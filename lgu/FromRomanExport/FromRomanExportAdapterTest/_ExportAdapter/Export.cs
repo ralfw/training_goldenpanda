@@ -9,7 +9,7 @@ namespace FromRomanExportAdapterTest._ExportAdapter
     [TestFixture]
     public class Export
     {
-        private const string OutputPath = @"c:\temp\fromRoman\output\";
+        private const string OutputPath = @"fromRoman\output\";
 
         [SetUp]
         public void SetUp()
