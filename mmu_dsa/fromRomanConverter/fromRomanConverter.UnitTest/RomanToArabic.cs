@@ -38,14 +38,15 @@ namespace fromRomanConverter.UnitTest
         [TestCase("CXCIV", 194)]
         [TestCase("CXLIX", 149)]
         [TestCase("CLXXXVIII", 188)]
-        public void ShouldConvert(string romanNumberStr, int expected)
+        public void ShouldConvertFromSingle(string romanNumberStr, int expected)
         {
             var sut = new FromRomanConverter();
 
             sut.ConvertRomanNumbersToArabInts(new[]{ romanNumberStr}).Should().Contain(expected);
         }
+
         [TestCase(new[] { "CLXXXVIII", "CXLIX", "MMMDCCCXLV" }, new[] { 188, 149, 3845 })]
-        public void ShouldConvert(string[] romanNumberStr, int[] expected)
+        public void ShouldConvertFromStringArray(string[] romanNumberStr, int[] expected)
         {
             var sut = new FromRomanConverter();
 
