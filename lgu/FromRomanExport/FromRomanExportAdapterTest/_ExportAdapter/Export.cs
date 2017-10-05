@@ -34,22 +34,6 @@ namespace FromRomanExportAdapterTest._ExportAdapter
             fileContent[1].Should().Be(numbers[1].ToString());
         }
 
-
-        [Test]
-        public void ShouldCreateEmptyFileForNoNumbers()
-        {
-            int[] numbers = {};
-
-            ExportAdapter.Export(numbers, OutputPath);
-
-            Directory.GetFiles(OutputPath).Length.Should().Be(1);
-
-            var file = Directory.GetFiles(OutputPath)[0];
-            var fileContent = File.ReadAllLines(file);
-            fileContent.Should().BeEmpty();
-
-        }
-
         [Test]
         public void ShouldNotOverwriteExistingFile()
         {
