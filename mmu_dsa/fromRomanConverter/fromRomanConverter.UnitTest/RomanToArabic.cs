@@ -40,17 +40,14 @@ namespace fromRomanConverter.UnitTest
         [TestCase("CLXXXVIII", 188)]
         public void ShouldConvertFromSingle(string romanNumberStr, int expected)
         {
-            var sut = new FromRomanConverter();
 
-            sut.ConvertRomanNumbersToArabInts(new[]{ romanNumberStr}).Should().Contain(expected);
+            FromRomanConverter.ConvertRomanNumbersToArabInts(new[]{ romanNumberStr}).Should().Contain(expected);
         }
 
         [TestCase(new[] { "CLXXXVIII", "CXLIX", "MMMDCCCXLV" }, new[] { 188, 149, 3845 })]
         public void ShouldConvertFromStringArray(string[] romanNumberStr, int[] expected)
         {
-            var sut = new FromRomanConverter();
-
-            sut.ConvertRomanNumbersToArabInts( romanNumberStr).Should().Contain(expected);
+            FromRomanConverter.ConvertRomanNumbersToArabInts( romanNumberStr).Should().Contain(expected);
         }
 
     }
