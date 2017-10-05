@@ -53,9 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="_ImportAdapter\Import.cs" />
-    <Compile Include="_ImportAdapter\ReadFileNamesInFolder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="_ImportAdapter\ReadNumbersFromFiles.cs" />
     <Compile Include="_ImportAdapter\TesterBase.cs" />
   </ItemGroup>
   <ItemGroup>

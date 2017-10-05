@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RomanNumberImportAdapter
 {
@@ -16,14 +13,24 @@ namespace RomanNumberImportAdapter
             ImportDirectory = directory;
         }
 
-        public string[] ReadFileNamesInFolder()
+        public Tuple<string[], int> Import()
         {
-            var currentDirectory = Directory.GetCurrentDirectory();
+            var filePaths = ReadFileNamesInFolder();
+            var numbers = ReadNumbersFromFiles(filePaths);
 
+            foreach (var filePath in filePaths)
+            {
+                File.Delete(filePath);
+            }
+            return new Tuple<string[], int>(numbers, filePaths.Length);
+        }
+
+        internal string[] ReadFileNamesInFolder()
+        {
             return Directory.GetFiles(ImportDirectory);
         }
 
-        public string[] ReadNumbersFromFiles(string[] filePaths)
+        internal string[] ReadNumbersFromFiles(string[] filePaths)
         {
             var result = new List<string>();
 
@@ -33,14 +40,6 @@ namespace RomanNumberImportAdapter
             }
 
             return result.ToArray();
-        }
-
-        public Tuple<string[], int> Import()
-        {
-            var filePaths = ReadFileNamesInFolder();
-            var numbers = ReadNumbersFromFiles(filePaths);
-            return new Tuple<string[], int>(numbers, filePaths.Length);
-            
         }
     }
 }

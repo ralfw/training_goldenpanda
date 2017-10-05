@@ -9,8 +9,8 @@ namespace RomanNumberImportAdapter.UnitTest._ImportAdapter
         [SetUp]
         public void SetUp()
         {
-            var testDirectory = "ReadFileNamesInFolder";
-            Directory.CreateDirectory(testDirectory);
+            _testDirectory = "ReadFileNamesInFolder";
+            Directory.CreateDirectory(_testDirectory);
 
             var testData1 = new List<string>
             {
@@ -23,15 +23,16 @@ namespace RomanNumberImportAdapter.UnitTest._ImportAdapter
                 "LX"
             };
 
-            File.WriteAllLines(Path.Combine(testDirectory, "a.txt"), testData1);
-            File.WriteAllLines(Path.Combine(testDirectory, "b.txt"), testData2);
+            File.WriteAllLines(Path.Combine(_testDirectory, "a.txt"), testData1);
+            File.WriteAllLines(Path.Combine(_testDirectory, "b.txt"), testData2);
 
-            _importAdapter = new ImportAdapter("ReadFileNamesInFolder");
+            _importAdapter = new ImportAdapter(_testDirectory);
         }
 
         #region Fields
 
         protected ImportAdapter _importAdapter;
+        protected string _testDirectory;
 
         #endregion
     }
