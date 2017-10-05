@@ -12,6 +12,5 @@ namespace fromRomanConverter
         {
             return new uint[] {};
         }
-
     }
 }
