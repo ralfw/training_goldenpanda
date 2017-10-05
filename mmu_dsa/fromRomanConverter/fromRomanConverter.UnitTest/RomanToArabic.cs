@@ -40,87 +40,18 @@ namespace fromRomanConverter.UnitTest
         [TestCase("CLXXXVIII", 188)]
         public void ShouldConvert(string romanNumberStr, int expected)
         {
-            var sut = new ToArabicConverter();
+            var sut = new FromRomanConverter();
 
-            sut.Convert(romanNumberStr).Should().Be(expected);
+            sut.ConvertRomanNumbersToArabInts(new[]{ romanNumberStr}).Should().Contain(expected);
         }
-    }
-    public class ToArabicConverter
-    {
-        public int Convert(string numberStr)
+        [TestCase(new[] { "CLXXXVIII", "CXLIX", "MMMDCCCXLV" }, new[] { 188, 149, 3845 })]
+        public void ShouldConvert(string[] romanNumberStr, int[] expected)
         {
-            var result = 0;
+            var sut = new FromRomanConverter();
 
-            for (int pos = 0; pos < numberStr.Length; pos++)
-            {
-                if (pos + 1 < numberStr.Length)
-                {
-                    int subtractValue;
-                    if (CheckForSubtractions(numberStr.Substring(pos, 2), out subtractValue))
-                    {
-                        result += subtractValue;
-                        pos += 1;
-                        continue;
-                    }
-                }
-
-                result += _romanNumbers[numberStr[pos].ToString()];
-            }
-
-            return result;
+            sut.ConvertRomanNumbersToArabInts( romanNumberStr).Should().Contain(expected);
         }
 
-        private bool CheckForSubtractions(string subString, out int result)
-        {
-            result = 0;
-
-            if (subString == "IV")
-            {
-                result = 4;
-                return true;
-            }
-            if (subString == "IX")
-            {
-                result = 9;
-                return true;
-            }
-            if (subString == "XL")
-            {
-                result = 40;
-                return true;
-            }
-            if (subString == "XC")
-            {
-                result = 90;
-                return true;
-            }
-            if (subString == "CD")
-            {
-                result = 400;
-                return true;
-            }
-            if (subString == "CM")
-            {
-                result = 900;
-                return true;
-            }
-
-            return false;
-        }
-
-        #region Fields
-
-        private readonly Dictionary<string, int> _romanNumbers = new Dictionary<string, int> {
-                                                                                                 { "I", 1 },
-                                                                                                 { "V", 5 },
-                                                                                                 { "X", 10 },
-                                                                                                 { "L", 50 },
-                                                                                                 { "C", 100 },
-                                                                                                 { "D", 500 },
-                                                                                                 { "M", 1000 }
-                                                                                             };
-
-        #endregion
     }
 
 }

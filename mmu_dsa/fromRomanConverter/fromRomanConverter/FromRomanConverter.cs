@@ -7,7 +7,16 @@ namespace fromRomanConverter
     {
         public int[] ConvertRomanNumbersToArabInts(string[] inputRomanNumbers)
         {
-            return inputRomanNumbers.Select(ConvertSingleNumber).ToArray();
+            var result = new List<int>();
+
+            foreach (string number in inputRomanNumbers)
+            {
+                result.Add(ConvertSingleNumber(number));
+            }
+
+            return result.ToArray();
+
+          //  return inputRomanNumbers.Select(ConvertSingleNumber).ToArray();
         }
 
         #region Private methods
