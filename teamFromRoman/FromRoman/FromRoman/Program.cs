@@ -16,14 +16,12 @@ namespace FromRoman
         static void Main(string[] args)
         {
             var fromRomanImportAdapter = new ImportAdapter(inputPath);
+            var display = new Display();
+
             var importedResult = fromRomanImportAdapter.Import();
-
-            //var decimals = FromRomanConverter.;
-
-            //var fromRomanExporter = new FromRomanExporter();
-            //fromRomanExporter.Export(decimals, outputPaht);
-
-            //ShowStatistic(numberOfFiles, numberOfRomans);
+            var decimals = FromRomanConverter.ConvertRomanNumbersToArabInts(importedResult.Item1);
+            FromRomanExportAdapter.ExportAdapter.Export(decimals, outputPath);
+            display.ShowStatistic(importedResult.Item2, importedResult.Item1.Length);
         }
     }
 }
