@@ -5,18 +5,9 @@ namespace fromRomanConverter
 {
     public class FromRomanConverter
     {
-        public int[] ConvertRomanNumbersToArabInts(string[] inputRomanNumbers)
-        {
-            var result = new List<int>();
-
-            foreach (string number in inputRomanNumbers)
-            {
-                result.Add(ConvertSingleNumber(number));
-            }
-
-            return result.ToArray();
-
-          //  return inputRomanNumbers.Select(ConvertSingleNumber).ToArray();
+        public static int[] ConvertRomanNumbersToArabInts(string[] inputRomanNumbers)
+        {        
+            return inputRomanNumbers.Select(ConvertSingleNumber).ToArray();
         }
 
         #region Private methods
@@ -27,7 +18,7 @@ namespace fromRomanConverter
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        private int ConvertSingleNumber(string input)
+        private static int ConvertSingleNumber(string input)
         {
             var sum = 0;
             for (var index = 0; index < input.Length; index++)
