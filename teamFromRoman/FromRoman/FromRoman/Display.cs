@@ -6,7 +6,7 @@ namespace FromRoman
     {
         public void ShowStatistic(int numberOfFiles, int numberOfRomans)
         {
-            Console.WriteLine($"{numberOfFiles} Files and {numberOfRomans} are processed.");
+            Console.WriteLine($"{numberOfFiles} files and {numberOfRomans} numbers were processed.");
         }
     }
 }

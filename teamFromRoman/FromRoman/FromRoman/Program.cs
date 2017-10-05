@@ -3,21 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using fromRomanConverter;
+using RomanNumberImportAdapter;
 
 namespace FromRoman
 {
     class Program
     {
-        private string inputPath = @"./input/";
-        private string outputPath = @"./output/";
+        private static string inputPath = @"./input/";
+        private static string outputPath = @"./output/";
 
         static void Main(string[] args)
         {
-            //var fromRomanImportAdapter = new ImportAdapter();
-            //var romans = fromRomanImportAdapter.Import(inputPath);
+            var fromRomanImportAdapter = new ImportAdapter(inputPath);
+            var importedResult = fromRomanImportAdapter.Import();
 
-            //var fromRomanConverter = new FromRomanConverter();
-            //var decimals = fromRomanConverter.Convert(romans);
+            //var decimals = FromRomanConverter.;
 
             //var fromRomanExporter = new FromRomanExporter();
             //fromRomanExporter.Export(decimals, outputPaht);

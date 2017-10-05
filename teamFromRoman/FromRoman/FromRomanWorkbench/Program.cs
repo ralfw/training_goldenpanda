@@ -15,7 +15,7 @@ namespace FromRomanWorkbench
         {
             var display = new Display();
             Console.WriteLine("Output Test");
-            display.ShowStatistic(0,0);
+            display.ShowStatistic(2,3);
         }
     }
 }
