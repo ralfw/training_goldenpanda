@@ -1,17 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace fromRomanConverter
 {
     public class FromRomanConverter
     {
-        public int[] ConvertRomanNumbersToRoman(string[] inputRomanNumbers)
+        public int[] ConvertRomanNumbersToArabInts(string[] inputRomanNumbers)
         {
             return inputRomanNumbers.Select(ConvertSingleNumber).ToArray();
         }
+
+        #region Private methods
 
         /// <summary>
         /// Implementation as suggested by 
@@ -27,6 +26,7 @@ namespace fromRomanConverter
                 if (index < input.Length - 1)
                     if (SymbolValueMap[input[index]] < SymbolValueMap[input[index + 1]])
                     {
+                        //toggle the sign
                         sum += SymbolValueMap[input[index + 1]] - SymbolValueMap[input[index]];
                         index++;
                         continue;
@@ -35,6 +35,10 @@ namespace fromRomanConverter
             }
             return sum;
         }
+
+        #endregion
+
+        #region Fields
 
         private static readonly IReadOnlyDictionary<char, int> SymbolValueMap = new Dictionary<char, int>
         {
@@ -46,5 +50,7 @@ namespace fromRomanConverter
             ['D'] = 500,
             ['M'] = 1000
         };
+
+        #endregion
     }
 }
