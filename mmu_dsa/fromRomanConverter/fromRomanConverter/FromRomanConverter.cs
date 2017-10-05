@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 
 namespace fromRomanConverter
 {
@@ -10,13 +9,11 @@ namespace fromRomanConverter
             var result = new List<int>();
 
             foreach (string number in inputRomanNumbers)
-            {
                 result.Add(ConvertSingleNumber(number));
-            }
 
             return result.ToArray();
 
-          //  return inputRomanNumbers.Select(ConvertSingleNumber).ToArray();
+            //  return inputRomanNumbers.Select(ConvertSingleNumber).ToArray();
         }
 
         #region Private methods
