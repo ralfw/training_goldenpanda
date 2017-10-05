@@ -53,9 +53,10 @@ namespace fromRoman.adapters.tests
             File.WriteAllLines("test_input/b.txt", new[]{"y", "z"});
             
             var sut = new ImportAdapter();
-            var result = sut.Import("test_input");
+            var (n, numbers) = sut.Import("test_input");
             
-            Assert.AreEqual(new[]{"x", "y", "z"}, result);
+            Assert.AreEqual(2, n);
+            Assert.AreEqual(new[]{"x", "y", "z"}, numbers);
             Assert.AreEqual(0, Directory.GetFiles("test_input").Length);
         }
     }

@@ -6,11 +6,11 @@ namespace romanConversion.adapters
 {
     public class ImportAdapter
     {
-        public string[] Import(string importDirectory) {
+        public (int numberOfImportedFiles, string[] romanNumbers) Import(string importDirectory) {
             var filenames = Find_input_files(importDirectory);
             var numbers = Import_numbers(filenames);
             Clear_input_files(filenames);
-            return numbers;
+            return (filenames.Length, numbers);
         }
         
         internal string[] Find_input_files(string importDirectory) {
