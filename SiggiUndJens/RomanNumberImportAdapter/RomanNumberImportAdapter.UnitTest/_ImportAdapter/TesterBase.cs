@@ -25,6 +25,14 @@ namespace RomanNumberImportAdapter.UnitTest._ImportAdapter
 
             File.WriteAllLines(Path.Combine(testDirectory, "a.txt"), testData1);
             File.WriteAllLines(Path.Combine(testDirectory, "b.txt"), testData2);
+
+            _importAdapter = new ImportAdapter("ReadFileNamesInFolder");
         }
+
+        #region Fields
+
+        protected ImportAdapter _importAdapter;
+
+        #endregion
     }
 }

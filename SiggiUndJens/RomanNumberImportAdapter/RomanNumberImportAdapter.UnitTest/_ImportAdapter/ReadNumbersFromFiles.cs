@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NUnit.Framework;
 
 namespace RomanNumberImportAdapter.UnitTest._ImportAdapter
@@ -14,10 +9,9 @@ namespace RomanNumberImportAdapter.UnitTest._ImportAdapter
         [Test]
         public void ShouldReadAllNumbersFromFiles()
         {
-            var importAdapter = new ImportAdapter("ReadFileNamesInFolder");
-            var filePaths = importAdapter.ReadFileNamesInFolder();
+            var filePaths = _importAdapter.ReadFileNamesInFolder();
 
-            var result = importAdapter.ReadNumbersFromFiles(filePaths);
+            var result = _importAdapter.ReadNumbersFromFiles(filePaths);
 
             result.Length.Should().Be(4);
         }
