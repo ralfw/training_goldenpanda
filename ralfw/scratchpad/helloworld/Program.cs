@@ -19,7 +19,16 @@ namespace helloworld
             Display(greeting);
         }
 
-
+        static string Map(int m)
+        {
+            switch (m)
+            {
+                case 1: return "Hello, {0}!";
+                case 2: return "Welcome back, {0}!";
+                case 3: return "Hello my good friend, {0}!";
+                default: return "Nice to see you again, {0}!";
+            }
+        }
         public static (string greeting, string[] visitors) Process(string name, string[] visitors) {
             visitors = visitors.Concat(new[] {name}).ToArray();
             var n = visitors.Count(v => v == name);
@@ -27,14 +36,7 @@ namespace helloworld
             var greeting = string.Format(greetingTemplate, name);
             return (greeting, visitors);
 
-            string Map(int m) {
-                switch (m) {
-                    case 1: return "Hello, {0}!";
-                    case 2: return "Welcome back, {0}!";
-                    case 3: return "Hello my good friend, {0}!";
-                    default: return "Nice to see you again, {0}!";
-                }
-            }
+          
         }
 
 
