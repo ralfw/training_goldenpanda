@@ -7,6 +7,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "helloworld", "helloworld/he
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "helloworld-ui-testbed", "helloworld-ui-testbed\helloworld-ui-testbed.csproj", "{9F77E85B-5F63-4D7E-9F39-C55E6F823550}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "helloworld_tag1", "helloworld_tag1", "{BE3EC0CF-3807-4E4B-B13E-D6F98ECED6C4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "fromRomanService_tag2", "fromRomanService_tag2", "{7FE45636-A979-47BC-9893-2643EACB613B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "romanImportAdapter", "romanImportAdapter\romanImportAdapter.csproj", "{50A0E07A-9F72-45E4-AB66-A0DB6654482A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,8 +27,17 @@ Global
 		{9F77E85B-5F63-4D7E-9F39-C55E6F823550}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F77E85B-5F63-4D7E-9F39-C55E6F823550}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F77E85B-5F63-4D7E-9F39-C55E6F823550}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50A0E07A-9F72-45E4-AB66-A0DB6654482A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50A0E07A-9F72-45E4-AB66-A0DB6654482A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50A0E07A-9F72-45E4-AB66-A0DB6654482A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50A0E07A-9F72-45E4-AB66-A0DB6654482A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{397899F0-099E-48E9-B1DD-A6B84A091E24} = {BE3EC0CF-3807-4E4B-B13E-D6F98ECED6C4}
+		{9F77E85B-5F63-4D7E-9F39-C55E6F823550} = {BE3EC0CF-3807-4E4B-B13E-D6F98ECED6C4}
+		{50A0E07A-9F72-45E4-AB66-A0DB6654482A} = {7FE45636-A979-47BC-9893-2643EACB613B}
 	EndGlobalSection
 EndGlobal
