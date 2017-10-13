@@ -70,5 +70,10 @@ namespace fromRomanConverter
         };
 
         #endregion
+
+        public static char[] Split(string romanNumber)
+        {
+            return romanNumber.ToCharArray();
+        }
     }
 }
