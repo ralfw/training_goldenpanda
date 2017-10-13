@@ -5,9 +5,9 @@ namespace fromRomanConverter
 {
     public class FromRomanConverter
     {
-        public static int[] ConvertRomanNumbersToArabInts(string[] inputRomanNumbers)
+        public static int[] ConvertRomanNumberStringsToArabicIntegers(string[] romanNumberStrings)
         {        
-            return inputRomanNumbers.Select(ConvertSingleNumber).ToArray();
+            return romanNumberStrings.Select(ConvertRomanNumberToArabic).ToArray();
         }
 
         #region Private methods
@@ -16,24 +16,42 @@ namespace fromRomanConverter
         /// Implementation as suggested by 
         /// https://groups.google.com/forum/#!topic/de.comp.datenbanken.ms-access/tXICrqZ2EWc
         /// </summary>
-        /// <param name="input"></param>
+        /// <param name="romanNumberStr"></param>
         /// <returns></returns>
-        private static int ConvertSingleNumber(string input)
+        private static int ConvertRomanNumberToArabic(string romanNumberStr)
         {
-            var sum = 0;
-            for (var index = 0; index < input.Length; index++)
+            var arabicNumber = 0;
+
+            for (var i = 0; i < romanNumberStr.Length; i++)
             {
-                if (index < input.Length - 1)
-                    if (SymbolValueMap[input[index]] < SymbolValueMap[input[index + 1]])
-                    {
-                        //toggle the sign
-                        sum += SymbolValueMap[input[index + 1]] - SymbolValueMap[input[index]];
-                        index++;
-                        continue;
-                    }
-                sum += SymbolValueMap[input[index]];
+                var substraction = 0;
+
+                if (i < romanNumberStr.Length - 1)
+                    substraction = ConvertRomanSubstractionSymbols(romanNumberStr[i], romanNumberStr[i + 1]);
+
+                if (substraction != 0)
+                {
+                    arabicNumber += substraction;
+                    i++;
+                }
+                else
+                    arabicNumber += ConvertRomanSymbol(romanNumberStr[i]);
             }
-            return sum;
+
+            return arabicNumber;
+        }
+
+        private static int ConvertRomanSymbol(char romanNumber)
+        {
+            return SymbolValueMap[romanNumber];
+        }
+
+        private static int ConvertRomanSubstractionSymbols(char romanSymbol1, char romanSymbol2)
+        {
+            if (SymbolValueMap[romanSymbol1] < SymbolValueMap[romanSymbol2])
+                return SymbolValueMap[romanSymbol2] - SymbolValueMap[romanSymbol1];
+
+            return 0;
         }
 
         #endregion
