@@ -1,19 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace fromRomanConverter
 {
     public class FromRomanConverter
     {
-        public static int[] ConvertRomanNumberStringsToArabicIntegers(string[] romanNumberStrings)
-        {        
-            return romanNumberStrings.Select(ConvertRomanNumberToArabic).ToArray();
-        }
-
         public static int[] Convert(char[] symbols)
         {
             return symbols.Select(ConvertRomanSymbol).ToArray();
+        }
+
+        public static int[] ConvertRomanNumberStringsToArabicIntegers(string[] romanNumberStrings)
+        {
+            return romanNumberStrings.Select(ConvertRomanNumberToArabic).ToArray();
+        }
+
+        public static int[] Sign(int[] numbers)
+        {
+            var result = new List<int>();
+            for (var i = 0; i < numbers.Length - 1; i++)
+            {
+                if (numbers[i] < numbers[i + 1])
+                    result.Add(numbers[i] * -1);
+                else
+                    result.Add(numbers[i]);
+            }
+  
+            result.Add(numbers[numbers.Length-1]);
+            return result.ToArray();
+        }
+
+        public static char[] Split(string romanNumber)
+        {
+            return romanNumber.ToCharArray();
         }
 
         #region Private methods
@@ -41,7 +60,9 @@ namespace fromRomanConverter
                     i++;
                 }
                 else
+                {
                     arabicNumber += ConvertRomanSymbol(romanNumberStr[i]);
+                }
             }
 
             return arabicNumber;
@@ -76,10 +97,5 @@ namespace fromRomanConverter
         };
 
         #endregion
-
-        public static char[] Split(string romanNumber)
-        {
-            return romanNumber.ToCharArray();
-        }
     }
 }
