@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace fromRomanConverter
@@ -8,6 +9,11 @@ namespace fromRomanConverter
         public static int[] ConvertRomanNumberStringsToArabicIntegers(string[] romanNumberStrings)
         {        
             return romanNumberStrings.Select(ConvertRomanNumberToArabic).ToArray();
+        }
+
+        public static int[] Convert(char[] symbols)
+        {
+            return symbols.Select(ConvertRomanSymbol).ToArray();
         }
 
         #region Private methods
