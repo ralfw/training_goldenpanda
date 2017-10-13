@@ -9,13 +9,11 @@ namespace fromRomanConverter.UnitTest
         [Test]
         public void ShouldConvertRomanSymbolsToArabicNumbers()
         {
-            char[] symbols = {'I', 'V', 'M'};
+            char[] symbols = {'I', 'V', 'X', 'L', 'C', 'D', 'M'};
 
-            var result = FromRomanConverter.Convert(symbols);
+            var arabicNumbers = FromRomanConverter.Convert(symbols);
 
-            result.Should().ContainInOrder(1, 5, 1000);
-
+            arabicNumbers.Should().ContainInOrder(1, 5, 10, 50, 100, 500, 1000);
         }
-
     }
 }
