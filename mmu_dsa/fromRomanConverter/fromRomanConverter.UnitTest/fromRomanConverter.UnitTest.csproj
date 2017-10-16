@@ -58,6 +58,7 @@
     <Compile Include="RomanToArabic.cs" />
     <Compile Include="Sign.cs" />
     <Compile Include="Split.cs" />
+    <Compile Include="Sum.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -97,5 +97,10 @@ namespace fromRomanConverter
         };
 
         #endregion
+
+        public static int Sum(int[] numbers)
+        {
+            return numbers.Sum();
+        }
     }
 }
