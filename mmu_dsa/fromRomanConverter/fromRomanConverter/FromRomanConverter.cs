@@ -25,8 +25,8 @@ namespace fromRomanConverter
                 else
                     result.Add(numbers[i]);
             }
-  
             result.Add(numbers[numbers.Length-1]);
+
             return result.ToArray();
         }
 
