@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NUnit.Framework;
 
 namespace fromRomanConverter.UnitTest
@@ -7,6 +6,12 @@ namespace fromRomanConverter.UnitTest
     [TestFixture]
     public class RomanToArabic
     {
+        [TestCase(new[] {"I", "II", "III"}, new[] {1, 2, 3})]
+        public void ShouldConvertFromStringArray(string[] romanNumberStr, int[] expected)
+        {
+            FromRomanConverter.ConvertRomanNumberStringsToArabicIntegers(romanNumberStr).Should().Contain(expected);
+        }
+
         [TestCase("I", 1)]
         [TestCase("V", 5)]
         [TestCase("X", 10)]
@@ -16,25 +21,19 @@ namespace fromRomanConverter.UnitTest
         [TestCase("M", 1000)]
         public void ShouldConvertSingleSymbol(string romanNumberStr, int expected)
         {
-            FromRomanConverter.ConvertRomanNumberStringsToArabicIntegers(new[]{ romanNumberStr}).Should().Contain(expected);
-        }
-
-        [TestCase("LXVI", 66)]
-        public void ShouldConvertSymbolsWithoutNegativeSigns(string romanNumberStr, int expected)
-        {
-            FromRomanConverter.ConvertRomanNumberStringsToArabicIntegers(new[]{ romanNumberStr}).Should().Contain(expected);
+            FromRomanConverter.ConvertRomanNumberStringsToArabicIntegers(new[] {romanNumberStr}).Should().Contain(expected);
         }
 
         [TestCase("MXLIX", 1049)]
         public void ShouldConvertSymbolsWithNegativeSigns(string romanNumberStr, int expected)
         {
-            FromRomanConverter.ConvertRomanNumberStringsToArabicIntegers(new[]{ romanNumberStr}).Should().Contain(expected);
+            FromRomanConverter.ConvertRomanNumberStringsToArabicIntegers(new[] {romanNumberStr}).Should().Contain(expected);
         }
 
-        [TestCase(new[] { "I", "II", "III" }, new[] { 1, 2, 3 })]
-        public void ShouldConvertFromStringArray(string[] romanNumberStr, int[] expected)
+        [TestCase("LXVI", 66)]
+        public void ShouldConvertSymbolsWithoutNegativeSigns(string romanNumberStr, int expected)
         {
-            FromRomanConverter.ConvertRomanNumberStringsToArabicIntegers( romanNumberStr).Should().Contain(expected);
+            FromRomanConverter.ConvertRomanNumberStringsToArabicIntegers(new[] {romanNumberStr}).Should().Contain(expected);
         }
     }
 }

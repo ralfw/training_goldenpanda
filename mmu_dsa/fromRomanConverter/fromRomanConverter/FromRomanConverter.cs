@@ -5,17 +5,19 @@ namespace fromRomanConverter
 {
     public class FromRomanConverter
     {
-        public static int[] Convert(char[] symbols)
-        {
-            return symbols.Select(ConvertRomanSymbol).ToArray();
-        }
-
         public static int[] ConvertRomanNumberStringsToArabicIntegers(string[] romanNumberStrings)
         {
             return romanNumberStrings.Select(ConvertRomanNumberToArabic).ToArray();
         }
 
-        public static int[] Sign(int[] numbers)
+        #region Private methods
+
+        private static int[] Convert(char[] symbols)
+        {
+            return symbols.Select(ConvertRomanSymbol).ToArray();
+        }
+
+        private static int[] Sign(int[] numbers)
         {
             var result = new List<int>();
             for (var i = 0; i < numbers.Length - 1; i++)
@@ -28,17 +30,15 @@ namespace fromRomanConverter
             return result.ToArray();
         }
 
-        public static char[] Split(string romanNumber)
+        private static char[] Split(string romanNumber)
         {
             return romanNumber.ToCharArray();
         }
 
-        public static int Sum(int[] numbers)
+        private static int Sum(int[] numbers)
         {
             return numbers.Sum();
         }
-
-        #region Private methods
 
         private static int ConvertRomanNumberToArabic(string romanNumberStr)
         {
