@@ -19,13 +19,11 @@ namespace fromRomanConverter
         {
             var result = new List<int>();
             for (var i = 0; i < numbers.Length - 1; i++)
-            {
                 if (numbers[i] < numbers[i + 1])
                     result.Add(numbers[i] * -1);
                 else
                     result.Add(numbers[i]);
-            }
-            result.Add(numbers[numbers.Length-1]);
+            result.Add(numbers[numbers.Length - 1]);
 
             return result.ToArray();
         }
@@ -35,50 +33,24 @@ namespace fromRomanConverter
             return romanNumber.ToCharArray();
         }
 
+        public static int Sum(int[] numbers)
+        {
+            return numbers.Sum();
+        }
+
         #region Private methods
 
-        /// <summary>
-        /// Implementation as suggested by 
-        /// https://groups.google.com/forum/#!topic/de.comp.datenbanken.ms-access/tXICrqZ2EWc
-        /// </summary>
-        /// <param name="romanNumberStr"></param>
-        /// <returns></returns>
         private static int ConvertRomanNumberToArabic(string romanNumberStr)
         {
-            var arabicNumber = 0;
-
-            for (var i = 0; i < romanNumberStr.Length; i++)
-            {
-                var substraction = 0;
-
-                if (i < romanNumberStr.Length - 1)
-                    substraction = ConvertRomanSubstractionSymbols(romanNumberStr[i], romanNumberStr[i + 1]);
-
-                if (substraction != 0)
-                {
-                    arabicNumber += substraction;
-                    i++;
-                }
-                else
-                {
-                    arabicNumber += ConvertRomanSymbol(romanNumberStr[i]);
-                }
-            }
-
-            return arabicNumber;
+            var symbols = Split(romanNumberStr);
+            var numbers = Convert(symbols);
+            var signedNumbers = Sign(numbers);
+            return Sum(signedNumbers);
         }
 
         private static int ConvertRomanSymbol(char romanNumber)
         {
             return SymbolValueMap[romanNumber];
-        }
-
-        private static int ConvertRomanSubstractionSymbols(char romanSymbol1, char romanSymbol2)
-        {
-            if (SymbolValueMap[romanSymbol1] < SymbolValueMap[romanSymbol2])
-                return SymbolValueMap[romanSymbol2] - SymbolValueMap[romanSymbol1];
-
-            return 0;
         }
 
         #endregion
@@ -97,10 +69,5 @@ namespace fromRomanConverter
         };
 
         #endregion
-
-        public static int Sum(int[] numbers)
-        {
-            return numbers.Sum();
-        }
     }
 }
