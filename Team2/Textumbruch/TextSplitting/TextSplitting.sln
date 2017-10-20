@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextSplitter", "TextSplitter\TextSplitter.csproj", "{66A000A4-3538-4A3E-B4B2-FDD071017152}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextSplitter.UnitTest", "TextSplitter.UnitTest\TextSplitter.UnitTest.csproj", "{C5774942-8A39-4DAB-9C9B-123D41E0871A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{66A000A4-3538-4A3E-B4B2-FDD071017152}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66A000A4-3538-4A3E-B4B2-FDD071017152}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66A000A4-3538-4A3E-B4B2-FDD071017152}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66A000A4-3538-4A3E-B4B2-FDD071017152}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5774942-8A39-4DAB-9C9B-123D41E0871A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5774942-8A39-4DAB-9C9B-123D41E0871A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5774942-8A39-4DAB-9C9B-123D41E0871A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5774942-8A39-4DAB-9C9B-123D41E0871A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
