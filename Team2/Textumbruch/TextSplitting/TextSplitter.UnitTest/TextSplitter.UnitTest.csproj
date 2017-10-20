@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="_TextSplitter\LimitWords.cs" />
     <Compile Include="_TextSplitter\Split.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
