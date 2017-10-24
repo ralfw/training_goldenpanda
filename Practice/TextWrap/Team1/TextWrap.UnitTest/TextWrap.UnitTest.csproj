@@ -53,8 +53,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BuildRows.cs" />
+    <Compile Include="BuildText.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SplitTextIntoWords.cs" />
+    <Compile Include="Wrap.cs" />
+    <Compile Include="WrapTooLongWords.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
