@@ -12,7 +12,7 @@ namespace TextSplitter.UnitTest._TextSplitter
         {
             var textSplitter = new TextSplitter();
 
-            var result = textSplitter.Split(text);
+            var result = TextSplitter.Split(text);
 
             result.Should().ContainInOrder(expectedWords);
         }

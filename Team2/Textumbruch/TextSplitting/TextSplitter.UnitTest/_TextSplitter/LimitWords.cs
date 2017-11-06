@@ -15,7 +15,7 @@ namespace TextSplitter.UnitTest._TextSplitter
             var expected = new[] { "die", "Nac","ht" };
             const int linelength = 3;
 
-            var result = sut.LimitWords(input, linelength);
+            var result = TextSplitter.LimitWords(input, linelength);
 
             result.Should().ContainInOrder(expected);
         }
