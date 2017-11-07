@@ -15,7 +15,7 @@ namespace TextSplitter
         }
         
         
-        public static IEnumerable<string> Split_into_words(string text)
+        private static IEnumerable<string> Split_into_words(string text)
         {
             return text.Split('\n', '\r', '\t', ' ');
         }
@@ -26,7 +26,7 @@ namespace TextSplitter
         }
         
         
-        public static IEnumerable<string> GenerateLines(int limit, IEnumerable<string> words)
+        private static IEnumerable<string> GenerateLines(int limit, IEnumerable<string> words)
         {
             var result = new List<string>();
             var lineNumber = 0;
@@ -58,7 +58,7 @@ namespace TextSplitter
         }
         
 
-        public static IEnumerable<string> Split_long_word(string word, int limit)
+        private static IEnumerable<string> Split_long_word(string word, int limit)
         {
             var result = new List<string>();
             var currentWord = word;
