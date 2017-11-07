@@ -8,24 +8,24 @@ namespace TextSplitter
     {
         public static string WrapWords(int limit, string input)
         {
-            var lines = Split(input);
-            lines = LimitWords(lines, limit);
-            lines = GenerateLines(limit, lines);
-            return Concatenate(lines);
+            var words = Split_into_words(input);
+            words = Split_long_words(words, limit);
+            words = GenerateLines(limit, words);
+            return Concatenate(words);
         }
-        public static IEnumerable<string> Split(string text)
+        
+        
+        public static IEnumerable<string> Split_into_words(string text)
         {
             return text.Split('\n', '\r', '\t', ' ');
         }
-        public static IEnumerable<string> LimitWords(IEnumerable<string> words, int limit)
-        {
-            var result = new List<string>();
-            foreach (var word in words)
-            {
-                result.AddRange(LimitWord(word, limit));
-            }
-            return result;
+        
+        
+        private static IEnumerable<string> Split_long_words(IEnumerable<string> words, int limit) {
+            return words.SelectMany(w => Split_long_word(w,limit));
         }
+        
+        
         public static IEnumerable<string> GenerateLines(int limit, IEnumerable<string> words)
         {
             var result = new List<string>();
@@ -50,13 +50,15 @@ namespace TextSplitter
 
             return result;
         }
-        public static string Concatenate(IEnumerable<string> lines)
+        
+        
+        private static string Concatenate(IEnumerable<string> lines)
         {
             return string.Join("\n", lines);
         }
+        
 
-        #region Private methods
-        private static IEnumerable<string> LimitWord(string word, int limit)
+        public static IEnumerable<string> Split_long_word(string word, int limit)
         {
             var result = new List<string>();
             var currentWord = word;
@@ -70,6 +72,5 @@ namespace TextSplitter
 
             return result;
         }
-        #endregion
     }
 }

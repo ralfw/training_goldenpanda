@@ -7,16 +7,10 @@ namespace TextSplitter.UnitTest._TextSplitter
     [TestFixture]
     public class LimitWords
     {
-        [Test]
-        public void ShouldLimitWords()
-        {
-            var sut = new TextSplitter();
-            var input = new[] {"die", "Nacht"};
-            var expected = new[] { "die", "Nac","ht" };
-            const int linelength = 3;
-
-            var result = TextSplitter.LimitWords(input, linelength);
-
+        [TestCase("die", 3, new[]{"die"})]
+        [TestCase("Nacht", 3, new[]{"Nac", "ht"})]
+        public void ShouldLimitWord(string word, int limit, string[] expected) {
+            var result = TextSplitter.Split_long_word(word, limit);
             result.Should().ContainInOrder(expected);
         }
     }

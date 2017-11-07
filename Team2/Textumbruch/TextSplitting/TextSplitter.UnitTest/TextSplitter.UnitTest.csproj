@@ -52,7 +52,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="_TextSplitter\Concatenate.cs" />
     <Compile Include="_TextSplitter\GenerateLines.cs" />
     <Compile Include="_TextSplitter\LimitWords.cs" />
     <Compile Include="_TextSplitter\Split.cs" />
