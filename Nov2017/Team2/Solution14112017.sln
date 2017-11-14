@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.16
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankOCR", "BankOCR\BankOCR.csproj", "{DBB8B604-0B42-44A3-8716-193F64A5FDE2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankOCR.UnitTest", "BankOCR.UnitTest\BankOCR.UnitTest.csproj", "{1A0B6F3A-2D5A-431D-83F4-ADA09D4E2B2E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DBB8B604-0B42-44A3-8716-193F64A5FDE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBB8B604-0B42-44A3-8716-193F64A5FDE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBB8B604-0B42-44A3-8716-193F64A5FDE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBB8B604-0B42-44A3-8716-193F64A5FDE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A0B6F3A-2D5A-431D-83F4-ADA09D4E2B2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A0B6F3A-2D5A-431D-83F4-ADA09D4E2B2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A0B6F3A-2D5A-431D-83F4-ADA09D4E2B2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A0B6F3A-2D5A-431D-83F4-ADA09D4E2B2E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1382B18E-CB66-48E0-A17A-EE86E914A058}
+	EndGlobalSection
+EndGlobal
