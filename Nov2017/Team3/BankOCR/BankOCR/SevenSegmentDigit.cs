@@ -14,7 +14,7 @@ namespace BankOCR
         }
         public string SevenSegments { get; set; }
 
-        private char Map()
+        public char Map()
         {
             return ' ';
         }

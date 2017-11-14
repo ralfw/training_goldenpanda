@@ -57,15 +57,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SevenSegmentAccountTest.cs" />
     <Compile Include="_Converter\Convert.cs" />
+    <Compile Include="_SevenSegmentDigit\Map.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\BankOCR\BankOCR\BankOCR.csproj">
-      <Project>{bec93b77-b5a3-48e2-9e4b-51a5ea2777f1}</Project>
-      <Name>BankOCR</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
