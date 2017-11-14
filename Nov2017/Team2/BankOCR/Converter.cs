@@ -4,7 +4,7 @@ namespace BankOCR
 {
     public class Converter
     {
-        public string[] Convert(string[] lines)
+        public static string[] Convert(string[] lines)
         {
             return new[] {""};
         }
