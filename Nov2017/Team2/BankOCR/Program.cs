@@ -20,19 +20,4 @@ namespace BankOCR
             return new[] {""};
         }
     }
-
-    public class SevenSegmentDigit
-    {
-        public string Segments { get; private set; }
-
-        public SevenSegmentDigit(string segments)
-        {
-            Segments = segments;
-        }
-
-        public char Map()
-        {
-            return '1';
-        }
-    }
 }

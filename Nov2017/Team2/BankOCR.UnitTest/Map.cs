@@ -18,7 +18,6 @@ namespace BankOCR.UnitTest
         [TestCase("   " +
                   "|_|" +
                   "  |", '4')]
-        
         public void ShouldMapSegmentsToNumber(string segments, char expected)
         {
             var sut = new SevenSegmentDigit(segments);
