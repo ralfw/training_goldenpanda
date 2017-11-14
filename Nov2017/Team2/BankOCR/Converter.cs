@@ -1,18 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace BankOCR
 {
-    static class Program
-    {
-        static void Main(string[] args)
-        {
-        }
-    }
-
     public class Converter
     {
         public string[] Convert(string[] lines)
@@ -27,7 +16,7 @@ namespace BankOCR
             foreach (var line in lines)
             {
                 if (!string.IsNullOrEmpty(line))
-                  linesHelper.Add(line);
+                    linesHelper.Add(line);
                 if (linesHelper.Count == 3)
                 {
                     sevenSegentAccounts.Add(new SevenSegmentAccount(linesHelper.ToArray()));
