@@ -50,9 +50,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="_Converter\Convert.cs" />
+    <Compile Include="_SevenSegmentAccountParser\GroupLines.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BankOcr\BankOcr.csproj">
+      <Project>{d67c14c1-6f44-47a4-8993-175d144f5ac1}</Project>
+      <Name>BankOcr</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
