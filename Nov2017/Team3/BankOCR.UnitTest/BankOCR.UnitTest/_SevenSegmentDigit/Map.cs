@@ -6,15 +6,13 @@ namespace BankOCR.UnitTest._SevenSegmentDigit
 {
     [TestFixture]
     public class Map
-    {
-        [Test]
-        public void ShouldMap()
+    {                                  
+        [TestCase("       I", '1')]
+        public void ShouldMap(string inputString, char expectedChar)
         {
-            var sut = new SevenSegmentDigit();
-            string input = "    I";
+            var sut = new SevenSegmentDigit(inputString);
 
-            sut.Map(input).Should().Be("1");
-
+            sut.Map(inputString).Should().Be(expectedChar); 
         }
     }
 }
