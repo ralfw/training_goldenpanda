@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace BankOcr
 {
@@ -10,11 +6,32 @@ namespace BankOcr
     {
         public static SevenSegmentAccount[] GroupLines(string[] lines)
         {
-            return new SevenSegmentAccount[]
+            var accounts = new List<SevenSegmentAccount>();
+            var tempLines = new[] {"", "", ""};
+
+            var counter = 1;
+            foreach (var line in lines)
             {
-                new SevenSegmentAccount(), 
-                new SevenSegmentAccount(),
-            };
+                switch (counter)
+                {
+                    case 1:
+                        tempLines[0] = line;
+                        break;
+                    case 2:
+                        tempLines[1] = line;
+                        break;
+                    case 3:
+                        tempLines[2] = line;
+                        accounts.Add(new SevenSegmentAccount(tempLines));
+                        break;
+                    case 4:
+                        counter = 0;
+                        break;
+                }
+                counter++;
+            }
+
+            return accounts.ToArray();
         }
     }
 }

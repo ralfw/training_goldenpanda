@@ -25,6 +25,13 @@ namespace BankOcr.UnitTest._SevenSegmentAccountParser
 
             groupLines.Length.Should().Be(2);
 
+            groupLines[0].Line1.Should().Be("    _  _     _  _  _  _  _ ");
+            groupLines[0].Line2.Should().Be("  | _| _||_||_ |_   ||_||_|");
+            groupLines[0].Line3.Should().Be("  ||_  _|  | _||_|  ||_| _|");
+
+            groupLines[1].Line1.Should().Be("    _  _  _  _  _  _     _ ");
+            groupLines[1].Line2.Should().Be("|_||_|| || ||_   |  |  ||_ ");
+            groupLines[1].Line3.Should().Be("  | _||_||_||_|  |  |  | _|");
         }
     }
 }
