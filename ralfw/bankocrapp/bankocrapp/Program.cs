@@ -9,8 +9,7 @@ namespace bankocrapp
         {
             var bankocr = new BankOCR();
 
-            var sourcepaths = args;
-            var accountnumbers = bankocr.decode(sourcepaths);
+            var accountnumbers = bankocr.decode(args);
             display(accountnumbers);
         }
 

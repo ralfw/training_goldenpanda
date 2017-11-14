@@ -44,13 +44,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="adapters\FileIO.cs" />
     <Compile Include="BankOCR.cs" />
-    <Compile Include="Converter.cs" />
-    <Compile Include="FileIO.cs" />
+    <Compile Include="data\SevenSAccountNo.cs" />
+    <Compile Include="data\SevenSDigit.cs" />
+    <Compile Include="domain\Converter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SevenSAccountNo.cs" />
-    <Compile Include="SevenSDigit.cs" />
     <Compile Include="tests\BankOCR_tests.cs" />
     <Compile Include="tests\Converter_tests.cs" />
     <Compile Include="tests\FileIO_tests.cs" />
