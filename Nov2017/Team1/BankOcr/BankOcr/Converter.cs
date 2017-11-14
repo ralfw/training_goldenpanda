@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BankOcr
 {
@@ -10,7 +7,14 @@ namespace BankOcr
     {
         public static IEnumerable<string> Convert(string[] content)
         {
-            return null;
+            var groupedLines = SevenSegmentAccountParser.GroupLines(content);
+
+            return ConvertSevenSegmentAccounts(groupedLines);
+        }
+
+        public static IEnumerable<string> ConvertSevenSegmentAccounts(SevenSegmentAccount[] groupedLines)
+        {
+            throw new NotImplementedException();
         }
     }
 }

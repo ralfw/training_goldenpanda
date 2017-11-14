@@ -2,7 +2,7 @@
 
 namespace BankOcr
 {
-    public class SevenSegmentAccountParser
+    public static class SevenSegmentAccountParser
     {
         public static SevenSegmentAccount[] GroupLines(string[] lines)
         {
