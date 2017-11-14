@@ -12,7 +12,7 @@ namespace bankocrapp
 
             var result = sut.decode(new[] {"tests/ocr1.txt"});
             
-            Assert.AreEqual(new[]{"12???????","???????1?"}, result);
+            Assert.AreEqual(new[]{"123456789","490067715"}, result);
         }
     }
 }

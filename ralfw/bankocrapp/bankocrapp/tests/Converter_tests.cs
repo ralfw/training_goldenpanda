@@ -17,7 +17,7 @@ namespace bankocrapp
                 "|_||_|| || ||_   |  |  ||_ ",
                 "  | _||_||_||_|  |  |  | _|",
             });
-            Assert.AreEqual(new[]{"12???????","???????1?"}, result);
+            Assert.AreEqual(new[]{"123456789","490067715"}, result);
         }
     }
 }

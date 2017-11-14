@@ -16,6 +16,14 @@ namespace bankocrapp
             switch (Segments) {
                 case ".....x..x": return '1';
                 case ".x..xxxx.": return '2';
+                case ".x..xx.xx": return '3';
+                case "...xxx..x": return '4';
+                case ".x.xx..xx": return '5';
+                case ".x.xx.xxx": return '6';
+                case ".x...x..x": return '7';
+                case ".x.xxxxxx": return '8';
+                case ".x.xxx.xx": return '9';
+                case ".x.x.xxxx": return '0';
                 default: return '?';
             }
         }
