@@ -8,11 +8,15 @@ namespace BankOCR
 {
     public class SevenSegmentDigit
     {
+        public SevenSegmentDigit(string segments)
+        {
+            SevenSegments = segments;
+        }
         public string SevenSegments { get; set; }
 
         private char Map()
         {
-
+            return ' ';
         }
     }
 }
