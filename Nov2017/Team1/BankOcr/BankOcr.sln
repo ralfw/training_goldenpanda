@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2008
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankOcr", "BankOcr\BankOcr.csproj", "{D67C14C1-6F44-47A4-8993-175D144F5AC1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankOcr.UnitTest", "BankOcr.UnitTest\BankOcr.UnitTest.csproj", "{982BD27B-D884-4639-BD54-0D2059884B1C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D67C14C1-6F44-47A4-8993-175D144F5AC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D67C14C1-6F44-47A4-8993-175D144F5AC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D67C14C1-6F44-47A4-8993-175D144F5AC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D67C14C1-6F44-47A4-8993-175D144F5AC1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{982BD27B-D884-4639-BD54-0D2059884B1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{982BD27B-D884-4639-BD54-0D2059884B1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{982BD27B-D884-4639-BD54-0D2059884B1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{982BD27B-D884-4639-BD54-0D2059884B1C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9129A910-0C29-4830-85D8-DA82E3D7BE14}
+	EndGlobalSection
+EndGlobal
