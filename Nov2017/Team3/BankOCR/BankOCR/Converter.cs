@@ -8,5 +8,19 @@ namespace BankOCR
 {
     public class Converter
     {
+        public static string[] Convert(SevenSegmentAccountNumber[] input)
+        {
+            IList<string> resultsList = new List<String>();
+
+            foreach (var acc in input)
+            {
+                //string result = acc.GetDigits().Select( _ => _.Map())
+            }
+
+
+            return resultsList.ToArray();
+
+        }
+
     }
 }

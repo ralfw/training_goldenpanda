@@ -6,11 +6,7 @@ using System.Threading.Tasks;
 
 namespace BankOCR
 {
-    public class Program
+    class FileIO
     {
-        public static void Main(string[] args)
-        {
-            
-        }
     }
 }
