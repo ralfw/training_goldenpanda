@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
 
-namespace BankOCR.UnitTest
+namespace BankOCR.UnitTest._SevenSegmentDigit
 {
     [TestFixture]
     public class Map
