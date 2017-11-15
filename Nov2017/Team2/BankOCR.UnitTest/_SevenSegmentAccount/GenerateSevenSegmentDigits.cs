@@ -7,14 +7,14 @@ namespace BankOCR.UnitTest._SevenSegmentAccount
     [TestFixture]
     public class GenerateSevenSegmentDigits
     {
-        [TestCase(
+        [TestCase(1,
             new[]{"   " ,
                   "  |" ,      
                   "  |"},       
             new[]{ "   " +
                    "  |" +
                    "  |"})]                           
-        [TestCase(new[]{"    _ " ,
+        [TestCase(2,new[]{"    _ " ,
                         "  | _|" ,
                         "  ||_ "}, new[]{ "   " +
                                        "  |" +
@@ -22,7 +22,7 @@ namespace BankOCR.UnitTest._SevenSegmentAccount
                                               " _|" +
                                               "|_ "
         })]
-        public void ShouldGenerateSevenSegmentDigit(string[] lines, string[] expectedDigits )
+        public void ShouldGenerateSevenSegmentDigit(int dummy, string[] lines, string[] expectedDigits )
         {
             var sut = new SevenSegmentAccount(lines);
             var generatedDigits = sut.GenerateSevenSegmentDigits();
