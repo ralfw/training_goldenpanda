@@ -1,8 +1,7 @@
-﻿using System.Linq;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NUnit.Framework;
 
-namespace BankOcr.UnitTest._Converter
+namespace BankOcr.UnitTest._SevenSegmentAccount
 {
     [TestFixture]
     public class GenerateSevenSegmentDigits

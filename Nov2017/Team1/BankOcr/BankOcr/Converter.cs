@@ -16,5 +16,15 @@ namespace BankOcr
         {
             throw new NotImplementedException();
         }
+
+        public static string ConvertSevenSegmentDigitsToAccount(SevenSegmentDigit[] digits)
+        {
+            var result = string.Empty;
+            foreach (var digit in digits)
+            {
+                result += digit.Map().ToString();
+            }
+            return result;
+        }
     }
 }
