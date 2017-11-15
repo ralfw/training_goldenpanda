@@ -49,7 +49,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SevenSegmentAccountNumber.cs" />
     <Compile Include="SevenSegmentParser.cs" />
-    <Compile Include="SevenSegmentAccount.cs" />
     <Compile Include="SevenSegmentDigit.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

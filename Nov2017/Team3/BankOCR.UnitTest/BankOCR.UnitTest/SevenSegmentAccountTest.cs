@@ -10,11 +10,13 @@ namespace BankOCR.UnitTest
         [Test]
         public void ShouldGenerateSingleAccountForDigit1()
         {
-            SevenSegmentAccount account = new SevenSegmentAccount();
+            SevenSegmentAccountNumber account = new SevenSegmentAccountNumber
+            {
+                Line1 = line1[0],
+                Line2 = line1[1],
+                Line3 = line1[2]
+            };
 
-            account.line1 = line1[0];
-            account.line2 = line1[1];
-            account.line3 = line1[2];
 
             account.GetDigits().Count().Should().Be(1);
             string result = account.GetDigits()[0].SevenSegments;
@@ -24,11 +26,11 @@ namespace BankOCR.UnitTest
         [Test]
         public void ShouldGenerateSingleAccountForDigit2()
         {
-            SevenSegmentAccount account = new SevenSegmentAccount();
+            SevenSegmentAccountNumber account = new SevenSegmentAccountNumber();
 
-            account.line1 = line2[0];
-            account.line2 = line2[1];
-            account.line3 = line2[2];
+            account.Line1 = line2[0];
+            account.Line2 = line2[1];
+            account.Line3 = line2[2];
 
             account.GetDigits().Count().Should().Be(1);
             string result = account.GetDigits()[0].SevenSegments;
@@ -38,11 +40,11 @@ namespace BankOCR.UnitTest
         [Test]
         public void ShouldGenerateTwoAccountaForDigit12()
         {
-            SevenSegmentAccount account = new SevenSegmentAccount();
+            SevenSegmentAccountNumber account = new SevenSegmentAccountNumber();
 
-            account.line1 = line1[0] + line2[0];
-            account.line2 = line1[1] + line2[1];
-            account.line3 = line1[2] + line2[2];
+            account.Line1 = line1[0] + line2[0];
+            account.Line2 = line1[1] + line2[1];
+            account.Line3 = line1[2] + line2[2];
 
             account.GetDigits().Count().Should().Be(2);
             string result1 = account.GetDigits()[0].SevenSegments;
