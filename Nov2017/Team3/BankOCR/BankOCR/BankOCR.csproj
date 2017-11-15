@@ -43,13 +43,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FileIO.cs" />
     <Compile Include="Converter.cs" />
+    <Compile Include="FileIO.cs" />
     <Compile Include="Programm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SevenSegmentAccountNumber.cs" />
-    <Compile Include="SevenSegmentParser.cs" />
     <Compile Include="SevenSegmentDigit.cs" />
+    <Compile Include="SevenSegmentParser.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
