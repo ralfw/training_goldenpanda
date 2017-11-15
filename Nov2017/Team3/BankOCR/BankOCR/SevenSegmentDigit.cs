@@ -28,10 +28,10 @@ namespace BankOCR
         }
         public string SevenSegments { get; set; }
 
-        public char Map(string segmentString)
+        public char Map()
         {
             char symbol;
-            SevSegDigits.TryGetValue(segmentString, out symbol);
+            SevSegDigits.TryGetValue(SevenSegments, out symbol);
 
             return symbol;
         }

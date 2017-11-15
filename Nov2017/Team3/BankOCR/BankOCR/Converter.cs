@@ -10,15 +10,15 @@ namespace BankOCR
     {
         public static string[] Convert(SevenSegmentAccountNumber[] input)
         {
-            IList<string> result = new List<String>();
+            IList<string> resultsList = new List<String>();
 
-            foreach (var i in input)
+            foreach (var acc in input)
             {
-                
+                //string result = acc.GetDigits().Select( _ => _.Map())
             }
 
 
-            return result.ToArray();
+            return resultsList.ToArray();
 
         }
 
