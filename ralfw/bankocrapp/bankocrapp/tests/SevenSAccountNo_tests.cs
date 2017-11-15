@@ -7,8 +7,7 @@ namespace bankocrapp
     public class SevenSAccountNo_tests
     {
         [Test]
-        public void Digits()
-        {
+        public void Digits() {
             var sut = new SevenSAccountNo("    _  _     _  _  _  _  _ ", "  | _| _||_||_ |_   ||_||_|", "  ||_  _|  | _||_|  ||_| _|");
             var result = sut.Digits;
             Assert.AreEqual(9, result.Length);

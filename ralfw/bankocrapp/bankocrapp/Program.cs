@@ -15,8 +15,9 @@ namespace bankocrapp
 
 
         static void display(IEnumerable<string> accountnumbers) {
-            foreach(var a in accountnumbers)
+            foreach (var a in accountnumbers) {
                 Console.WriteLine(a);
+            }
         }
     }
 }
