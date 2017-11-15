@@ -6,19 +6,19 @@ namespace BankOCR
     {
         public List<SevenSegmentAccountNumber> GroupLines(List<string> lines)
         {
-            List<SevenSegmentAccountNumber> result = new List<SevenSegmentAccountNumber>();
-            List<string> rows = new List<string>();
+            List<SevenSegmentAccountNumber> sevenSegmentAccountNumbers = new List<SevenSegmentAccountNumber>();
+            List<string> lineGroup = new List<string>();
             foreach (var line in lines)
             {
-                rows.Add(line);
-                if (rows.Count == 4)
+                lineGroup.Add(line);
+                if (lineGroup.Count == 4)
                 {
-                    result.Add(new SevenSegmentAccountNumber() {Line1 = rows[0], Line2 = rows[1], Line3 = rows[2]});
-                    rows.Clear();
+                    sevenSegmentAccountNumbers.Add(new SevenSegmentAccountNumber() {Line1 = lineGroup[0], Line2 = lineGroup[1], Line3 = lineGroup[2]});
+                    lineGroup.Clear();
                 }
 
             }
-            return result;
+            return sevenSegmentAccountNumbers;
         }
     }
 }
