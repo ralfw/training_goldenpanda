@@ -11,7 +11,8 @@ namespace BankOCR.UnitTest._Converter
     {
         [TestCase(1,new[]{"   " +
                         "  |" +
-                        "  |"},"1")]
+                        "  |"
+        },"1")]
         [TestCase(2,new[]{"   " +
                         "  |" +
                         "  |",

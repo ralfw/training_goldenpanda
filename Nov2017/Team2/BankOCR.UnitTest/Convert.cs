@@ -8,11 +8,10 @@ namespace BankOCR.UnitTest
     [TestFixture]
     public class Convert
     {
-        protected List<string> lines;
-        [SetUp]
-        public void SetUp()
+        [Test]
+        public void ShouldConvertLines()
         {
-             lines = new List<string>
+           var lines = new List<string>
             {
                 "    _  _     _  _  _  _  _ ",
                 "  | _| _||_||_ |_   ||_||_|",
@@ -22,11 +21,6 @@ namespace BankOCR.UnitTest
                 "|_||_|| || ||_   |  |  ||_ ",
                 "  | _||_||_||_|  |  |  | _|"
             };
-        }
-
-       [Test]
-        public void ShouldConvertLines()
-        {
             var accountNos = Converter.Convert(lines.ToArray());
 
             accountNos.Should().HaveCount(2);

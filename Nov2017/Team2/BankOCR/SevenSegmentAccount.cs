@@ -8,12 +8,13 @@ namespace BankOCR
 {
     public class SevenSegmentAccount
     {
-        public string[] SevenSegmentAccountNumber { get; private set; }
+        public string[] SevenSegmentAccountNumber { get; }
 
         public SevenSegmentAccount(string[] sevenSegmentAccountNumber)
         {
             SevenSegmentAccountNumber = sevenSegmentAccountNumber;
         }
+
         public List<SevenSegmentDigit> GenerateSevenSegmentDigits()
         {
             var sevenSegmentDigits = new List<SevenSegmentDigit>();

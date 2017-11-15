@@ -10,16 +10,6 @@ namespace BankOCR
             return ConvertSevenSegmentAccounts(sevenSegmentAccounts);
         }
 
-    public static string ConvertSevenSegmentDigitsToAccountNo(List<SevenSegmentDigit> digits)
-        {
-            var accountNo = string.Empty;
-            foreach (var digit in digits)
-            {
-                accountNo += digit.Map();
-            }
-            return accountNo;
-        }
-
         public static string[] ConvertSevenSegmentAccounts(SevenSegmentAccount[] sevenSegmentAccounts)
         {
             var accountNos = new List<string>();
@@ -30,6 +20,16 @@ namespace BankOCR
                 accountNos.Add(accountNo);
             }
             return accountNos.ToArray();
+        }
+
+        public static string ConvertSevenSegmentDigitsToAccountNo(List<SevenSegmentDigit> digits)
+        {
+            var accountNo = string.Empty;
+            foreach (var digit in digits)
+            {
+                accountNo += digit.Map();
+            }
+            return accountNo;
         }
     }
 }
