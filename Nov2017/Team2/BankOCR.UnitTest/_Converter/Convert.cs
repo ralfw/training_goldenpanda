@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace BankOCR.UnitTest
+namespace BankOCR.UnitTest._Converter
 {
     [TestFixture]
     public class Convert
