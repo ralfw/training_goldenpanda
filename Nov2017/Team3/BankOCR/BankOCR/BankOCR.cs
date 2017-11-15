@@ -6,17 +6,16 @@ using System.Threading.Tasks;
 
 namespace BankOCR
 {
-    public class Integrator
+    public class BankOCR
     {
-        public List<string> Convert(List<string> lines)
+        public List<string> Decode(List<string> lines)
         {
             var sevenSegmentParser = new SevenSegmentParser();
             var sevenSegmentAccountNumbers = sevenSegmentParser.GroupLines(lines);
 
-            var converter = new Converter();
-            var accountNumbers = converter.Convert(sevenSegmentAccountNumbers);
+            var accountNumbers = Converter.Convert(sevenSegmentAccountNumbers.ToArray());
 
-            return accountNumbers;
+            return accountNumbers.ToList();
         }
     }
 }

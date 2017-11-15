@@ -56,7 +56,8 @@
     <Compile Include="GroupLines.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SevenSegmentAccountTest.cs" />
-    <Compile Include="_Converter\Convert.cs" />
+    <Compile Include="_FileIO\GetFilePaths.cs" />
+    <Compile Include="_BankOCR\Decode.cs" />
     <Compile Include="_SevenSegmentDigit\Map.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -67,6 +68,14 @@
       <Project>{BEC93B77-B5A3-48E2-9E4B-51A5EA2777F1}</Project>
       <Name>BankOCR</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="testFiles\bankocr.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="testFiles\bankocr2.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
