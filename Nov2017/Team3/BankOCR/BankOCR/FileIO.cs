@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,12 +11,20 @@ namespace BankOCR
     {
         public List<string> GetFilePaths(string source)
         {
-            return null;
+            string[] filePaths = Directory.GetFiles(source);
+
+            return filePaths.ToList();
         }
 
         public List<string> ReadLines(List<string> filePaths)
         {
-            return null;
+            var result = new List<string>();
+            foreach (var filePath in filePaths)
+            {
+                var readLines = File.ReadLines(filePath);
+                result.AddRange(readLines);
+            }
+            return result;
         }
     }
 }

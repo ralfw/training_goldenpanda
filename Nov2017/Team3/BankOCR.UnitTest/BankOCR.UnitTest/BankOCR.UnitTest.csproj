@@ -58,6 +58,7 @@
     <Compile Include="SevenSegmentAccountTest.cs" />
     <Compile Include="_FileIO\GetFilePaths.cs" />
     <Compile Include="_BankOCR\Decode.cs" />
+    <Compile Include="_FileIO\ReadLines.cs" />
     <Compile Include="_SevenSegmentDigit\Map.cs" />
   </ItemGroup>
   <ItemGroup>

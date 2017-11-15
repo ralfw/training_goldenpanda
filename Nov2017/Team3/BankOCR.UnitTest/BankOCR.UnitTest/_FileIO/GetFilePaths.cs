@@ -11,9 +11,9 @@ namespace BankOCR.UnitTest._FileIO
         [Test]
         public void ShouldReturnFilePathsFromSource()
         {
-            string[] dirs = Directory.GetFiles(@"./testFiles/");
-
-            dirs.Length.Should().Be(2);
+            var filePaths = new FileIO().GetFilePaths(@"./testFiles/");
+            
+            filePaths.Count.Should().Be(2);
         }
     }
 }
