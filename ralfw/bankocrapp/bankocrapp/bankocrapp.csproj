@@ -49,6 +49,7 @@
     <Compile Include="data\SevenSAccountNo.cs" />
     <Compile Include="data\SevenSDigit.cs" />
     <Compile Include="domain\Converter.cs" />
+    <Compile Include="domain\SevenSAccountNoParser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="tests\BankOCR_tests.cs" />
