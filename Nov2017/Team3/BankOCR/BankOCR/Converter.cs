@@ -14,7 +14,11 @@ namespace BankOCR
 
             foreach (var acc in input)
             {
-                //string result = acc.GetDigits().Select( _ => _.Map())
+                var chars = acc.GetDigits().Select(_ => _.Map()).ToList();
+
+                string account = chars.Aggregate("", (current, ch) => current + ch);
+
+                resultsList.Add(account);
             }
 
 

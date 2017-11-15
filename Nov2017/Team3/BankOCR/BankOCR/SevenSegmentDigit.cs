@@ -11,15 +11,15 @@ namespace BankOCR
     {
         Dictionary<string, char> SevSegDigits = new Dictionary<string, char> {
         {"     I  I", '1'},
-        {" I  IIII ", '2'},
-        {" I  II II", '3'},
-        {"   III  I", '4'},
-        {" I II  II", '5'},
-        {" I II III", '6'},
-        {" I   I  I", '7'},
-        {" I IIIIII", '8'},
-        {" I III II", '9'},
-        {" I I IIII", '0'}};
+        {" _  _II_ ", '2'},
+        {" _  _I _I", '3'},
+        {"   I_I  I", '4'},
+        {" _ I_  _I", '5'},
+        {" _ I_ I_I", '6'},
+        {" _   I  I", '7'},
+        {" _ I_II_I", '8'},
+        {" _ I_I _I", '9'},
+        {" _ I II_I", '0'}};
 
 
         public SevenSegmentDigit(string segments)
