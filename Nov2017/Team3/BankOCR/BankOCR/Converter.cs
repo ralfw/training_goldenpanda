@@ -17,7 +17,7 @@ namespace BankOCR
         private static String GetAccount(SevenSegmentAccountNumber acc)
         {
             var chars = acc.GetDigits().Select(_ => _.Map()).ToList();
-            string account = chars.Aggregate("", (current, ch) => current + ch);
+            var account = chars.Aggregate("", (current, ch) => current + ch);
             return account;
         }
 
