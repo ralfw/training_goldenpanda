@@ -15,16 +15,19 @@ namespace BankOCR
             SevenSegmentAccountNumber = sevenSegmentAccountNumber;
         }
 
-        public List<SevenSegmentDigit> GenerateSevenSegmentDigits()
+        public List<SevenSegmentDigit> Digits
         {
-            var sevenSegmentDigits = new List<SevenSegmentDigit>();
-            for (int i = 0; i < SevenSegmentAccountNumber[0].Length; i = i + 3)
+            get
             {
-                sevenSegmentDigits.Add(new SevenSegmentDigit(SevenSegmentAccountNumber[0].Substring(i,3) 
-                    + SevenSegmentAccountNumber[1].Substring(i, 3)
-                    + SevenSegmentAccountNumber[2].Substring(i, 3)));
+                var sevenSegmentDigits = new List<SevenSegmentDigit>();
+                for (int i = 0; i < SevenSegmentAccountNumber[0].Length; i = i + 3)
+                {
+                    sevenSegmentDigits.Add(new SevenSegmentDigit(SevenSegmentAccountNumber[0].Substring(i, 3)
+                                                                 + SevenSegmentAccountNumber[1].Substring(i, 3)
+                                                                 + SevenSegmentAccountNumber[2].Substring(i, 3)));
+                }
+                return sevenSegmentDigits;
             }
-            return sevenSegmentDigits;
         }
     }
 }

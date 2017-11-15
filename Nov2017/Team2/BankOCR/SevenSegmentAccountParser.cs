@@ -5,22 +5,15 @@ namespace BankOCR
 {
     public class SevenSegmentAccountParser
     {
-        public static SevenSegmentAccount[] GroupLines(string[] lines)
+        public static IEnumerable<SevenSegmentAccount> GroupLines(string[] lines)
         {
-            var sevenSegentAccounts = new List<SevenSegmentAccount>();
-            var linesHelper = new List<string>();
-            foreach (var line in lines)
+            for (int i = 0; i < lines.Length; i+=4)
             {
-                if (!String.IsNullOrWhiteSpace(line))
-                    linesHelper.Add(line);
-                if (linesHelper.Count == 3)
+                yield return (new SevenSegmentAccount(new []
                 {
-                    sevenSegentAccounts.Add(new SevenSegmentAccount(linesHelper.ToArray()));
-                    linesHelper.Clear();
-                }
+                    lines[i],lines[i+1],lines[i+2]
+                }));
             }
-
-            return sevenSegentAccounts.ToArray();
         }
     }
 }

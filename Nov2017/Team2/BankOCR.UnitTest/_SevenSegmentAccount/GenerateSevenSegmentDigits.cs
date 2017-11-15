@@ -14,18 +14,21 @@ namespace BankOCR.UnitTest._SevenSegmentAccount
             new[]{ "   " +
                    "  |" +
                    "  |"})]                           
-        [TestCase(2,new[]{"    _ " ,
-                        "  | _|" ,
-                        "  ||_ "}, new[]{ "   " +
-                                       "  |" +
-                                       "  |", " _ " +
-                                              " _|" +
-                                              "|_ "
+        [TestCase(2,new[]{
+                        "111aaa" ,
+                        "222bbb" ,
+                        "333ccc"},
+            new[]{ "111" +
+                   "222" +
+                   "333",
+                   "aaa" +
+                   "bbb" +
+                   "ccc"
         })]
         public void ShouldGenerateSevenSegmentDigit(int dummy, string[] lines, string[] expectedDigits )
         {
             var sut = new SevenSegmentAccount(lines);
-            var generatedDigits = sut.GenerateSevenSegmentDigits();
+            var generatedDigits = sut.Digits;
 
             generatedDigits.Should().HaveCount(expectedDigits.Length);
             var index = 0;

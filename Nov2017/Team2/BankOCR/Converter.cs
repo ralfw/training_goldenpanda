@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace BankOCR
 {
@@ -10,26 +11,14 @@ namespace BankOCR
             return ConvertSevenSegmentAccounts(sevenSegmentAccounts);
         }
 
-        public static string[] ConvertSevenSegmentAccounts(SevenSegmentAccount[] sevenSegmentAccounts)
+        public static string[] ConvertSevenSegmentAccounts(IEnumerable<SevenSegmentAccount> sevenSegmentAccounts)
         {
-            var accountNos = new List<string>();
-            foreach (var sevenSegmentAccount in sevenSegmentAccounts)
-            {
-                var sevenSegmentDigits = sevenSegmentAccount.GenerateSevenSegmentDigits();
-                var accountNo = ConvertSevenSegmentDigitsToAccountNo(sevenSegmentDigits);
-                accountNos.Add(accountNo);
-            }
-            return accountNos.ToArray();
+            return sevenSegmentAccounts.Select(ConvertSevenSegmentAccountNo).ToArray();
         }
 
-        public static string ConvertSevenSegmentDigitsToAccountNo(List<SevenSegmentDigit> digits)
+        private static string ConvertSevenSegmentAccountNo(SevenSegmentAccount sevenSegmentAccount)
         {
-            var accountNo = string.Empty;
-            foreach (var digit in digits)
-            {
-                accountNo += digit.Map();
-            }
-            return accountNo;
-        }
+            return new string(sevenSegmentAccount.Digits.Select(d => d.Map()).ToArray());
+        }       
     }
 }

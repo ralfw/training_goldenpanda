@@ -4,7 +4,7 @@ namespace BankOCR
 {
     public class SevenSegmentDigit
     {
-        public string Segments { get; private set; }
+        public string Segments { get; }
 
         public SevenSegmentDigit(string segments)
         {
