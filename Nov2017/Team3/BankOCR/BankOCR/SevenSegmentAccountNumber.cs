@@ -7,8 +7,9 @@ namespace BankOCR
         public SevenSegmentDigit[] GetDigits()
         {
             List<SevenSegmentDigit> arrResult = new List<SevenSegmentDigit>();
+            var count = Line1.Length/3;
 
-            for (int i = 0; i < Line1.Length; i = i + 3)
+            for (int i = 0; i < count*3; i = i + 3)
             {
                 string val = Line1[i].ToString() + Line1[i + 1] + Line1[i + 2];
                 val = val + Line2[i] + Line2[i + 1] + Line2[i + 2];

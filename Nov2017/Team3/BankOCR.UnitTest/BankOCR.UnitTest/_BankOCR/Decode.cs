@@ -12,14 +12,14 @@ namespace BankOCR.UnitTest._Integrator
         public void ShouldReturnAccountNumbers()
         {
             List<string> lines = new List<string>();
-            lines.Add(" _ _     _ _  _ _  _ _");
-            lines.Add("I _I _II_II_ I_   II_II_II I");
-            lines.Add("I I_  _I I _II_I II_I _II_I");
-            lines.Add("                           ");
-            lines.Add(" _ _     _ _  _ _  _ _");
-            lines.Add("I _I _II_II_ I_   II_II_II I");
-            lines.Add("I I_  _I I _II_I II_I _II_I");
-            lines.Add("                           ");
+            lines.Add("    _  _     _  _  _  _  _  _ ");
+            lines.Add("  I _I _II_II_ I_   II_II_II I");
+            lines.Add("  II_  _I  I _II_I  II_I _II_I");
+            lines.Add("                              ");
+            lines.Add("    _  _     _  _  _  _  _  _ ");
+            lines.Add("  I _I _II_II_ I_   II_II_II I");
+            lines.Add("  II_  _I  I _II_I  II_I _II_I");
+            lines.Add("                             ");
 
             var integrator = new BankOCR();
             var accountNumbers = integrator.Decode(lines);
