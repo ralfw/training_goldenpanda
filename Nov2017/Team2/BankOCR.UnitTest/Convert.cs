@@ -30,6 +30,8 @@ namespace BankOCR.UnitTest
             var accountNos = Converter.Convert(lines.ToArray());
 
             accountNos.Should().HaveCount(2);
+            accountNos[0].Should().Be("123456789");
+            accountNos[1].Should().Be("490067715");
         }
     }
 }

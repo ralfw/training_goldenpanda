@@ -55,6 +55,7 @@
     <Compile Include="Convert.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="_Converter\ConvertSevenSegmentAccounts.cs" />
     <Compile Include="_Converter\ConvertSevenSegmentDigitsToAccountNo.cs" />
     <Compile Include="_SevenSegmentAccountParser\GroupLines.cs" />
     <Compile Include="_SevenSegmentAccount\GenerateSevenSegmentDigits.cs" />

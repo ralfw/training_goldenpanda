@@ -27,9 +27,12 @@ namespace BankOCR.UnitTest._SevenSegmentAccountParser
         [Test]
         public void ShouldGroupLines()
         {
-            var SevenSegmentAccounts = SevenSegmentAccountParser.GroupLines(lines);
+            var SevenSegmentAccounts = SevenSegmentAccountParser.GroupLines(lines.ToArray());
 
             SevenSegmentAccounts.Should().HaveCount(2);
+
+            SevenSegmentAccounts[0].SevenSegmentAccountNumber[2].Should().Be("  ||_  _|  | _||_|  ||_| _|");
+            SevenSegmentAccounts[1].SevenSegmentAccountNumber[2].Should().Be("  | _||_||_||_|  |  |  | _|");
         }
 
     }
