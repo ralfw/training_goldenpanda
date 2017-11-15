@@ -6,7 +6,16 @@ using System.Threading.Tasks;
 
 namespace BankOCR
 {
-    class FileIO
+    public class FileIO
     {
+        public List<string> GetFilePaths(string source)
+        {
+            return null;
+        }
+
+        public List<string> ReadLines(List<string> filePaths)
+        {
+            return null;
+        }
     }
 }
