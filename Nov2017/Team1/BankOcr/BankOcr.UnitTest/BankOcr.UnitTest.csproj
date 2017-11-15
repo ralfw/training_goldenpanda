@@ -52,6 +52,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="_Converter\Convert.cs" />
     <Compile Include="_Converter\ConvertSevenSegmentAccounts.cs" />
+    <Compile Include="_Converter\GenerateSevenSegmentDigits.cs" />
     <Compile Include="_SevenSegmentAccountParser\GroupLines.cs" />
   </ItemGroup>
   <ItemGroup>

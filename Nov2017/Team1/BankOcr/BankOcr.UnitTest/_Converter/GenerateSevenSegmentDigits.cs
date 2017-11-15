@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 
 namespace BankOcr.UnitTest._Converter
 {
     [TestFixture]
-    public class ConvertSevenSegmentAccounts
+    public class GenerateSevenSegmentDigits
     {
-        [Test, Ignore("WIP")]
-        public void ShouldConvertSevenSegmentAccounts()
+        [Test]
+        public void ShouldReturnDigitsForGivenAccount()
         {
             var lines = new[]
             {
@@ -18,11 +16,15 @@ namespace BankOcr.UnitTest._Converter
                 "  | _| _||_||_ |_   ||_||_|",
                 "  ||_  _|  | _||_|  ||_| _|",
             };
-
             var account = new SevenSegmentAccount(lines);
-            var accounts = BankOcr.Converter.ConvertSevenSegmentAccounts(new []{ account});
 
-            accounts.Single().Should().Be("123456789");
+            var result = account.GenerateDigits();
+
+            result.Length.Should().Be(9);
+            result[5].Value.Should().Be(
+                " _ " +
+                "|_ " +
+                "|_|");
         }
     }
 }
