@@ -1,18 +1,18 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System;
+using System.Collections.Generic;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace BankOCR.UnitTest
+namespace BankOCR.UnitTest._SevenSegmentAccountParser
 {
     [TestFixture]
-    public class Convert
+    public class GroupLines
     {
         protected List<string> lines;
         [SetUp]
         public void SetUp()
         {
-             lines = new List<string>
+            lines = new List<string>
             {
                 "    _  _     _  _  _  _  _ ",
                 "  | _| _||_||_ |_   ||_||_|",
@@ -24,12 +24,13 @@ namespace BankOCR.UnitTest
             };
         }
 
-       [Test]
-        public void ShouldConvertLines()
+        [Test]
+        public void ShouldGroupLines()
         {
-            var accountNos = Converter.Convert(lines.ToArray());
+            var SevenSegmentAccounts = SevenSegmentAccountParser.GroupLines(lines);
 
-            accountNos.Should().HaveCount(2);
+            SevenSegmentAccounts.Should().HaveCount(2);
         }
+
     }
 }

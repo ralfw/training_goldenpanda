@@ -9,22 +9,14 @@ namespace BankOCR
             return new[] {""};
         }
 
-        public static SevenSegmentAccount[] GroupLines(List<string> lines)
+        public static string ConvertSevenSegmentDigitsToAccountNo(List<SevenSegmentDigit> digits)
         {
-            var sevenSegentAccounts = new List<SevenSegmentAccount>();
-            var linesHelper = new List<string>();
-            foreach (var line in lines)
+            var accountNo = string.Empty;
+            foreach (var digit in digits)
             {
-                if (!string.IsNullOrEmpty(line))
-                    linesHelper.Add(line);
-                if (linesHelper.Count == 3)
-                {
-                    sevenSegentAccounts.Add(new SevenSegmentAccount(linesHelper.ToArray()));
-                    linesHelper.Clear();
-                }
+                accountNo += digit.Map();
             }
-
-            return sevenSegentAccounts.ToArray();
+            return accountNo;
         }
     }
 }

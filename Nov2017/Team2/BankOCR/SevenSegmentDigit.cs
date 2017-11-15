@@ -19,8 +19,8 @@ namespace BankOCR
         private Dictionary<string,char> mapping = new Dictionary<string, char>
         {
             { "   " +
-            "  |" +
-            "  |",'1'},
+              "  |" +
+              "  |",'1'},
             { " _ " +
               " _|" +
               "|_ ",'2'},
