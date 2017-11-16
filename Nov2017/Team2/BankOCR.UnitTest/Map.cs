@@ -6,15 +6,24 @@ namespace BankOCR.UnitTest
     [TestFixture]
     public class Map
     {
-        [Test]
-        public void ShouldMapSegmentsToNumber()
+        [TestCase("   " +
+                  "  |" +
+                  "  |", '1')]
+        [TestCase(" _ " +
+                  " _|" +
+                  "|_ ", '2')]
+        [TestCase(" _ " +
+                  " _|" +
+                  " _|", '3')]
+        [TestCase("   " +
+                  "|_|" +
+                  "  |", '4')]
+        public void ShouldMapSegmentsToNumber(string segments, char expected)
         {
-            var sut = new SevenSegmentDigit("   " +
-                                            "  |" +
-                                            "  |");
+            var sut = new SevenSegmentDigit(segments);
 
             var mappedSignatur = sut.Map();
-            mappedSignatur.Should().Be('1');
+            mappedSignatur.Should().Be(expected);
         }
 
     }
