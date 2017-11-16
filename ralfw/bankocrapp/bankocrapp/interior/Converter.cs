@@ -18,7 +18,7 @@ namespace bankocrapp.interior
 
         static string convert(OcrLine accNo)
         {
-            var decDigits = accNo.Chars.Select(d => d.ToDecimalDigit());
+            var decDigits = accNo.Chars.Select(Ocr.Recognize);
             var accNoText = new string(decDigits.ToArray());
             if (accNoText.Contains("?")) accNoText = "Fehlerhafte Kontonummer!";
             return accNoText;
