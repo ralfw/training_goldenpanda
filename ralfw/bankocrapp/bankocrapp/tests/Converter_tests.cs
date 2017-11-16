@@ -1,6 +1,7 @@
-﻿using NUnit.Framework;
+﻿using bankocrapp.interior;
+using NUnit.Framework;
 
-namespace bankocrapp
+namespace bankocrapp.tests
 {
     [TestFixture]
     public class Converter_tests

@@ -1,6 +1,7 @@
-﻿using NUnit.Framework;
+﻿using bankocrapp.adapters;
+using NUnit.Framework;
 
-namespace bankocrapp
+namespace bankocrapp.tests
 {
     [TestFixture]
     public class FileIO_tests

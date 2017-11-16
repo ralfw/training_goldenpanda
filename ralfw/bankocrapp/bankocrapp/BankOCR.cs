@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using bankocrapp.adapters;
+using bankocrapp.interior;
 
 namespace bankocrapp
 {

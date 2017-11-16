@@ -1,25 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
 using System.Linq;
+using bankocrapp.data;
 
-namespace bankocrapp
+namespace bankocrapp.interior
 {
-    class Converter
+    internal static class Converter
     {
         public static string[] convert(string[] lines)
         {
-            var accNos = SevenSAccountNoParser.Parse(lines);
+            var accNos = OcrParser.Parse(lines);
             return convert(accNos);
         }
 
-        static string[] convert(IEnumerable<SevenSAccountNo> accNos) {
+        static string[] convert(IEnumerable<OcrLine> accNos) {
             return accNos.Select(convert).ToArray();
         }
 
-        static string convert(SevenSAccountNo accNo)
+        static string convert(OcrLine accNo)
         {
-            var decDigits = accNo.Digits.Select(d => d.ToDecimalDigit());
+            var decDigits = accNo.Chars.Select(d => d.ToDecimalDigit());
             var accNoText = new string(decDigits.ToArray());
             if (accNoText.Contains("?")) accNoText = "Fehlerhafte Kontonummer!";
             return accNoText;

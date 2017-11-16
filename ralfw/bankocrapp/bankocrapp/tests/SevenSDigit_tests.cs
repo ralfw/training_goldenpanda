@@ -1,6 +1,7 @@
-﻿using NUnit.Framework;
+﻿using bankocrapp.data;
+using NUnit.Framework;
 
-namespace bankocrapp
+namespace bankocrapp.tests
 {
     [TestFixture]
     public class SevenSDigit_tests
@@ -8,7 +9,7 @@ namespace bankocrapp
         [Test]
         public void ToChar()
         {
-            var sut = new SevenSDigit(' ', ' ', ' ', ' ', ' ', 'I', ' ', ' ', 'I');
+            var sut = new OcrChar(' ', ' ', ' ', ' ', ' ', 'I', ' ', ' ', 'I');
             Assert.AreEqual('1', sut.ToDecimalDigit());
         }
     }

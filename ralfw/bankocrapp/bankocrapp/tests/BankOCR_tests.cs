@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 
-namespace bankocrapp
+namespace bankocrapp.tests
 {
     [TestFixture]
     public class BankOCR_tests

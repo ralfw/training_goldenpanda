@@ -1,19 +1,17 @@
-﻿using System;
-
-namespace bankocrapp
+﻿namespace bankocrapp.data
 {
-    struct SevenSDigit
+    struct OcrChar
     {
-        public SevenSDigit(char s0, char s1, char s2, char s3, char s4, char s5, char s6, char s7, char s8) {
-            Segments = new string(new[]{s0,s1,s2,s3,s4,s5,s6,s7,s8});
-            Segments = Segments.Replace(" ", ".").Replace("_", "x").Replace("I", "x").Replace("|", "x");
-        }
+        private readonly string _segments;
         
-        private string Segments { get; }
+        public OcrChar(char s0, char s1, char s2, char s3, char s4, char s5, char s6, char s7, char s8) {
+            _segments = new string(new[]{s0,s1,s2,s3,s4,s5,s6,s7,s8});
+            _segments = _segments.Replace(" ", ".").Replace("_", "x").Replace("I", "x").Replace("|", "x");
+        }
 
         public char ToDecimalDigit()
         {
-            switch (Segments) {
+            switch (_segments) {
                 case ".....x..x": return '1';
                 case ".x..xxxx.": return '2';
                 case ".x..xx.xx": return '3';
