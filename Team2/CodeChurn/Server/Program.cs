@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Server
+﻿namespace Server
 {
     class Program
     {
+        #region Private methods
+
         static void Main(string[] args)
         {
         }
+
+        #endregion
     }
 }
