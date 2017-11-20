@@ -287,3 +287,5 @@ __pycache__/
 *.odx.cs
 *.xsd.cs
 /Nov2017/Team3/BankOCR/BankOCR.v2.ncrunchsolution
+*.ncrunchproject
+*.ncrunchsolution
