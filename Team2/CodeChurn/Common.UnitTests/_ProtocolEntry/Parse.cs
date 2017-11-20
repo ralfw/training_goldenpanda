@@ -10,9 +10,7 @@ namespace Common.UnitTests._ProtocolEntry
         [TestCase(@"2017-11-20T12:10:49; 120; c:\y.txt", "2017-11-20T12:10:49", 120, @"c:\y.txt")]
         public void ShouldParseTextLine(string line, string expectedDateTime, int expectedLoc, string expectedFilePath)
         {
-            var protocolEntry = new ProtocolEntry();
-
-            protocolEntry.Parse(line);
+            var protocolEntry = ProtocolEntry.Parse(line);
 
             protocolEntry.Timestamp.Should().Be(DateTime.Parse(expectedDateTime));
             protocolEntry.Loc.Should().Be(expectedLoc);

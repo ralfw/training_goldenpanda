@@ -8,12 +8,17 @@ namespace Common
         public int Loc { get; private set; }
         public string FilePath { get; private set; }
 
-        public void Parse(string line)
+        public ProtocolEntry(DateTime timestamp, int loc, string filePath)
+        {
+            Timestamp = timestamp;
+            Loc = loc;
+            FilePath = filePath;
+        }
+
+        public static ProtocolEntry Parse(string line)
         {
             var parts = line.Split(';');
-            Timestamp = DateTime.Parse(parts[0]);
-            Loc = int.Parse(parts[1]);
-            FilePath = parts[2].Trim();
+            return new ProtocolEntry(DateTime.Parse(parts[0]), int.Parse(parts[1]), parts[2].Trim());
         }
     }
 }
