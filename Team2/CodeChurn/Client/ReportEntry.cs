@@ -11,5 +11,10 @@ namespace Client
             FilePath = filePath;
             LastLoc = loc;
         }
+
+        public override string ToString()
+        {
+            return $"{LastLoc};{Churns};{FilePath}";
+        }
     }
 }
