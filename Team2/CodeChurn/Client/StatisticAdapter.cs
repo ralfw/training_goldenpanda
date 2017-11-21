@@ -9,7 +9,7 @@ namespace Client
             Console.WriteLine($"{statisticInfo.FileCount} files");
             Console.WriteLine($"max. churns: {statisticInfo.MaxChurns}");
             Console.WriteLine($"max. loc: {statisticInfo.MaxLoc}");
-            Console.WriteLine($"reoprt file: {filePath}");
+            Console.WriteLine($"report file: {filePath}");
         }
     }
 }

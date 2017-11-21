@@ -9,7 +9,7 @@ namespace Client
     {
         public static List<ProtocolEntry> Filter(List<ProtocolEntry> entries, DateTime start, DateTime end)
         {
-            return entries.Where(entry => entry.Timestamp >= start && entry.Timestamp <= end).ToList();
+            return entries.Where(entry => entry.Timestamp.Date >= start && entry.Timestamp.Date <= end).ToList();
         }
     }
 }

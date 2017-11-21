@@ -14,12 +14,12 @@ namespace Client.UnitTests._ProtocolEntryFilter
         public void Setup()
         {
             _entries = new List<ProtocolEntry>();
-            _entries.Add(new ProtocolEntry(new DateTime(2017, 11, 10), 120, "x"));
-            _entries.Add(new ProtocolEntry(new DateTime(2017, 11, 10), 120, "y"));
-            _entries.Add(new ProtocolEntry(new DateTime(2017, 11, 11), 120, "x"));
-            _entries.Add(new ProtocolEntry(new DateTime(2017, 11, 11), 120, "y"));
-            _entries.Add(new ProtocolEntry(new DateTime(2017, 11, 12), 120, "x"));
-            _entries.Add(new ProtocolEntry(new DateTime(2017, 11, 12), 120, "y"));
+            _entries.Add(new ProtocolEntry(new DateTime(2017, 11, 10, 12, 0, 0), 120, "x"));
+            _entries.Add(new ProtocolEntry(new DateTime(2017, 11, 10, 12, 0, 0), 120, "y"));
+            _entries.Add(new ProtocolEntry(new DateTime(2017, 11, 11, 12, 0, 0), 120, "x"));
+            _entries.Add(new ProtocolEntry(new DateTime(2017, 11, 11, 12, 0, 0), 120, "y"));
+            _entries.Add(new ProtocolEntry(new DateTime(2017, 11, 12, 12, 0, 0), 120, "x"));
+            _entries.Add(new ProtocolEntry(new DateTime(2017, 11, 12, 12, 0, 0), 120, "y"));
         }
 
         [Test]
@@ -29,8 +29,8 @@ namespace Client.UnitTests._ProtocolEntryFilter
             var end = new DateTime(2017, 11, 11);
 
             var expectedEntries = new List<ProtocolEntry>();
-            expectedEntries.Add(new ProtocolEntry(new DateTime(2017, 11, 11), 120, "x"));
-            expectedEntries.Add(new ProtocolEntry(new DateTime(2017, 11, 11), 120, "y"));
+            expectedEntries.Add(new ProtocolEntry(new DateTime(2017, 11, 11, 12, 0, 0), 120, "x"));
+            expectedEntries.Add(new ProtocolEntry(new DateTime(2017, 11, 11, 12, 0, 0), 120, "y"));
 
 
             var filteredEntries = ProtocolEntryFilter.Filter(_entries.ToList(), start, end);
@@ -50,10 +50,10 @@ namespace Client.UnitTests._ProtocolEntryFilter
             var end = new DateTime(2017, 11, 11);
 
             var expectedEntries = new List<ProtocolEntry>();
-            expectedEntries.Add(new ProtocolEntry(new DateTime(2017, 11, 10), 120, "x"));
-            expectedEntries.Add(new ProtocolEntry(new DateTime(2017, 11, 10), 120, "y"));
-            expectedEntries.Add(new ProtocolEntry(new DateTime(2017, 11, 11), 120, "x"));
-            expectedEntries.Add(new ProtocolEntry(new DateTime(2017, 11, 11), 120, "y"));
+            expectedEntries.Add(new ProtocolEntry(new DateTime(2017, 11, 10, 12, 0, 0), 120, "x"));
+            expectedEntries.Add(new ProtocolEntry(new DateTime(2017, 11, 10, 12, 0, 0), 120, "y"));
+            expectedEntries.Add(new ProtocolEntry(new DateTime(2017, 11, 11, 12, 0, 0), 120, "x"));
+            expectedEntries.Add(new ProtocolEntry(new DateTime(2017, 11, 11, 12, 0, 0), 120, "y"));
 
 
             var filteredEntries = ProtocolEntryFilter.Filter(_entries.ToList(), start, end);
