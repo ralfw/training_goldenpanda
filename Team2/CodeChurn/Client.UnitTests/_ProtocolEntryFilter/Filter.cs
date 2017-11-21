@@ -36,6 +36,7 @@ namespace Client.UnitTests._ProtocolEntryFilter
             var filteredEntries = ProtocolEntryFilter.Filter(_entries.ToList(), start, end);
 
 
+            filteredEntries.Count.Should().Be(2);
             for (int i = 0; i < filteredEntries.Count; i++)
             {
                 filteredEntries[i].Timestamp.Should().Be(expectedEntries[i].Timestamp);
@@ -58,6 +59,7 @@ namespace Client.UnitTests._ProtocolEntryFilter
             var filteredEntries = ProtocolEntryFilter.Filter(_entries.ToList(), start, end);
 
 
+            filteredEntries.Count.Should().Be(4);
             for (int i = 0; i < filteredEntries.Count; i++)
             {
                 filteredEntries[i].Timestamp.Should().Be(expectedEntries[i].Timestamp);

@@ -47,6 +47,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProtocolAdapter.cs" />
     <Compile Include="ProtocolEntryFilter.cs" />
+    <Compile Include="ReportEntry.cs" />
+    <Compile Include="ReportGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
