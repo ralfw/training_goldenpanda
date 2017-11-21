@@ -6,10 +6,10 @@ namespace Client
         public int LastLoc { get; set; }
         public int Churns { get; set; }
 
-        public ReportEntry(string filePath, int loc)
+        public ReportEntry(string filePath, int lastLoc)
         {
             FilePath = filePath;
-            LastLoc = loc;
+            LastLoc = lastLoc;
         }
 
         public override string ToString()

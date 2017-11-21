@@ -50,6 +50,9 @@
     <Compile Include="ReportAdapter.cs" />
     <Compile Include="ReportEntry.cs" />
     <Compile Include="ReportGenerator.cs" />
+    <Compile Include="StatisticAdapter.cs" />
+    <Compile Include="StatisticInfo.cs" />
+    <Compile Include="Statistics.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

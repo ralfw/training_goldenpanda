@@ -55,6 +55,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="_ProtocolEntryFilter\Filter.cs" />
     <Compile Include="_ReportGenerator\GenerateReportEntries.cs" />
+    <Compile Include="_Statistics\CalculateStatistics.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
