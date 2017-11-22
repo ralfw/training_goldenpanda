@@ -20,5 +20,10 @@ namespace Common
             var parts = line.Split(';');
             return new ProtocolEntry(DateTime.Parse(parts[0]), int.Parse(parts[1]), parts[2].Trim());
         }
+
+        public override string ToString()
+        {
+            return $"{Timestamp:s};{Loc};{FilePath}";
+        }
     }
 }
