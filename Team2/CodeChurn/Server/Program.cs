@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Threading;
 using appcfg;
 
@@ -23,7 +22,7 @@ namespace Server
             var cfg = GetConfigFromArgs(args);
             _rootPath = cfg.root;
             _protocolFilePath = cfg.protocol;
-            _intervall = (int)cfg.interval * 1000;
+            _intervall = (int) cfg.interval * 1000;
         }
 
         private static void StartChurnLogServer()
