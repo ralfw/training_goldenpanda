@@ -15,7 +15,7 @@ namespace Server
 
         public static IEnumerable<ProtocolEntry> GetProtocolEntries(List<string> filePaths)
         {
-            return filePaths.Select(filePath => new ProtocolEntry(DateTime.Now, File.ReadAllLines(filePath).Length, filePath));
+            return filePaths.Select(filePath => new ProtocolEntry(DateTime.Now, File.ReadAllLines(filePath).Length, filePath.UncPath()));
         }
 
         public static void PersistProtocolEntries(IEnumerable<ProtocolEntry> protocolEntries, string protocolFilePath)

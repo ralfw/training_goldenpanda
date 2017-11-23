@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Threading;
 using appcfg;
 
@@ -27,7 +28,7 @@ namespace Server
 
         private static void StartChurnLogServer()
         {
-            var t = new Timer(Execute, null, 0, _intervall);
+            _timer = new Timer(Execute, null, 0, _intervall);
         }
 
         private static void WaitForKeyPressToExit()
@@ -68,6 +69,7 @@ namespace Server
         private static string _protocolFilePath;
         private static bool _locked;
         private static int _intervall;
+        private static Timer _timer;
 
         #endregion
     }
