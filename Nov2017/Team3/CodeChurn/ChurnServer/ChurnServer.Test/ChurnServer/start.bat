@@ -1,0 +1,1 @@
+"E:\CCC_Data\GitHubRepo\training_goldenpanda\Nov2017\Team3\CodeChurn\ChurnServer\ChurnServer.Test\ChurnServer\bin\Debug\ChurnServer.exe" E:\CCC_Data\GitHubRepo\training_goldenpanda\Nov2017\Team2 2000  E:\Report.csv
