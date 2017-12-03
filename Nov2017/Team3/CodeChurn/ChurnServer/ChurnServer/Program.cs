@@ -13,7 +13,7 @@ namespace ChurnServer
             _reportFilePath = args[2];
 
             var timer = new Timer();
-            timer.Interval = Int16.Parse(args[1]);
+            timer.Interval = 1000 * Int16.Parse(args[1]);
             timer.Elapsed += TimerOnElapsed;
             timer.Start();
 
