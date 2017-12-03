@@ -9,6 +9,7 @@ namespace BankOCR
         public static string[] Convert(SevenSegmentAccountNumber[] input)
         {
             IList<string> resultsList = input.Select(GetAccount).ToList();
+
             return resultsList.ToArray();
         }
 
