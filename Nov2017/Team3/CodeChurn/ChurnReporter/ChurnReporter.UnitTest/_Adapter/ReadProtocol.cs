@@ -21,15 +21,17 @@ namespace ChurnReporter.UnitTest._Adapter
         [Test]
         public void ShouldReadCsvFile()
         {
-            var sut = new Adapter();
+            // Arrange
             _protocolFilePath = Path.Combine(_testDirectory, @"./testFiles/protocol.csv");
 
+            // Act
             var lines = Adapter.ReadProtocol(_protocolFilePath);
 
+            // Assert
             var firstLine = lines[0].Split(new[] {';'});
-            firstLine[0].Should().Be(@"D:\dev\training_goldenpanda\Nov2017\Team3\BankOCR\BankOCR\BankOCR.cs");
-            firstLine[1].Should().Be("131567725374506232");
-            firstLine[2].Should().Be("21");
+            firstLine[0].Should().Be(@"03.12.2017 17:58:09");
+            firstLine[1].Should().Be("27");
+            firstLine[2].Should().Be(@"D:\dev\training_goldenpanda\Nov2017\Team3\CodeChurn\ChurnReporter\ChurnReporter\Adapter.cs");
         }
     }
 }
