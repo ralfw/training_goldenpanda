@@ -52,7 +52,7 @@ namespace ChurnServer
             List<string> lines = new List<String>();
 
             foreach (var info in infos)
-                lines.Add($"{info.FilePath};{info.TimeStamp.ToFileTime()};{info.LoC}");
+                lines.Add($"{info.TimeStamp};{info.LoC};{info.FilePath}");
 
             File.AppendAllLines(protocolFilePath, lines);
         }
