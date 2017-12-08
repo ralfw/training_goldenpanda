@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using CodeChurnReport.Structs;
 
 namespace CodeChurnReport
 {
@@ -13,13 +10,13 @@ namespace CodeChurnReport
         {
             if (args.Length != 3)
                 throw new ArgumentException();
-            var startDate = DateTime.Parse(args[1], CultureInfo.InvariantCulture);
-            var endDate = DateTime.Parse(args[2], CultureInfo.InvariantCulture);
+            var startDate = DateTime.Parse(args[0], CultureInfo.InvariantCulture);
+            var endDate = DateTime.Parse(args[1], CultureInfo.InvariantCulture);
             if (endDate < startDate)
                 throw new ArgumentException("StartDate should be less or equal EndDate");
             return new Config
             {
-                ProtocolFilePath = args[0],
+                ProtocolFilePath = args[2],
                 StartDate = startDate,
                 EndDate = endDate
             };

@@ -14,7 +14,7 @@ namespace CodeChurnReport.UnitTest._ConfigProvider
         {
             var startDate = new DateTime(2000,1,1);
             var endDate = new DateTime(2000, 12, 31);
-            var args = new []{"a", startDate.ToString(CultureInfo.InvariantCulture), endDate.ToString(CultureInfo.InvariantCulture)};
+            var args = new []{startDate.ToString(CultureInfo.InvariantCulture), endDate.ToString(CultureInfo.InvariantCulture), "a" };
             var config = ConfigProvider.GetConfig(args);
             config.Should().NotBeNull();
             config.ProtocolFilePath.Should().Be("a");
@@ -35,7 +35,7 @@ namespace CodeChurnReport.UnitTest._ConfigProvider
         {
             var startDate = new DateTime(2002, 1, 1);
             var endDate = new DateTime(2000, 12, 31);
-            var args = new[] { "a", startDate.ToString(CultureInfo.InvariantCulture), endDate.ToString(CultureInfo.InvariantCulture) }; 
+            var args = new[] { startDate.ToString(CultureInfo.InvariantCulture), endDate.ToString(CultureInfo.InvariantCulture), "a" }; 
             var action = new Action(() => ConfigProvider.GetConfig(args));
             action.ShouldThrow<ArgumentException>().WithMessage("StartDate should be less or equal EndDate");
         }

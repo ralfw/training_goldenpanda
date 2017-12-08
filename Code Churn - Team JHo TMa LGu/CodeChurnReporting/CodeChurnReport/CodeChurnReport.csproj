@@ -42,10 +42,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Config.cs" />
+    <Compile Include="FileIO.cs" />
+    <Compile Include="Structs\Config.cs" />
     <Compile Include="ConfigProvider.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Structs\ProtocolItem.cs" />
+    <Compile Include="ProtocolItemsExtension.cs" />
+    <Compile Include="ProtocolReader.cs" />
+    <Compile Include="ReportBuilder.cs" />
+    <Compile Include="Structs\ReportItem.cs" />
+    <Compile Include="Structs\Statistic.cs" />
+    <Compile Include="StatisticAdapter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
