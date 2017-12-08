@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AdapterTests", "AdapterTest
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeProviderTestConsole", "TimeProviderTestConsole\TimeProviderTestConsole.csproj", "{352E9573-D5C9-46E1-AC58-5425A9C61CCE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportBuilder.IntegrationTests", "ReportBuilder.IntegrationTests\ReportBuilder.IntegrationTests.csproj", "{82BA8B3F-36AD-4EB5-A529-D9FC83FD03CC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,10 @@ Global
 		{352E9573-D5C9-46E1-AC58-5425A9C61CCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{352E9573-D5C9-46E1-AC58-5425A9C61CCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{352E9573-D5C9-46E1-AC58-5425A9C61CCE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82BA8B3F-36AD-4EB5-A529-D9FC83FD03CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82BA8B3F-36AD-4EB5-A529-D9FC83FD03CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82BA8B3F-36AD-4EB5-A529-D9FC83FD03CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82BA8B3F-36AD-4EB5-A529-D9FC83FD03CC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,16 +1,17 @@
 ﻿using System;
+using ChurnServer;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace ChurnServer.UnitTests
+namespace ReportBuilder.IntegrationTests
 {
     [TestFixture]
-    public class ProtocolBuilderTests
+    public class GenerateReport
     {
         [Test]
         public void ShouldThrowNotImplementedException()
         {
-            string[] fileExtensions = {"", ""};
+            string[] fileExtensions = { "", "" };
 
             Action call = () => ProtocolBuilder.GenerateReport("observableDir", "protocolFilePath", fileExtensions);
 
