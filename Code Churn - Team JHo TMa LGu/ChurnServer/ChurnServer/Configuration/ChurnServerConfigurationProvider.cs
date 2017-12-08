@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ChurnServer.Configuration
+﻿namespace ChurnServer
 {
     public static class ChurnServerConfigurationProvider
     {

@@ -1,5 +1,4 @@
 ﻿using System;
-using ChurnServer.Configuration;
 using FluentAssertions;
 using NUnit.Framework;
 
