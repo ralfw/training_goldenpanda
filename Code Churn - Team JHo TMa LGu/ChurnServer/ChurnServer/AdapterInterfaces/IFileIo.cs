@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace ChurnServer.AdapterInterfaces
@@ -6,5 +7,10 @@ namespace ChurnServer.AdapterInterfaces
     public interface IFileIo
     {
         IEnumerable<string> GetObservableFiles(string observableDirectoryPath, string[] fileExtensions);
+    }
+
+    public interface ITimeProvider
+    {
+        DateTime GetStartTime();
     }
 }

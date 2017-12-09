@@ -1,5 +1,6 @@
 ﻿using System;
 using ChurnServer;
+using ChurnServer.Adapter;
 
 namespace TimeProviderTestConsole
 {
@@ -20,12 +21,13 @@ namespace TimeProviderTestConsole
 
         private static void Test_GetStartTime()
         {
+            var timeProvider = new TimeProvider();
 
             Console.Out.Write("Any key to get the starttime from the provider...");
             Console.ReadKey();
             Console.Out.WriteLine("");
 
-            var startTime = TimeProvider.GetStartTime();
+            var startTime = timeProvider.GetStartTime();
 
             Console.Out.WriteLine("StartTime is {0}", startTime);
             Console.Out.WriteLine("");
