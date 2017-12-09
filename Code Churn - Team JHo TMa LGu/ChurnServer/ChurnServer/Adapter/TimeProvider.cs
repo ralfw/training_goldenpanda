@@ -5,7 +5,7 @@ namespace ChurnServer.Adapter
 {
     public class TimeProvider : ITimeProvider
     {
-        public DateTime GetStartTime()
+        public DateTime GetCurrentDateAndTime()
         {
             return DateTime.Now;
         }

@@ -1,5 +1,4 @@
 ﻿using System;
-using ChurnServer;
 using ChurnServer.Adapter;
 
 namespace TimeProviderTestConsole
@@ -10,7 +9,7 @@ namespace TimeProviderTestConsole
         {
             PrintTestHeader();
 
-            Test_GetStartTime();
+            Test_GetCurrentDateAndTime();
         }
 
         private static void PrintTestHeader()
@@ -19,17 +18,17 @@ namespace TimeProviderTestConsole
             Console.Out.WriteLine("");
         }
 
-        private static void Test_GetStartTime()
+        private static void Test_GetCurrentDateAndTime()
         {
             var timeProvider = new TimeProvider();
 
-            Console.Out.Write("Any key to get the starttime from the provider...");
+            Console.Out.Write("Any key to get the current time from the provider...");
             Console.ReadKey();
             Console.Out.WriteLine("");
 
-            var startTime = timeProvider.GetStartTime();
+            var startTime = timeProvider.GetCurrentDateAndTime();
 
-            Console.Out.WriteLine("StartTime is {0}", startTime);
+            Console.Out.WriteLine("Current time is {0}", startTime);
             Console.Out.WriteLine("");
         }
     }
