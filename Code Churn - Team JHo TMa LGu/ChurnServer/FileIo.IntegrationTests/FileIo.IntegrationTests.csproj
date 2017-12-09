@@ -4,12 +4,12 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{24E82E24-7E3F-4B4D-9B98-D9C35C69F284}</ProjectGuid>
+    <ProjectGuid>{EDF2205A-09E4-46A3-98C2-055E7EC08E00}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ChurnServer.UnitTests</RootNamespace>
-    <AssemblyName>ChurnServer.UnitTests</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <RootNamespace>FileIo.IntegrationTests</RootNamespace>
+    <AssemblyName>FileIo.IntegrationTests</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -49,8 +49,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ChurnServerConfigurationTests.cs" />
+    <Compile Include="FileIoTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestDirectory\CSharpCodeFile1.cs" />
+    <Compile Include="TestDirectory\CSharpCodeFile2.cs" />
+    <Compile Include="TestDirectory\SubDir2\CSharpCodeFile3.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -60,6 +63,15 @@
       <Project>{E94C2553-6BB7-42A0-8A9E-04A8423E212C}</Project>
       <Name>ChurnServer</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TestDirectory\PythonFile1.py" />
+    <Content Include="TestDirectory\PythonFile2.py" />
+    <Content Include="TestDirectory\SubDir1\PythonFile3.py" />
+    <Content Include="TestDirectory\SubDir1\TextFile3.txt" />
+    <Content Include="TestDirectory\SubDir2\PythonFile4.py" />
+    <Content Include="TestDirectory\TextFile1.txt" />
+    <Content Include="TestDirectory\TextFile2.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
