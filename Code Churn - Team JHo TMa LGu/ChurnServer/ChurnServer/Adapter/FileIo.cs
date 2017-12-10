@@ -21,5 +21,10 @@ namespace ChurnServer.Adapter
         {
             return File.ReadAllLines(filePath);
         }
+
+        public string ToUncPath(string filePath)
+        {
+            return filePath;
+        }
     }
 }

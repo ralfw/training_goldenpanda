@@ -8,5 +8,7 @@ namespace ChurnServer.AdapterInterfaces
         IEnumerable<string> GetObservableFiles(string observableDirectoryPath, string[] fileExtensions);
 
         string[] GetFileContent(string filePath);
+
+        string ToUncPath(string filePath);
     }
 }
