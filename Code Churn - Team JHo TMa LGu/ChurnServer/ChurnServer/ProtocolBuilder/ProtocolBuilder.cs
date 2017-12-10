@@ -10,5 +10,11 @@ namespace ChurnServer
 
             throw new System.NotImplementedException();
         }
+
+        public static int GetLinesOfCode(string filePath)
+        {
+            // empty lines are counted as well
+            return AdapterProvider.FileIo.GetFileContent(filePath).Length;
+        }
     }
 }

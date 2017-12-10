@@ -1,7 +1,6 @@
 ﻿using System;
 using ChurnServer;
 using ChurnServer.Adapter;
-using ChurnServer.AdapterInterfaces;
 using ChurnServer.Infrastructure;
 using FluentAssertions;
 using NUnit.Framework;
