@@ -1,5 +1,4 @@
-﻿using ChurnServer.Adapter;
-using ChurnServer.Infrastructure;
+﻿using ChurnServer.Infrastructure;
 
 namespace ChurnServer
 {

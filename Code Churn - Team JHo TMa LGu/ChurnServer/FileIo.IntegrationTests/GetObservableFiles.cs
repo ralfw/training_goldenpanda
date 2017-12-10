@@ -6,14 +6,8 @@ using FluentAssertions;
 namespace FileIo.IntegrationTests
 {
     [TestFixture]
-    public class FileIoTests
+    public class GetObservableFiles : FileIoTestsBase
     {
-        public static string GetPathToTestDirectory()
-        {
-            return Path.Combine(
-                TestContext.CurrentContext.TestDirectory.Replace(@"\bin\Debug", ""), "TestDirectory");
-        }
-
         [Test]
         public void ShouldReturnTextFilesOnly()
         {
@@ -62,5 +56,6 @@ namespace FileIo.IntegrationTests
             observableFiles.Should().Contain(Path.Combine(Path.GetFullPath(testDirectoryPath), "CSharpCodeFile2.cs"));
             observableFiles.Should().Contain(Path.Combine(Path.GetFullPath(testDirectoryPath), @"SubDir2\CSharpCodeFile3.cs"));
         }
+
     }
 }

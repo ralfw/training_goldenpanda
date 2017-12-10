@@ -6,5 +6,7 @@ namespace ChurnServer.AdapterInterfaces
     public interface IFileIo
     {
         IEnumerable<string> GetObservableFiles(string observableDirectoryPath, string[] fileExtensions);
+
+        string[] GetFileContent(string filePath);
     }
 }

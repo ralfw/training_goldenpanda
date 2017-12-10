@@ -16,5 +16,10 @@ namespace ChurnServer.Adapter
 
             return files;
         }
+
+        public string[] GetFileContent(string filePath)
+        {
+            return File.ReadAllLines(filePath);
+        }
     }
 }
