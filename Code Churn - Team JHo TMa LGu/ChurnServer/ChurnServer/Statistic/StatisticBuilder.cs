@@ -1,13 +1,13 @@
 ﻿using System;
-using ChurnServer.AdapterInterfaces;
+using ChurnServer.Infrastructure;
 
 namespace ChurnServer.Statistic
 {
     public class StatisticBuilder
     {
-        public static ReportStatistic BuildStatistic(ITimeProvider timeProvider, DateTime startTime, string[] filesPaths)
+        public static ReportStatistic BuildStatistic(DateTime startTime, string[] filesPaths)
         {
-            var statisticDuration = timeProvider.GetCurrentDateAndTime().Subtract(startTime);
+            var statisticDuration = AdapterProvider.TimeProvider.GetCurrentDateAndTime().Subtract(startTime);
             return new ReportStatistic(startTime, filesPaths.Length, statisticDuration);
         }
     }

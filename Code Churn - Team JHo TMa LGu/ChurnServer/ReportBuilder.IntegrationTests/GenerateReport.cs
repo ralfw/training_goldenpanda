@@ -1,5 +1,8 @@
 ﻿using System;
 using ChurnServer;
+using ChurnServer.Adapter;
+using ChurnServer.AdapterInterfaces;
+using ChurnServer.Infrastructure;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -8,6 +11,12 @@ namespace ReportBuilder.IntegrationTests
     [TestFixture]
     public class GenerateReport
     {
+        [SetUp]
+        public void SetUp()
+        {
+            AdapterProvider.TimeProvider = new TimeProvider();
+        }
+
         [Test]
         public void ShouldThrowNotImplementedException()
         {

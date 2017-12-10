@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ChurnServer.Adapter;
+using ChurnServer.Infrastructure;
 
 namespace ChurnServer
 {
@@ -10,6 +8,8 @@ namespace ChurnServer
     {
         static void Main(string[] args)
         {
+            AdapterProvider.TimeProvider = new TimeProvider();
+
             var configuration = ChurnServerConfigurationProvider.CreateConfiguration(args);
 
             DumpConfiguration(configuration);

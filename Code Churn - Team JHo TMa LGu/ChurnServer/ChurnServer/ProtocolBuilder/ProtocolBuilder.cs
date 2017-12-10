@@ -1,4 +1,5 @@
 ﻿using ChurnServer.Adapter;
+using ChurnServer.Infrastructure;
 
 namespace ChurnServer
 {
@@ -6,7 +7,7 @@ namespace ChurnServer
     {
         public static void GenerateReport(string observableDirectoryPath, string protocolFilepath, string[] fileExtensions)
         {
-            var startTime = new TimeProvider().GetCurrentDateAndTime();
+            var startTime = AdapterProvider.TimeProvider.GetCurrentDateAndTime();
 
             throw new System.NotImplementedException();
         }

@@ -1,5 +1,7 @@
 ﻿using System;
+using ChurnServer.Adapter;
 using ChurnServer.AdapterInterfaces;
+using ChurnServer.Infrastructure;
 using ChurnServer.Statistic;
 using NUnit.Framework;
 using FluentAssertions;
@@ -11,6 +13,12 @@ namespace ChurnServer.UnitTests
     [TestFixture]
     public class StatisticBuilderTests
     {
+        [SetUp]
+        public void TestFixtureSetUp()
+        {
+            AdapterProvider.TimeProvider = new Mock<ITimeProvider>().Object;
+        }
+
         [Test]
         public void ShouldBuildStatistic()
         {
@@ -22,10 +30,10 @@ namespace ChurnServer.UnitTests
                 @"filePath2",
                 @"filePath3",
             };
-            var timeProvider = new Mock<ITimeProvider>();
+            var timeProvider = Mock.Get(AdapterProvider.TimeProvider);
             timeProvider.Setup(x => x.GetCurrentDateAndTime()).Returns(endTime);
 
-            var statistic = StatisticBuilder.BuildStatistic(timeProvider.Object, startTime, filesPaths);
+            var statistic = StatisticBuilder.BuildStatistic(startTime, filesPaths);
 
             statistic.StartTime.Should().Be(startTime);
             statistic.Duration.Should().Be(TimeSpan.FromSeconds(93));
