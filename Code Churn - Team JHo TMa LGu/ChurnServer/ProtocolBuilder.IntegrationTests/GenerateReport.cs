@@ -1,11 +1,10 @@
 ﻿using System;
-using ChurnServer;
 using ChurnServer.Adapter;
 using ChurnServer.Infrastructure;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace ReportBuilder.IntegrationTests
+namespace ProtocolBuilder.IntegrationTests
 {
     [TestFixture]
     public class GenerateReport
@@ -21,7 +20,7 @@ namespace ReportBuilder.IntegrationTests
         {
             string[] fileExtensions = { "", "" };
 
-            Action call = () => ProtocolBuilder.GenerateReport("observableDir", "protocolFilePath", fileExtensions);
+            Action call = () => ChurnServer.ProtocolBuilder.GenerateReport("observableDir", "protocolFilePath", fileExtensions);
 
             call.ShouldThrow<NotImplementedException>();
         }

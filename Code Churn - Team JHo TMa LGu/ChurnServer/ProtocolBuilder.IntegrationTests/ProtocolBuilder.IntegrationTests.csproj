@@ -7,8 +7,8 @@
     <ProjectGuid>{82BA8B3F-36AD-4EB5-A529-D9FC83FD03CC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ReportBuilder.IntegrationTests</RootNamespace>
-    <AssemblyName>ReportBuilder.IntegrationTests</AssemblyName>
+    <RootNamespace>ProtocolBuilder.IntegrationTests</RootNamespace>
+    <AssemblyName>ProtocolBuilder.IntegrationTests</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
