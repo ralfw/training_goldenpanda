@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Management;
 using ChurnServer.AdapterInterfaces;
 
 namespace ChurnServer.Adapter
@@ -21,9 +22,28 @@ namespace ChurnServer.Adapter
             return File.ReadAllLines(filePath);
         }
 
-        public string ToUncPath(string filePath)
+        public string ToUncPath(string pathToFile)
         {
-            return filePath;
+                var info = new FileInfo(pathToFile);
+                var filePath = info.FullName;
+
+                if (filePath.StartsWith(@"\\"))
+                    return filePath;
+
+                if (new DriveInfo(Path.GetPathRoot(filePath)).DriveType != DriveType.Network)
+                    return filePath;
+
+                var drivePrefix = Path.GetPathRoot(filePath).Substring(0, 2);
+                string uncRoot;
+
+                using (var managementObject = new ManagementObject())
+                {
+                    var managementPath = $"Win32_LogicalDisk='{drivePrefix}'";
+                    managementObject.Path = new ManagementPath(managementPath);
+                    uncRoot = (string)managementObject["ProviderName"];
+                }
+
+                return filePath.Replace(drivePrefix, uncRoot);
         }
 
         public void StoreFileContent(string protocolFilePath, string[] protocolLines)
