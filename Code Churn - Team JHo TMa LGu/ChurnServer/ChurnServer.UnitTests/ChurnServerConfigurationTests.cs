@@ -23,7 +23,7 @@ namespace ChurnServer.UnitTests
             configuration.ObservableDirectoryPath.Should().Be(@"c:\codeToWatch");
             configuration.SamplingRateInSeconds.Should().Be(45);
             configuration.ProtocolFilePath.Should().Be(@"c:\output\churnlog.csv");
-            configuration.FileExtensions.Should().ContainInOrder(".txt", ".cs");
+            configuration.FileExtensions.Should().ContainInOrder("txt", "cs");
         }
     }
 }

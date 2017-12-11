@@ -17,7 +17,7 @@
             SamplingRateInSeconds = samplingRateInSeconds;
             ProtocolFilePath = protocolFilePath;
 
-            FileExtensions = new[] {".txt", ".cs"};
+            FileExtensions = new[] {"txt", "cs"};
         }
 
         public string ObservableDirectoryPath { get; }
