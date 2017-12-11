@@ -9,10 +9,16 @@ namespace ChurnServer
         static void Main(string[] args)
         {
             AdapterProvider.TimeProvider = new TimeProvider();
+            AdapterProvider.FileIo = new FileIo();
+            AdapterProvider.Ui = new Ui();
 
             var configuration = ChurnServerConfigurationProvider.CreateConfiguration(args);
 
             DumpConfiguration(configuration);
+
+            // todo add timing
+
+            ProtocolBuilder.GenerateReport(configuration.ObservableDirectoryPath, configuration.ProtocolFilePath, configuration.FileExtensions);
         }
 
         private static void DumpConfiguration(ChurnServerConfiguration configuration)
