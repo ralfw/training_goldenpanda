@@ -10,7 +10,7 @@ namespace ChurnServer
         {
             var timeStamp = $"{startTime:s}";
             var linesOfCode = ProtocolBuilder.GetLinesOfCode(filePath).ToString();
-            var uncFilePath = $"\"{filePath}\"";
+            var uncFilePath = AdapterProvider.FileIo.ToUncPath(filePath);
 
             return string.Join(";", timeStamp, linesOfCode, uncFilePath);
         }

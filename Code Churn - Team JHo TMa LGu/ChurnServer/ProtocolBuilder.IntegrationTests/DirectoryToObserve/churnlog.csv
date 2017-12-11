@@ -1,0 +1,7 @@
+Timestamp;LinesOfCode;FilePath
+2017-12-11T17:19:33;2;D:\CCDSchool\training_goldenpanda_checkout\Code Churn - Team JHo TMa LGu\ChurnServer\ProtocolBuilder.IntegrationTests\DirectoryToObserve\TextFile1.txt
+2017-12-11T17:19:33;3;D:\CCDSchool\training_goldenpanda_checkout\Code Churn - Team JHo TMa LGu\ChurnServer\ProtocolBuilder.IntegrationTests\DirectoryToObserve\TextFile2.txt
+2017-12-11T17:19:33;4;D:\CCDSchool\training_goldenpanda_checkout\Code Churn - Team JHo TMa LGu\ChurnServer\ProtocolBuilder.IntegrationTests\DirectoryToObserve\SubDir1\TextFile3.txt
+2017-12-11T17:19:33;2;D:\CCDSchool\training_goldenpanda_checkout\Code Churn - Team JHo TMa LGu\ChurnServer\ProtocolBuilder.IntegrationTests\DirectoryToObserve\CSharpCodeFile1.cs
+2017-12-11T17:19:33;3;D:\CCDSchool\training_goldenpanda_checkout\Code Churn - Team JHo TMa LGu\ChurnServer\ProtocolBuilder.IntegrationTests\DirectoryToObserve\CSharpCodeFile2.cs
+2017-12-11T17:19:33;4;D:\CCDSchool\training_goldenpanda_checkout\Code Churn - Team JHo TMa LGu\ChurnServer\ProtocolBuilder.IntegrationTests\DirectoryToObserve\SubDir2\CSharpCodeFile3.cs

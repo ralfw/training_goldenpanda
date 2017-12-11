@@ -28,7 +28,7 @@ namespace ChurnServer.UnitTests
 
             var line = ProtocolLine.BuildProtocolLine(startTime, filePath);
 
-            line.Should().Be("2017-12-10T15:00:00;33;\"c:\\pathToDir\\pathToFile.txt\"");
+            line.Should().Be("2017-12-10T15:00:00;33;c:\\pathToDir\\pathToFile.txt");
         }
     }
 }
