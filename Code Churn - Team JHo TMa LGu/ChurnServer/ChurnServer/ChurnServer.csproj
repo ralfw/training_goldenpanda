@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="AdapterInterfaces\IFileIo.cs" />
     <Compile Include="AdapterInterfaces\ITimeProvider.cs" />
+    <Compile Include="AdapterInterfaces\Ui.cs" />
     <Compile Include="Adapter\FileIo.cs" />
     <Compile Include="Configuration\ChurnServerConfigurationProvider.cs" />
     <Compile Include="Infrastructure\AdapterProvider.cs" />
