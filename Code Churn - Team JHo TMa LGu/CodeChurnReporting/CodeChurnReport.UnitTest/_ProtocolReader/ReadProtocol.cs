@@ -10,12 +10,23 @@ namespace CodeChurnReport.UnitTest._ProtocolReader
     [TestFixture]
     public class ReadProtocol
     {
-        private void CreateTestFile(string filePath)
+        private string _filePath;
+
+        [SetUp]
+        public void Setup()
         {
-            if (File.Exists(filePath))
-                File.Delete(filePath);
+            _filePath = $"{AppDomain.CurrentDomain.BaseDirectory}\\test.csv";
+            if (File.Exists(_filePath))
+                File.Delete(_filePath);
             var content = new[] {"2000-01-01;1;a", "2000-02-01;2;b"};
-            File.WriteAllLines(filePath, content);
+            File.WriteAllLines(_filePath, content);
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            if (File.Exists(_filePath))
+                File.Delete(_filePath);
         }
 
         [Test]
@@ -23,9 +34,7 @@ namespace CodeChurnReport.UnitTest._ProtocolReader
         {
             var startDate = new DateTime(2000, 1, 15);
             var endDate = new DateTime(2000, 3, 1);
-            var filePath = $"{AppDomain.CurrentDomain.BaseDirectory}\\test.csv";
-            var config = new Config {StartDate = startDate, EndDate = endDate, ProtocolFilePath = filePath};
-            CreateTestFile(filePath);
+            var config = new Config {StartDate = startDate, EndDate = endDate, ProtocolFilePath = _filePath};
 
             var protocol = ProtocolReader.ReadProtocol(config).ToArray();
 
