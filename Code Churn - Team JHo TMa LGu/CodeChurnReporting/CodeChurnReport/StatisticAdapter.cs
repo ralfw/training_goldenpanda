@@ -20,5 +20,12 @@ namespace CodeChurnReport
                 MaxLinesOfCode = items.Max(i => i.LinesOfCode)
             };
         }
+
+        public static void DisplayStatistic(Statistic statistic)
+        {
+            Console.WriteLine($"{statistic.FileCount} files");
+            Console.WriteLine($"max churn: {statistic.MaxChurnRate}");
+            Console.WriteLine($"max lines of code: {statistic.MaxLinesOfCode}");
+        }
     }
 }

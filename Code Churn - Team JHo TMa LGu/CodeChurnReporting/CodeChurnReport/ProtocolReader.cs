@@ -17,9 +17,9 @@ namespace CodeChurnReport
                 where fields.Length == 3
                 select new ProtocolItem
                 {
-                    TimeStamp = DateTime.Parse(fields[0], CultureInfo.InvariantCulture),
-                    UncFilePath = fields[1],
-                    LineOfCode = int.Parse(fields[2])
+                    TimeStamp = DateTime.ParseExact(fields[0], "yyyy-MM-dd", CultureInfo.InvariantCulture),
+                    UncFilePath = fields[2],
+                    LineOfCode = int.Parse(fields[1])
                 }).ToList();
         }
 

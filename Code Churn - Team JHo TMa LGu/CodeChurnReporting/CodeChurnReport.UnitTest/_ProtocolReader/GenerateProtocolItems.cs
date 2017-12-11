@@ -15,10 +15,12 @@ namespace CodeChurnReport.UnitTest._ProtocolReader
             var timeStamp = new DateTime(2000,1,1);
             var protocolLines = new[]
             {
-                $"{timeStamp.ToString(CultureInfo.InvariantCulture)};a;1",
-                $"{timeStamp.ToString(CultureInfo.InvariantCulture)};b;2"
+                $"{timeStamp:yyyy-MM-dd};1;a",
+                $"{timeStamp:yyyy-MM-dd};2;b"
             };
+
             var result = ProtocolReader.GenerateProtocolItems(protocolLines).ToArray();
+
             result.Length.Should().Be(2);
             result[0].TimeStamp.Should().Be(timeStamp);
             result[0].UncFilePath.Should().Be("a");

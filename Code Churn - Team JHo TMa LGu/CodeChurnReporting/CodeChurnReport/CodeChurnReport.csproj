@@ -42,7 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FileIO.cs" />
+    <Compile Include="ReportPersistence.cs" />
     <Compile Include="Structs\Config.cs" />
     <Compile Include="ConfigProvider.cs" />
     <Compile Include="Program.cs" />

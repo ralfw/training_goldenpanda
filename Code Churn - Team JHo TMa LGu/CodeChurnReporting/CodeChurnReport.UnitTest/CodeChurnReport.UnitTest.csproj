@@ -56,6 +56,7 @@
     <Compile Include="_ProtocollItemsExtension\GetChurnRate.cs" />
     <Compile Include="_ProtocolReader\GenerateProtocolItems.cs" />
     <Compile Include="_ProtocollItemsExtension\GetDistinctFilePaths.cs" />
+    <Compile Include="_ProtocolReader\ReadProtocol.cs" />
     <Compile Include="_ReportBuilder\BuildReportItems.cs" />
     <Compile Include="_ReportPersistence\StoreReport.cs" />
     <Compile Include="_StatisticAdapter\GenerateStatistic.cs" />
