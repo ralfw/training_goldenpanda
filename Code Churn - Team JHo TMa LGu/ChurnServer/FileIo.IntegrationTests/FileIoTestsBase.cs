@@ -5,10 +5,16 @@ namespace FileIo.IntegrationTests
 {
     public class FileIoTestsBase
     {
-        public static string GetPathToTestDirectory()
+        protected static string GetPathToTestDirectory()
         {
             return Path.Combine(
                 TestContext.CurrentContext.TestDirectory.Replace(@"\bin\Debug", ""), "TestDirectory");
+        }
+
+        protected static string GetPathToTestDirectoryForReadWrite()
+        {
+            return Path.Combine(
+                TestContext.CurrentContext.TestDirectory.Replace(@"\bin\Debug", ""), "TestDirectoryRw");
         }
     }
 }

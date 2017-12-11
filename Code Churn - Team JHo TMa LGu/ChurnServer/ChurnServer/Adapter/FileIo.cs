@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using ChurnServer.AdapterInterfaces;
@@ -25,6 +24,14 @@ namespace ChurnServer.Adapter
         public string ToUncPath(string filePath)
         {
             return filePath;
+        }
+
+        public void StoreFileContent(string protocolFilePath, string[] protocolLines)
+        {
+            if (File.Exists(protocolFilePath))
+                File.AppendAllLines(protocolFilePath, protocolLines);
+            else
+                File.WriteAllLines(protocolFilePath, protocolLines);
         }
     }
 }

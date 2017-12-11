@@ -54,6 +54,7 @@
     <Compile Include="FileIoTestsBase.cs" />
     <Compile Include="GetFileContent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StoreProtocol.cs" />
     <Compile Include="TestDirectory\CSharpCodeFile1.cs" />
     <Compile Include="TestDirectory\CSharpCodeFile2.cs" />
     <Compile Include="TestDirectory\SubDir2\CSharpCodeFile3.cs" />
@@ -77,5 +78,6 @@
     <Content Include="TestDirectory\TextFile1.txt" />
     <Content Include="TestDirectory\TextFile2.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

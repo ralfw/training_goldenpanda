@@ -10,5 +10,7 @@ namespace ChurnServer.AdapterInterfaces
         string[] GetFileContent(string filePath);
 
         string ToUncPath(string filePath);
+
+        void StoreFileContent(string protocolFilePath, string[] protocolLines);
     }
 }
