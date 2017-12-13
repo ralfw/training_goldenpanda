@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using CodeChurnReport.Structs;
+using CodeChurnReport.Behavior.Core;
+using CodeChurnReport.Data;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -20,7 +21,7 @@ namespace CodeChurnReport.UnitTest._ReportBuilder
                 new ProtocolItem {TimeStamp = new DateTime(2000, 1, 3), UncFilePath = "a", LineOfCode = 3},
                 new ProtocolItem {TimeStamp = new DateTime(2000, 1, 4), UncFilePath = "c", LineOfCode = 4}
             };
-            var result = ReportBuilder.BuildReportItems(protocollItems).ToArray();
+            var result = ReportBuilder.BuildReportItems(protocollItems.ToArray()).ToArray();
             result.Should().NotBeNull();
             result.Length.Should().Be(3);
             result[0].UncFilePath.Should().Be("a");

@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using CodeChurnReport.Structs;
+using CodeChurnReport.Behavior.Core;
+using CodeChurnReport.Data;
 using FluentAssertions;
 using NUnit.Framework;
 

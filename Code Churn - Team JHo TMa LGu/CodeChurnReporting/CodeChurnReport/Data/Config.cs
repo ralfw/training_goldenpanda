@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CodeChurnReport.Structs
+namespace CodeChurnReport.Data
 {
     public struct Config
     {

@@ -1,4 +1,4 @@
-﻿namespace CodeChurnReport.Structs
+﻿namespace CodeChurnReport.Data
 {
     public struct ReportItem
     {

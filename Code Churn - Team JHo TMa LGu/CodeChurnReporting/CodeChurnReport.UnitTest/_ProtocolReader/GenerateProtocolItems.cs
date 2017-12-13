@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Linq;
+using CodeChurnReport.Behavior.Providers;
 using FluentAssertions;
 using NUnit.Framework;
 

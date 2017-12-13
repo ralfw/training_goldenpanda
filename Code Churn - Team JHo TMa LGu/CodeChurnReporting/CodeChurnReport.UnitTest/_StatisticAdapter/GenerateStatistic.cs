@@ -1,4 +1,5 @@
-﻿using CodeChurnReport.Structs;
+﻿using CodeChurnReport.Behavior.Portals;
+using CodeChurnReport.Data;
 using FluentAssertions;
 using NUnit.Framework;
 

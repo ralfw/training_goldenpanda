@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using CodeChurnReport.Structs;
+using CodeChurnReport.Data;
 
-namespace CodeChurnReport
+namespace CodeChurnReport.Behavior.Portals
 {
     public static class StatisticAdapter
     {

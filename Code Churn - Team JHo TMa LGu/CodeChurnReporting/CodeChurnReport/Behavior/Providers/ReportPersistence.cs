@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using CodeChurnReport.Structs;
+using CodeChurnReport.Data;
 
-namespace CodeChurnReport
+namespace CodeChurnReport.Behavior.Providers
 {
     public class ReportPersistence
     {

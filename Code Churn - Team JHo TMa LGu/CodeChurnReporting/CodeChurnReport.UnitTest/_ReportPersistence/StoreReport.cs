@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
-using CodeChurnReport.Structs;
+using CodeChurnReport.Behavior.Providers;
+using CodeChurnReport.Data;
 using FluentAssertions;
 using NUnit.Framework;
 

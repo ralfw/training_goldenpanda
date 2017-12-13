@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Globalization;
-using CodeChurnReport.Structs;
+using CodeChurnReport.Data;
 
-namespace CodeChurnReport
+namespace CodeChurnReport.Behavior.Providers
 {
     public static class ConfigProvider
     {

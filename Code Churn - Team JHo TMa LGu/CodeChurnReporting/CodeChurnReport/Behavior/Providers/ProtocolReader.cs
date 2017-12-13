@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
-using CodeChurnReport.Structs;
+using CodeChurnReport.Behavior.Core;
+using CodeChurnReport.Data;
 
-namespace CodeChurnReport
+namespace CodeChurnReport.Behavior.Providers
 {
     public static class ProtocolReader
     {
@@ -23,11 +23,10 @@ namespace CodeChurnReport
                 }).ToList();
         }
 
-        public static IEnumerable<ProtocolItem> ReadProtocol(Config config)
+        public static IEnumerable<ProtocolItem> ReadProtocol(string filePath)
         {
-            var protocolLines = File.ReadAllLines(config.ProtocolFilePath);
-            var protocollItems = GenerateProtocolItems(protocolLines);
-            return protocollItems.FilterByTimeSpan(config.StartDate, config.EndDate);
+            var protocolLines = File.ReadAllLines(filePath);
+            return GenerateProtocolItems(protocolLines);
         }
 
 

@@ -42,18 +42,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ReportPersistence.cs" />
-    <Compile Include="Structs\Config.cs" />
-    <Compile Include="ConfigProvider.cs" />
+    <Compile Include="Behavior\Providers\ReportPersistence.cs" />
+    <Compile Include="Data\Config.cs" />
+    <Compile Include="Behavior\Providers\ConfigProvider.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Structs\ProtocolItem.cs" />
-    <Compile Include="ProtocolItemsExtension.cs" />
-    <Compile Include="ProtocolReader.cs" />
-    <Compile Include="ReportBuilder.cs" />
-    <Compile Include="Structs\ReportItem.cs" />
-    <Compile Include="Structs\Statistic.cs" />
-    <Compile Include="StatisticAdapter.cs" />
+    <Compile Include="Data\ProtocolItem.cs" />
+    <Compile Include="Behavior\Core\ProtocolItemsExtension.cs" />
+    <Compile Include="Behavior\Providers\ProtocolReader.cs" />
+    <Compile Include="Behavior\Core\ReportBuilder.cs" />
+    <Compile Include="Data\ReportItem.cs" />
+    <Compile Include="Data\Statistic.cs" />
+    <Compile Include="Behavior\Portals\StatisticAdapter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
