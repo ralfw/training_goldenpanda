@@ -59,6 +59,7 @@
     </ApplicationDefinition>
     <Compile Include="Controller\MainController.cs" />
     <Compile Include="CalculatorViewModel.cs" />
+    <Compile Include="Interfaces\ILoginUi.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="ViewModelBase.cs" />
     <Page Include="CalculatorView.xaml">
