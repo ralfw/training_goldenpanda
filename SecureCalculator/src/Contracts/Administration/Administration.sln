@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sc.administration.unittest", "sc.administration.unittest\sc.administration.unittest.csproj", "{5621C0E5-F138-4E4A-A312-3C20EC5B7562}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sc.administration.UnitTest", "sc.administration.unittest\sc.administration.UnitTest.csproj", "{5621C0E5-F138-4E4A-A312-3C20EC5B7562}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sc.administration", "sc.administration\sc.administration.csproj", "{5F97842C-7296-478B-944B-E36D554E3DCC}"
 EndProject
