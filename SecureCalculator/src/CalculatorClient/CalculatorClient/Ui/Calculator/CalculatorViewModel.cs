@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using CalculatorClient.Infrastructure;
 using sc.contracts;
 
 namespace CalculatorClient

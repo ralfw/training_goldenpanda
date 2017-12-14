@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace CalculatorClient
+namespace CalculatorClient.Infrastructure
 {
     public interface IViewModelBase : INotifyPropertyChanged
     {

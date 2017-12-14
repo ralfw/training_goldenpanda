@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace CalculatorClient
+namespace CalculatorClient.Infrastructure
 {
     /// <summary>
     /// To register commands in MMVM pattern

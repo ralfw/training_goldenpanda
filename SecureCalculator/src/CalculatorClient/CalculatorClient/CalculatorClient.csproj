@@ -58,12 +58,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Controller\MainController.cs" />
-    <Compile Include="CalculatorViewModel.cs" />
+    <Compile Include="Ui\Calculator\CalculatorViewModel.cs" />
     <Compile Include="Interfaces\ILoginUi.cs" />
-    <Compile Include="LoginUi.cs" />
-    <Compile Include="RelayCommand.cs" />
-    <Compile Include="ViewModelBase.cs" />
-    <Page Include="CalculatorView.xaml">
+    <Compile Include="Ui\Login\LoginUi.cs" />
+    <Compile Include="Infrastructure\RelayCommand.cs" />
+    <Compile Include="Infrastructure\ViewModelBase.cs" />
+    <Page Include="Ui\Calculator\CalculatorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -71,20 +71,20 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="CalculatorView.xaml.cs">
+    <Compile Include="Ui\Calculator\CalculatorView.xaml.cs">
       <DependentUpon>CalculatorView.xaml</DependentUpon>
     </Compile>
-    <Page Include="LoginView.xaml">
+    <Page Include="Ui\Login\LoginView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IViewModelBase.cs" />
-    <Compile Include="LoginView.xaml.cs">
+    <Compile Include="Infrastructure\IViewModelBase.cs" />
+    <Compile Include="Ui\Login\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="LoginViewModel.cs" />
+    <Compile Include="Ui\Login\LoginViewModel.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -111,8 +111,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="LoginUi\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

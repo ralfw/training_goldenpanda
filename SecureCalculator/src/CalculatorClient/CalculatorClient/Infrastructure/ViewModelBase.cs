@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using CalculatorClient.Annotations;
+using CalculatorClient.Properties;
 
-namespace CalculatorClient
+namespace CalculatorClient.Infrastructure
 {
     public abstract class ViewModelBase : IViewModelBase
     {
