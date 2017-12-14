@@ -10,14 +10,14 @@ namespace sc.administration.UnitTest.config_provider
         [Test]
         public void ShouldGetConfigFromArguments()
         {
-            var args = new string[] {"cu", "test@wago.com", "student", "uri"};
+            var args = new[] {"cu", "-email:test@wago.com", "-role:student", "-serveruri:uri"};
 
             var config = ConfigProvider.GetConfig(args);
-
-            config.Command.Should().Be("cu");
-            config.Email.Should().Be("test@wago.com");
-            config.Role.Should().Be("student");
-            config.ServerUri.Should().Be("uri");
+ 
+            ((string)config._RoutePath).Should().Be("cu");
+            ((string)config.email).Should().Be("test@wago.com");
+            ((string)config.role).Should().Be("student");
+            ((string)config.serveruri).Should().Be("uri");
         }
     }
 }

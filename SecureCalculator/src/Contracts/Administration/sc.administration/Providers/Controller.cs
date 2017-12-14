@@ -10,11 +10,14 @@ namespace sc.administration.Providers
 {
     public class Controller
     {
-        public static void Run(Config config, IAdminCredentialService credentialService)
+        public static void Run(dynamic config, IAdminCredentialService credentialService)
         {
-            if (config.Command.ToLower() == "cu")
+            var route = config._RoutePath;
+            if (route == "cu")
             {
-                credentialService.CreateUser(config.Email, config.Role, OnSuccess, OnError );
+                string email = config.email;
+                string role = config.role;
+                credentialService.CreateUser(email, role, OnSuccess, OnError );
             }
             else
             {

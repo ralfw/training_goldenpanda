@@ -33,6 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="appcfg, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\appcfg.1.0.2\lib\net45\appcfg.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="sc.contracts">
       <HintPath>..\..\..\..\contracts\sc.contracts.dll</HintPath>
     </Reference>
