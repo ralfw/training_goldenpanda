@@ -13,7 +13,9 @@ namespace CredentialServiceTest
     {
         static void Main(string[] args)
         {
-            new Server("localhost:1234", new UserServiceMock());
+            //var server = new Server(new UserServiceMock());
+            //server.Run("http://localhost:1234");
+            servicehost.Server.Run(new Uri("http://localhost:8080"));
         }
     }
 }
