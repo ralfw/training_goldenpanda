@@ -5,8 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CalculatorClient"
         mc:Ignorable="d"
-        Title="{Binding Title}" Height="300" Width="300">
-    <Grid>
+        Title="{Binding Title}" SizeToContent="WidthAndHeight">
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.Column="0" >Email</TextBlock>
+        <TextBlock Grid.Row="1" Grid.Column="0" >Password</TextBlock>
         
+        <TextBox Grid.Row="0" Grid.Column="1" MinWidth="120" Text="{Binding EmailAddress}"></TextBox>
+        <TextBox Grid.Row="1" Grid.Column="1" MinWidth="120" Text="{Binding Password}"></TextBox>
+        <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,10,0,0"
+                Command="{Binding Login}"
+                >Login</Button>
     </Grid>
 </Window>

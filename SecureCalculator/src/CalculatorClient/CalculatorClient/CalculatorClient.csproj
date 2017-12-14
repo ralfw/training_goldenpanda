@@ -54,6 +54,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controller\MainController.cs" />
+    <Compile Include="RelayCommand.cs" />
     <Compile Include="ViewModelBase.cs" />
     <Page Include="CalulatorView.xaml">
       <SubType>Designer</SubType>
@@ -103,5 +105,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
