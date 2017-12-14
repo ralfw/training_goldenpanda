@@ -24,7 +24,7 @@
         <TextBox Grid.Row="0" Grid.Column="1" MinWidth="120" Text="{Binding EmailAddress}"></TextBox>
         <TextBox Grid.Row="1" Grid.Column="1" MinWidth="120" Text="{Binding Password}"></TextBox>
         <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,10,0,0"
-                Command="{Binding Login}"
+                Command="{Binding Login}" IsDefault="True"
                 >Login</Button>
     </Grid>
 </Window>

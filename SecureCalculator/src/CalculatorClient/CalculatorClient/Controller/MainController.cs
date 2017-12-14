@@ -1,22 +1,23 @@
 ﻿using System;
 using System.Windows;
+using CalculatorClient.Interfaces;
 
 namespace CalculatorClient.Controller
 {
     public static class MainController
     {
+        public static ILoginUi  LoginUi { get; private set; }
+
         public static void ShowLogin()
         {
-            var loginView = new LoginView
-            {
-                DataContext = new LoginViewModel()
-            };
+            if(LoginUi == null)
+                LoginUi = new LoginUi();
 
-            App.Current.MainWindow = loginView;
-            App.Current.MainWindow.Show();
+            LoginUi.OnLoginRequested += Login;
+            LoginUi.Open();
         }
 
-        public static void Login(string emailAddress, string password)
+        private static void Login(string emailAddress, string password)
         {
             var message = $"User called Login with{Environment.NewLine}{Environment.NewLine}" +
                           $"email: {emailAddress}{Environment.NewLine}" +

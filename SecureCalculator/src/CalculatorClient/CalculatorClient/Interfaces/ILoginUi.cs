@@ -6,6 +6,7 @@ namespace CalculatorClient.Interfaces
     {
         void Open();
         void Display(string errorMessage);
-        Action<string, string> OnLoginRequested();
+        event Action<string, string> OnLoginRequested;
+        void InvokeLoginRequested(string emailAddress, string password);
     }
 }

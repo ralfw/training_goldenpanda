@@ -35,7 +35,7 @@ namespace CalculatorClient
 
         private void OnLogin(object obj)
         {
-            Controller.MainController.Login(EmailAddress, Password);
+            Controller.MainController.LoginUi.InvokeLoginRequested(EmailAddress, Password);
         }
 
         #region Fields
