@@ -7,7 +7,7 @@ using sc.contracts;
 
 namespace credentionalService.core
 {
-    public class UserServices : IUserService
+    public class user_services : IUserService
     {
         public void AddUser(String emailAddress, String rolename, Action onSuccess, Action<String> onError)
         {
