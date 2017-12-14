@@ -24,7 +24,7 @@ namespace CalculatorClient
 
         public string Email
         {
-            get => _email;
+            get { return _email; }
             set
             {
                 _email = value;
@@ -34,7 +34,7 @@ namespace CalculatorClient
 
         public ObservableCollection<Permissions> PermissionSet
         {
-            get => _permissionSet;
+            get { return _permissionSet; }
             set
             {
                 _permissionSet = value;
