@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="email_adapter_integration_test.cs" />
     <Compile Include="db_provider_test.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
