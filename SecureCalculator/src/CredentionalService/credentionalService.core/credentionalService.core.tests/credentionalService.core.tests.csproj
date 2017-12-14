@@ -55,6 +55,7 @@
     <Compile Include="email_adapter_integration_test.cs" />
     <Compile Include="db_provider_test.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="user_services_tests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Contracts\sc.contracts\sc.contracts.csproj">
