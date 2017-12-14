@@ -48,24 +48,16 @@ namespace credentionalService.core.adapter
         private user_info get_user_from_line(string line)
         {
             var parts = line.Split(',');
-            var target = new user_info();
-            fill_permissions_from_line(target, parts);
-            fill_usercredentials_from_line(target, parts.Skip(2).ToArray());
-            return target;
-            
-        }
+            var target = new user_info
+            {
+                user_email = parts[0],
+                password_hash = parts[1]
+            };
 
-
-        private void fill_permissions_from_line(user_info target, string[] lineParts)
-        {
-            target.user_email = lineParts[0];
-            target.password_hash = lineParts[1];
-        }
-
-        private void fill_usercredentials_from_line(user_info target, string[] lineParts)
-        {            
-            var permissions = lineParts.Select(o => (Permissions)Enum.Parse(typeof(Permissions), o)).ToArray();
+            var permissions = parts.Skip(2).Select(o => (Permissions)Enum.Parse(typeof(Permissions), o)).ToArray();
             target.permissions = new PermissionSet(permissions);
+
+            return target;            
         }
     }
 }
