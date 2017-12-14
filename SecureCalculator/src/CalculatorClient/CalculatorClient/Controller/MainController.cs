@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Windows;
 using CalculatorClient.Interfaces;
+using sc.contracts;
 
 namespace CalculatorClient.Controller
 {
     public static class MainController
     {
         public static ILoginUi  LoginUi { get; private set; }
+        public static ICalculatorUi CalculatorUi { get; private set; }
 
         public static void ShowLogin()
         {
@@ -23,6 +25,28 @@ namespace CalculatorClient.Controller
                           $"email: {emailAddress}{Environment.NewLine}" +
                           $"password:{password}";
             MessageBox.Show(message);
+
+            // TODO: user service to get permissions
+            var fakePermissions = GetFakePermissions();
+
+            // call Calculator view
+            if (CalculatorUi == null)
+                CalculatorUi = new CalculatorUi();
+
+            CalculatorUi.Open(fakePermissions);
+        }
+
+        private static PermissionSet GetFakePermissions()
+        {
+            Permissions[] permissions = {
+                Permissions.Add,
+                Permissions.Subtract,
+                Permissions.Multiply,
+                Permissions.Divide
+            };
+
+            var fakePermissions = new PermissionSet(permissions);
+            return fakePermissions;
         }
     }
 }
