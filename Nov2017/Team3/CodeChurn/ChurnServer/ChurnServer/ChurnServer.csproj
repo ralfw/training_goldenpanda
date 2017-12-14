@@ -45,8 +45,11 @@
   <ItemGroup>
     <Compile Include="ChurnFileInfo.cs" />
     <Compile Include="ChurnServer.cs" />
+    <Compile Include="ConsoleAddapter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ProtocolAddapter.cs" />
+    <Compile Include="RootDirAddapter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -2,7 +2,7 @@
 
 namespace ChurnServer
 {
-    public class ChurnFileInfo
+    public class ProtocolEntry
     {
         public int LoC { get; set; }
         public DateTime TimeStamp { get; set; }

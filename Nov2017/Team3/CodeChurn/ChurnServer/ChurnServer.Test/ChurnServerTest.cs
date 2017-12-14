@@ -30,18 +30,18 @@ namespace ChurnServer.Test
         {
             string rootDir = "TestData";
             string protocolFilePath = "ChurnProtocol.csv";
-            ChurnServer.DoEvaluateDirectory(rootDir, protocolFilePath);
+            ChurnServer.Quellcodestand_protokollieren(rootDir, protocolFilePath);
         }
 
         [Test]
         public void ShouldPrepareOutput()
         {
-            List<ChurnFileInfo> infos = new List<ChurnFileInfo>();
+            List<ProtocolEntry> infos = new List<ProtocolEntry>();
 
-            infos.Add(new ChurnFileInfo {FilePath = "Path", LoC = 1, TimeStamp = DateTime.Now});
-            infos.Add(new ChurnFileInfo {FilePath = "Path1", LoC = 2, TimeStamp = DateTime.Now});
+            infos.Add(new ProtocolEntry {FilePath = "Path", LoC = 1, TimeStamp = DateTime.Now});
+            infos.Add(new ProtocolEntry {FilePath = "Path1", LoC = 2, TimeStamp = DateTime.Now});
 
-            string result = ChurnServer.BuildConsoleOutput(infos.ToArray());
+            string result = $"Lines written: {infos.ToArray().Length}";
 
             result.Should().Be("Lines written: 2");
         }

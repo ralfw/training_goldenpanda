@@ -9,30 +9,42 @@ namespace ChurnServer
 
         private static void Main(string[] args)
         {
-            _rootDir = args[0];
-            _reportFilePath = args[2];
+            var config = Konfigurationsparameter_lesen(args);
+            PeriodischAnstoßen(config.Interval_In_Milli_Second_s,
+                () => ChurnServer.Quellcodestand_protokollieren(config.RootDir, config.ProtocolFilePath));
 
-            var timer = new Timer();
-            timer.Interval = 1000 * Int16.Parse(args[1]);
-            timer.Elapsed += TimerOnElapsed;
-            timer.Start();
-
+            Console.WriteLine("Press any key to exit...");
             Console.ReadLine();
-
-
         }
 
-        private static void TimerOnElapsed(Object sender, ElapsedEventArgs elapsedEventArgs)
+        private static Config Konfigurationsparameter_lesen(string[] args)
         {
-            ChurnServer.DoEvaluateDirectory(_rootDir, _reportFilePath);
+            Config result;
+            result.Interval_In_Milli_Second_s = 1000*Int16.Parse(args[1]);
+            result.ProtocolFilePath = args[2];
+            result.RootDir = args[0];
+
+            return result;
+        }
+
+        private static void PeriodischAnstoßen(int interval, Action On_Tick)
+        {
+            var timer = new Timer();
+            timer.Interval = interval;
+            timer.Elapsed += (sender, args) => On_Tick();
+            timer.Start();
         }
 
         #endregion
 
-        #region Fields
+        #region Nested types
 
-        private static string _rootDir;
-        private static String _reportFilePath;
+        private struct Config
+        {
+            public string ProtocolFilePath;
+            public string RootDir;
+            public int Interval_In_Milli_Second_s;
+        }
 
         #endregion
     }
