@@ -27,23 +27,44 @@ namespace CalculatorClient
             }
         }
 
+        public string UserMessage
+        {
+            get { return _userMessage; }
+            set { _userMessage = value; OnPropertyChanged();}
+        }
+
         public ICommand Login { get; }
 
         public LoginViewModel()
         {
+            UserMessage = "";
             Login = new RelayCommands(OnLogin);
         }
 
         private void OnLogin(object obj)
         {
-            Controller.MainController.LoginUi.InvokeLoginRequested(EmailAddress, Password);
+            if (string.IsNullOrEmpty(EmailAddress))
+                Controller.MainController.LoginUi.Display("E-Mail address required");
+            else if(string.IsNullOrEmpty(Password))
+                Controller.MainController.LoginUi.Display("Password required");
+            else
+            {
+                UserMessage = string.Empty;
+                Controller.MainController.LoginUi.InvokeLoginRequested(EmailAddress, Password);
+            }
         }
 
         #region Fields
 
         private string _emailAddress;
         private string _password;
+        private string _userMessage;
 
         #endregion
+
+        public void Display(string errorMessage)
+        {
+            UserMessage = errorMessage;
+        }
     }
 }

@@ -31,7 +31,7 @@ namespace CalculatorClient
 
         public void Display(string errorMessage)
         {
-            throw new NotImplementedException();
+            _loginViewModel.Display(errorMessage);
         }
     }
 }
