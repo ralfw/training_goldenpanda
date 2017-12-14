@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading;
 using sc.contracts;
 using servicehost;
 
@@ -15,16 +14,9 @@ namespace CredentialService
             UserService = userService;
         }
 
-        public void Start(string url)
+        public void Run(string url)
         {
-            _serviceHost = new ServiceHost();
-
-            _serviceHost.Start(new Uri(url));
-        }
-
-        public void Stop()
-        {
-            _serviceHost.Stop();
+            servicehost.Server.Run(new Uri(url));
         }
     }
 }
