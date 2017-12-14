@@ -30,8 +30,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="RestSharp, Version=106.1.0.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.106.1.0\lib\net452\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -41,7 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="adapter\db_provider.cs" />
-    <Compile Include="adapter\email_adapter.cs" />
+    <Compile Include="adapter\mailgun_adapter.cs" />
     <Compile Include="data\user_info.cs" />
     <Compile Include="user_services.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -51,6 +55,9 @@
       <Project>{e036a018-bfc5-44ec-b42b-7160e94a6cc3}</Project>
       <Name>sc.contracts</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
