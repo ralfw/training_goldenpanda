@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using sc.contracts;
 
 namespace credentionalService.core.data
 {
@@ -10,6 +11,6 @@ namespace credentionalService.core.data
     {
         public string user_email;
         public string password_hash;
-
+        public PermissionSet permissions;
     }
 }

@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="adapter\db_provider.cs" />
     <Compile Include="adapter\email_adapter.cs" />
+    <Compile Include="data\user_info.cs" />
     <Compile Include="user_services.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
