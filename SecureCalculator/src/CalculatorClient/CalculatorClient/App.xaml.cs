@@ -21,7 +21,7 @@ namespace CalculatorClient
         {
             Log.InfoFormat("{0}{0}Starting up...{0}", Environment.NewLine);
 
-            Controller.MainController.ShowLogin();
+            Controller.MainController.Run();
         }
 
         protected override void OnExit(ExitEventArgs e)

@@ -1,44 +1,55 @@
-﻿using System;
-using System.Windows;
-using CalculatorClient.Interfaces;
+﻿using CalculatorClient.Interfaces;
+using log4net;
 using sc.contracts;
 
 namespace CalculatorClient.Controller
 {
     public static class MainController
     {
-        public static ILoginUi  LoginUi { get; private set; }
-        public static ICalculatorUi CalculatorUi { get; private set; }
+        public static ILoginUi LoginUi { get; set; }
+        public static ICalculatorUi CalculatorUi { get; set; }
 
-        public static void ShowLogin()
+        public static void Run()
         {
-            if(LoginUi == null)
-                LoginUi = new LoginUi();
-
-            LoginUi.OnLoginRequested += Login;
+            AssertLoginUi();
+            LoginUi.OnLoginRequested += LoginUiRequestsLogin;
             LoginUi.Open();
         }
 
-        private static void Login(string emailAddress, string password)
+        public static void LoginUiRequestsLogin(string emailAddress, string password)
         {
-            var message = $"User called Login with{Environment.NewLine}{Environment.NewLine}" +
-                          $"email: {emailAddress}{Environment.NewLine}" +
-                          $"password:{password}";
-            MessageBox.Show(message);
+            LogRequest(emailAddress, password);
 
-            // TODO: user service to get permissions
+            // TODO: use service to get permissions
             var fakePermissions = GetFakePermissions();
 
-            // call Calculator view
+            AssertCalculatorUi();
+            CalculatorUi.Open(fakePermissions);
+        }
+
+        #region Private methods
+
+        private static void LogRequest(string emailAddress, string password)
+        {
+            Log.Debug($"Login request - Email:{emailAddress}, Password:{password}");
+        }
+
+        private static void AssertCalculatorUi()
+        {
             if (CalculatorUi == null)
                 CalculatorUi = new CalculatorUi();
+        }
 
-            CalculatorUi.Open(fakePermissions);
+        private static void AssertLoginUi()
+        {
+            if (LoginUi == null)
+                LoginUi = new LoginUi();
         }
 
         private static PermissionSet GetFakePermissions()
         {
-            Permissions[] permissions = {
+            Permissions[] permissions =
+            {
                 Permissions.Add,
                 Permissions.Subtract,
                 Permissions.Multiply,
@@ -48,5 +59,13 @@ namespace CalculatorClient.Controller
             var fakePermissions = new PermissionSet(permissions);
             return fakePermissions;
         }
+
+        #endregion
+
+        #region Fields
+
+        private static readonly ILog Log = LogManager.GetLogger(typeof(MainController));
+
+        #endregion
     }
 }
