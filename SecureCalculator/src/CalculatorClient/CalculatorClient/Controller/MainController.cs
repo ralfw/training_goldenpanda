@@ -20,11 +20,17 @@ namespace CalculatorClient.Controller
         {
             LogRequest(emailAddress, password);
 
-            // TODO: use service to get permissions
+            string hashedPassword = HashPassword(password);
+            
             var fakePermissions = GetFakePermissions();
 
             AssertCalculatorUi();
             CalculatorUi.Open(fakePermissions);
+        }
+
+        public static string HashPassword(string password)
+        {
+            return password.Length.ToString();
         }
 
         #region Private methods
