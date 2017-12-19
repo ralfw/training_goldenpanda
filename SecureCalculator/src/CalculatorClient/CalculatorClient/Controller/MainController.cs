@@ -1,4 +1,6 @@
-﻿using CalculatorClient.Interfaces;
+﻿using System.Linq;
+using CalculatorClient.Interfaces;
+using CalculatorClient.Resources;
 using log4net;
 using sc.contracts;
 
@@ -8,6 +10,7 @@ namespace CalculatorClient.Controller
     {
         public static ILoginUi LoginUi { get; set; }
         public static ICalculatorUi CalculatorUi { get; set; }
+        public static ICalculatorCredentialService CalculatorCredentialService { get; set; }
 
         public static void Run()
         {
@@ -18,26 +21,61 @@ namespace CalculatorClient.Controller
 
         public static void LoginUiRequestsLogin(string emailAddress, string password)
         {
-            LogRequest(emailAddress, password);
+            LogLoginRequest(emailAddress, password);
 
-            string hashedPassword = HashPassword(password);
-            
-            var fakePermissions = GetFakePermissions();
+            var hashedPassword = HashPassword(password);
 
-            AssertCalculatorUi();
-            CalculatorUi.Open(fakePermissions);
+            AssertService();
+            CalculatorCredentialService.LogIn(emailAddress, hashedPassword,
+                OnLoginSuccess,
+                OnLoginFailure);
         }
 
         public static string HashPassword(string password)
         {
-            return password.Length.ToString();
+            // we currently use very simple hashing, which is the length of the given password
+            var hashPassword = password.Length.ToString();
+
+            Log.Debug($"Hashed password '{password}' -> '{hashPassword}'");
+
+            return hashPassword;
+        }
+
+        public static void OnLoginSuccess(PermissionSet permissionSet)
+        {
+            LogLoginSuccess(permissionSet);
+
+            // TODO: check for any given permissions and redirect to login if there are none
+
+            AssertCalculatorUi();
+            CalculatorUi.Open(permissionSet);
+        }
+
+        public static void OnLoginFailure(string errorMessage)
+        {
+            LogLoginFailure(errorMessage);
+
+            LoginUi.Display(errorMessage);
         }
 
         #region Private methods
 
-        private static void LogRequest(string emailAddress, string password)
+        private static void LogLoginRequest(string emailAddress, string password)
         {
             Log.Debug($"Login request - Email:{emailAddress}, Password:{password}");
+        }
+
+        private static void LogLoginSuccess(PermissionSet permissionSet)
+        {
+            Log.Debug($"Login succeeded! Permissions: A({permissionSet.Permissions.Contains(Permissions.Add)})," +
+                      $"S({permissionSet.Permissions.Contains(Permissions.Subtract)})," +
+                      $"M({permissionSet.Permissions.Contains(Permissions.Multiply)})," +
+                      $"D({permissionSet.Permissions.Contains(Permissions.Divide)})");
+        }
+
+        private static void LogLoginFailure(string errorMessage)
+        {
+            Log.Debug($"Login failed! Reason '{errorMessage}'");
         }
 
         private static void AssertCalculatorUi()
@@ -52,18 +90,10 @@ namespace CalculatorClient.Controller
                 LoginUi = new LoginUi();
         }
 
-        private static PermissionSet GetFakePermissions()
+        private static void AssertService()
         {
-            Permissions[] permissions =
-            {
-                Permissions.Add,
-                Permissions.Subtract,
-                Permissions.Multiply,
-                Permissions.Divide
-            };
-
-            var fakePermissions = new PermissionSet(permissions);
-            return fakePermissions;
+            if (CalculatorCredentialService == null)
+                CalculatorCredentialService = new CalculatorCredentialService();
         }
 
         #endregion

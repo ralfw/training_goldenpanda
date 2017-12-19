@@ -63,6 +63,7 @@
     </ApplicationDefinition>
     <Compile Include="Controller\MainController.cs" />
     <Compile Include="Interfaces\ICalculatorUi.cs" />
+    <Compile Include="Resources\CalculatorCredentialService.cs" />
     <Compile Include="Ui\Calculator\CalculatorUi.cs" />
     <Compile Include="Ui\Calculator\CalculatorViewModel.cs" />
     <Compile Include="Interfaces\ILoginUi.cs" />
