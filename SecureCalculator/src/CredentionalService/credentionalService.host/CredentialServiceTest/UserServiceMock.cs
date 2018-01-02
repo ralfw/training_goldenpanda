@@ -3,7 +3,7 @@ using sc.contracts;
 
 namespace CredentialServiceTest
 {
-    internal class UserServiceMock : IUserService
+    public class UserServiceMock : IUserService
     {
         public UserServiceMock()
         {

@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Runtime.Remoting.Messaging;
-using System.Text;
-using System.Threading.Tasks;
-using sc.contracts;
+﻿using sc.contracts;
 using servicehost.contract;
 
 namespace CredentialService
@@ -23,19 +15,21 @@ namespace CredentialService
         }
 
         [EntryPoint(HttpMethods.Get, "/api/v1/users/role")] 
-        public string Login(string emailAddress, string passwordHash)
+        public LoginResult Login(string emailAddress, string passwordHash)
         {
-            var result = string.Empty;
+            var error = string.Empty;
             PermissionSet permissionSet = null;
-            Server.UserService.LogIn(emailAddress, passwordHash, p => permissionSet = p, s => result = s);
+            Server.UserService.LogIn(emailAddress, passwordHash, p => permissionSet = p, s => error = s);
             //TODO Change result type 
-            return result;
+
+            return new LoginResult {Error = error, Permissions = permissionSet };
         }
     }
 
     public class LoginResult
     {
         public string Error { get; set; }
+        public PermissionSet Permissions { get; set; }
 
     }
 }
