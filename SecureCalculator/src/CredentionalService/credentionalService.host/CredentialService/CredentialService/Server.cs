@@ -16,7 +16,7 @@ namespace CredentialService
 
         public void Run(string url)
         {
-            servicehost.Server.Run(new Uri(url));
+            servicehost.ServiceHost.Run(new Uri(url));
         }
     }
 }
