@@ -10,11 +10,15 @@
 
     public class PermissionSet 
     {
+        public PermissionSet()
+        {
+        }
+
         public PermissionSet(Permissions[] permissions)
         {
             Permissions = permissions;
         }
 
-        public Permissions[] Permissions { get; }
+        public Permissions[] Permissions { get; set; }
     }
 }
