@@ -16,8 +16,10 @@ namespace CredentialServiceTest
 
         public void LogIn(string emailAddress, string passwordHash, Action<PermissionSet> onSuccess, Action<string> onError)
         {
-            onError?.Invoke($"ServiceMock: LogIn-Command: emailAddress={emailAddress}; passwordHash={passwordHash}");
-            onSuccess?.Invoke(new PermissionSet(new Permissions[] {Permissions.Add, Permissions.Subtract }));
+            if (emailAddress.Contains("error"))
+              onError?.Invoke($"ServiceMock: LogIn-Command: emailAddress={emailAddress}; passwordHash={passwordHash}");
+            else
+              onSuccess?.Invoke(new PermissionSet(new Permissions[] {Permissions.Add, Permissions.Subtract }));
         }
     }
 }
