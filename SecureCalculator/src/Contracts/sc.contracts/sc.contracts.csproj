@@ -44,6 +44,7 @@
     <Compile Include="IEmailProvider.cs" />
     <Compile Include="ICalculatorCredentialService.cs" />
     <Compile Include="IUserService.cs" />
+    <Compile Include="LoginResult.cs" />
     <Compile Include="PermissionSet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -20,16 +20,8 @@ namespace CredentialService
             var error = string.Empty;
             PermissionSet permissionSet = null;
             Server.UserService.LogIn(emailAddress, passwordHash, p => permissionSet = p, s => error = s);
-            //TODO Change result type 
 
             return new LoginResult {Error = error, Permissions = permissionSet };
         }
-    }
-
-    public class LoginResult
-    {
-        public string Error { get; set; }
-        public PermissionSet Permissions { get; set; }
-
     }
 }
