@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>sc.administration</RootNamespace>
     <AssemblyName>sc.administration</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -37,7 +38,8 @@
       <HintPath>..\packages\appcfg.1.0.2\lib\net45\appcfg.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="sc.contracts">
+    <Reference Include="sc.contracts, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\contracts\sc.contracts.dll</HintPath>
     </Reference>
     <Reference Include="System" />
