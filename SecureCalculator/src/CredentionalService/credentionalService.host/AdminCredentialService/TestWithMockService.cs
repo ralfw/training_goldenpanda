@@ -18,6 +18,7 @@ namespace AdminCredentialService
             Assert.True(success);
         }
 
+        [Test]
         public void CallWithError()
         {
             var service = new AdminCredentialService();

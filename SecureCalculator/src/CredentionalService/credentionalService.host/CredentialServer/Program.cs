@@ -11,7 +11,7 @@ namespace CredentialServer
         {
             //TODO use real Service 
             var server = new Server(new UserServiceMock());
-            server.Run("http://localhost:8080");
+            server.Run("http://localhost:80");
         }
 
         #endregion
