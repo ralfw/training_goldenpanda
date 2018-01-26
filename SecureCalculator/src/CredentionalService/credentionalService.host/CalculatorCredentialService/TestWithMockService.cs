@@ -1,11 +1,10 @@
-﻿using System;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using sc.contracts;
 
 namespace CalculatorCredentialService
 {
     [TestFixture]
-    public class Test
+    public class TestWithMockService
     {
         [Test]
         public void CallWithError()
@@ -13,7 +12,7 @@ namespace CalculatorCredentialService
             var service = new CalculatorCredentialService();
             var error = string.Empty;
             PermissionSet ps = null;
-            service.LogIn("test@mich_error.de","123456", set => { ps = set;}, s => { error = s;});
+            service.LogIn("test@mich_error.de", "123456", set => { ps = set; }, s => { error = s; });
 
             Assert.True(error.Contains("test@mich_error.de"));
         }
@@ -26,7 +25,7 @@ namespace CalculatorCredentialService
             PermissionSet ps = null;
             service.LogIn("test@mich.de", "123456", set => { ps = set; }, s => { error = s; });
             Assert.True(string.IsNullOrEmpty(error));
-            Assert.True(ps.Permissions.Length==2);
+            Assert.True(ps.Permissions.Length == 2);
         }
     }
 }

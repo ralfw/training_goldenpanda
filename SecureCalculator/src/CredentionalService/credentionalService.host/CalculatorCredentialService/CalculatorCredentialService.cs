@@ -1,10 +1,6 @@
 ﻿using System;
-using System.IO;
 using System.Net;
-using Newtonsoft.Json;
 using RestSharp;
-using RestSharp.Deserializers;
-using RestSharp.Serializers;
 using sc.contracts;
 
 namespace CalculatorCredentialService
@@ -21,14 +17,14 @@ namespace CalculatorCredentialService
             myproxy.BypassProxyOnLocal = false;
             client.Proxy = myproxy;
 
-            var myJsonDeserializer = new MyJsonDeserializer();
+            var myJsonDeserializer = new NewtonsoftJsonDeserializer();
             client.AddHandler("application/json", myJsonDeserializer);
             client.AddHandler("text/json", myJsonDeserializer);
 
             var request = new RestRequest("/api/v1/users/role", Method.GET);
             request.AddParameter("emailAddress", emailAddress);
             request.AddParameter("passwordHash", passwordHash);
-            
+
             var loginResult = client.Execute<LoginResult>(request);
             if (loginResult.ErrorException == null && string.IsNullOrEmpty(loginResult.Data.Error))
                 onSuccess?.Invoke(loginResult.Data.Permissions);
@@ -39,27 +35,5 @@ namespace CalculatorCredentialService
         }
 
         #endregion
-    }
-
-    public class MyJsonDeserializer : IDeserializer 
-    {
-        
-
-        public T Deserialize<T>(IRestResponse response)
-        {
-            var content = response.Content;
-
-            using (var stringReader = new StringReader(content))
-            {
-                using (var jsonTextReader = new JsonTextReader(stringReader))
-                {
-                    return new Newtonsoft.Json.JsonSerializer().Deserialize<T>(jsonTextReader);
-                }
-            }
-        }
-
-        public string RootElement { get; set; }
-        public string Namespace { get; set; }
-        public string DateFormat { get; set; }
     }
 }

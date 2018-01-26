@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("CalculatorCredentialService")]
+[assembly: AssemblyTitle("AdminCredentialService")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("CalculatorCredentialService")]
+[assembly: AssemblyProduct("AdminCredentialService")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -19,7 +19,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("5b6a31fb-6b5e-48b7-9ef2-2b2c04d3df55")]
+[assembly: Guid("8c4dc042-48d0-44e5-8d4e-9a1decfa8da3")]
 
 // Version information for an assembly consists of the following four values:
 //
