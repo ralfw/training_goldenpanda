@@ -4,7 +4,7 @@ using sc.contracts;
 namespace CalculatorCredentialService
 {
     [TestFixture]
-    public class TestWithMockService
+    public class CalculatorCredentialServiceTestWithMockService
     {
         [Test]
         public void CallWithError()

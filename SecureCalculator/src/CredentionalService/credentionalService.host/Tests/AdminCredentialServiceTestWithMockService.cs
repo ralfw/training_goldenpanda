@@ -3,7 +3,7 @@
 namespace AdminCredentialService
 {
     [TestFixture]
-    public class TestWithMockService
+    public class AdminCredentialServiceTestWithMockService
     {
         [Test]
         public void CallWithoutError()
