@@ -11,7 +11,7 @@ namespace sc.administration.Providers
         {
 
             var cfgSchema = new AppCfgSchema(string.Empty,
-                new Route("cu", isDefault: false)
+                new Route("cu", isDefault: true)
                     .Param("email", valueType: ValueTypes.String, isRequired: true)
                     .Param("role", valueType: ValueTypes.String, isRequired: true)
                     .Param("serveruri", valueType: ValueTypes.String, isRequired: true));

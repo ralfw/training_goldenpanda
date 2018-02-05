@@ -12,8 +12,9 @@ namespace sc.administration
         static void Main(string[] args)
         {
             var config = ConfigProvider.GetConfig(args);
-            // var credentialService = new CredentialService(config.ServerUri);
-            // Controller.Run(config, credentialService);
+        
+            var credentialService = new AdminCredentialService.AdminCredentialService();
+            Controller.Run(config, credentialService);
         }
     }
 }
