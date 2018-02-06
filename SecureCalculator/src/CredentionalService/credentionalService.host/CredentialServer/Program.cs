@@ -9,8 +9,7 @@ namespace CredentialServer
 
         static void Main(string[] args)
         {
-            //TODO use real Service 
-            var server = new Server(new UserServiceMock());
+            var server = new Server(new credentionalService.core.user_services());
             server.Run("http://localhost:80");
         }
 
