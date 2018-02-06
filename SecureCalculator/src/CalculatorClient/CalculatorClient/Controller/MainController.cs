@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 using CalculatorClient.Interfaces;
-using CalculatorClient.Resources;
 using log4net;
 using sc.contracts;
+
 
 namespace CalculatorClient.Controller
 {
@@ -93,7 +93,10 @@ namespace CalculatorClient.Controller
         private static void AssertService()
         {
             if (CalculatorCredentialService == null)
-                CalculatorCredentialService = new CalculatorCredentialService();
+            {
+                //CalculatorCredentialService = new CalculatorCredentialService();
+                CalculatorCredentialService = new CalculatorCredentialService.CalculatorCredentialService();
+            }
         }
 
         #endregion
