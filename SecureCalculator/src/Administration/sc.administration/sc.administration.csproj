@@ -39,8 +39,7 @@
       <HintPath>..\..\..\bin\CredentialService\AdminCredentialService\AdminCredentialService.dll</HintPath>
     </Reference>
     <Reference Include="appcfg, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\appcfg.1.0.2\lib\net45\appcfg.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\packages\appcfg.1.0.2\lib\net45\appcfg.dll</HintPath>
     </Reference>
     <Reference Include="sc.contracts, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

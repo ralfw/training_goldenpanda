@@ -45,6 +45,25 @@ namespace credentionalService.core
 
         public void LogIn(String emailAddress, String passwordHash, Action<PermissionSet> onSuccess, Action<String> onError)
         {
+            var availableUser = new db_provider().get_user_info(emailAddress);
+            if (availableUser == null)
+            {
+                onError("User does not exist!");
+                return;
+            }
+
+            if (availableUser.password_hash != passwordHash)
+            {
+                onError("Wrong password!");
+                return;
+            }
+
+            if (availableUser.permissions == null)
+            {
+                throw new ApplicationException($"no permissions set for user {availableUser.user_email}!");
+            }
+
+            onSuccess.Invoke(availableUser.permissions);
         }
 
         #endregion
