@@ -39,7 +39,7 @@
       <HintPath>..\..\..\bin\CredentialService\AdminCredentialService\AdminCredentialService.dll</HintPath>
     </Reference>
     <Reference Include="appcfg, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\appcfg.1.0.2\lib\net45\appcfg.dll</HintPath>
+      <HintPath>..\..\..\..\packages\appcfg.1.0.2\lib\net45\appcfg.dll</HintPath>
     </Reference>
     <Reference Include="sc.contracts, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -48,7 +48,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.ValueTuple.4.4.0\lib\net461\System.ValueTuple.dll</HintPath>
+      <HintPath>..\..\..\..\packages\System.ValueTuple.4.4.0\lib\net461\System.ValueTuple.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
