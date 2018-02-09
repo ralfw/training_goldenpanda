@@ -2,7 +2,6 @@
 using System.Dynamic;
 using Moq;
 using NUnit.Framework;
-using sc.administration.Data;
 using sc.administration.Providers;
 using sc.contracts;
 
@@ -14,7 +13,11 @@ namespace sc.administration.UnitTest.controller
         [Test]
         public void ShouldCallCreateUser()
         {
-            dynamic config = new {_RoutePath = "cu", email = "test@wago.com", role ="student", serveruri ="uri"};
+            dynamic config = new ExpandoObject();
+            config._RoutePath = "cu";
+            config.email = "test@wago.com";
+            config.role = "student";
+            config.serveruri = "uri";
 
             var credentialServiceMock = new Mock<IAdminCredentialService>();
 
