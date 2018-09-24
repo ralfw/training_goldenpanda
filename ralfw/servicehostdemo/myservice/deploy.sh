@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+dropstack deploy --compress --verbose --alias wagocredentials.cloud.dropstack.run -v test=./nix.sh -v build=./nix.sh -v run=./run.sh --type mono --stateful -v WAGOCREDENTIALS_DBFILENAME=/mnt/db.txt
