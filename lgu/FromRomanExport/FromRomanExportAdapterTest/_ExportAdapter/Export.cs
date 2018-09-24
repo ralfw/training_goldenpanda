@@ -6,6 +6,8 @@ using NUnit.Framework;
 
 namespace FromRomanExportAdapterTest._ExportAdapter
 {
+    /* Test */
+
     [TestFixture]
     public class Export
     {
