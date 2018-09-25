@@ -53,9 +53,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="_Predictor\CalcDuration.cs" />
+    <Compile Include="_Predictor\Predict.cs" />
+    <Compile Include="_Predictor\SortDurations.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\bbp\bbp.csproj">
+      <Project>{908bb792-2e34-483c-9c7b-6802a36a4961}</Project>
+      <Name>bbp</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
