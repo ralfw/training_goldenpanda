@@ -46,6 +46,7 @@
     <Compile Include="BlackBox.cs" />
     <Compile Include="DatesProvider.cs" />
     <Compile Include="DisplayAdapter.cs" />
+    <Compile Include="Dto\UserStory.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
