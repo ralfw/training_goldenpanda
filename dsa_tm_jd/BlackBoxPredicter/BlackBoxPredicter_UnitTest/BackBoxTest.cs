@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using BlackBoxPredicter;
 using FluentAssertions;
 using NUnit.Framework;
@@ -16,9 +17,34 @@ namespace BlackBoxPredicter_UnitTest
     public class BackBoxTest
     {
         [Test]
+        public void ShouldCalculatePercentils()
+        {
+            IList<int> inputList = new List<int>(){2,2,3,3,3,4,5,7};
+
+            var result = BlackBox.CalculatePercintles(inputList).ToArray();
+
+            result[0]
+                .Item1.Should()
+                .Be(2);
+
+            result[0]
+                .Item2.Should()
+                .Be(0.125);
+
+
+            result[7]
+                .Item1.Should()
+                .Be(7);
+
+            result[7]
+                .Item2.Should()
+                .Be(1);
+        }
+
+        [Test]
         public void ShouldCalculatedDurations()
         {
-            BlackBox bl = new BlackBox();
+      
 
             IList<Tuple<DateTime, DateTime>> dates = new List<Tuple<DateTime, DateTime>>();
 
