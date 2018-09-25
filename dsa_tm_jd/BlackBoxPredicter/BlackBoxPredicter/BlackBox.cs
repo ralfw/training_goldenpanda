@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using BlackBoxPredicter.Dto;
 
 namespace BlackBoxPredicter
 {
     public class BlackBox
     {
-        public static IList<int> CalculateCycleTimes(IList<Tuple<DateTime, DateTime>> dates)
+        public static IList<int> CalculateCycleTimes(IEnumerable<UserStory> userStories)
         {
-            return dates.Select(o => CalcCycleTime(o.Item1, o.Item2))
+            return userStories.Select(o => CalcCycleTime(o.Start, o.End))
                         .OrderBy(o => o)
                         .ToList();
 

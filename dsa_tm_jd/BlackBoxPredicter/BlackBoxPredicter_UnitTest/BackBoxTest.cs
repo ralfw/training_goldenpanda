@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using BlackBoxPredicter;
+using BlackBoxPredicter.Dto;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -18,23 +19,22 @@ namespace BlackBoxPredicter_UnitTest
         [Test]
         public void ShouldCalculatedDurations()
         {
-            BlackBox bl = new BlackBox();
+            IList<UserStory> userStories = new List<UserStory>
+            {
+                new UserStory(DateTime.Parse("2018-01-01"), DateTime.Parse("2018-01-02")),
+                new UserStory(DateTime.Parse("2018-01-01"), DateTime.Parse("2018-01-03"))
+            };
 
-            IList<Tuple<DateTime, DateTime>> dates = new List<Tuple<DateTime, DateTime>>();
+            var cycleTimes = BlackBox.CalculateCycleTimes(userStories);
 
-            dates.Add(new Tuple<DateTime, DateTime>(DateTime.Parse("2018-01-01"), DateTime.Parse("2018-01-02")));
-            dates.Add(new Tuple<DateTime, DateTime>(DateTime.Parse("2018-01-01"), DateTime.Parse("2018-01-03")));
-
-            BlackBox.CalculateCycleTimes(dates).Count.Should().Be(2);
-            BlackBox.CalculateCycleTimes(dates)[0]
+            cycleTimes.Count.Should().Be(2);
+            cycleTimes[0]
               .Should()
               .Be(2);
 
-            BlackBox.CalculateCycleTimes(dates)[1]
+            cycleTimes[1]
               .Should()
               .Be(3);
-
-
         }
 
     }
