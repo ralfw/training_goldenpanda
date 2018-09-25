@@ -11,8 +11,9 @@ namespace BlackBoxPredicter
     {
         static void Main(string[] args)
         {
-
-            TestDisplay();
+            var dates = DatesProvider.GetDates();
+            var cycles = BlackBox.CalculateCycleTimes(dates);
+            DisplayAdapter.Display(cycles);
         }
 
         private static void TestDisplay()

@@ -19,7 +19,7 @@ namespace BlackBoxPredicter
                 new Tuple<DateTime, DateTime>(DateTime.Parse("2018-01-01"), DateTime.Parse("2018-01-03")),
                 new Tuple<DateTime, DateTime>(DateTime.Parse("2018-01-01"), DateTime.Parse("2018-01-05")),
                 new Tuple<DateTime, DateTime>(DateTime.Parse("2018-01-01"), DateTime.Parse("2018-01-03")),
-                new Tuple<DateTime, DateTime>(DateTime.Parse("2018-12-30"), DateTime.Parse("2018-01-02")),
+                new Tuple<DateTime, DateTime>(DateTime.Parse("2017-12-30"), DateTime.Parse("2018-01-02")),
             };
         }
     }

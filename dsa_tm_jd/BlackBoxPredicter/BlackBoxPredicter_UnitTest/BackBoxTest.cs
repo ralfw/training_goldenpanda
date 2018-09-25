@@ -25,12 +25,12 @@ namespace BlackBoxPredicter_UnitTest
             dates.Add(new Tuple<DateTime, DateTime>(DateTime.Parse("2018-01-01"), DateTime.Parse("2018-01-02")));
             dates.Add(new Tuple<DateTime, DateTime>(DateTime.Parse("2018-01-01"), DateTime.Parse("2018-01-03")));
 
-            BlackBox.CalculateCycles(dates).Count.Should().Be(2);
-            BlackBox.CalculateCycles(dates)[0]
+            BlackBox.CalculateCycleTimes(dates).Count.Should().Be(2);
+            BlackBox.CalculateCycleTimes(dates)[0]
               .Should()
               .Be(2);
 
-            BlackBox.CalculateCycles(dates)[1]
+            BlackBox.CalculateCycleTimes(dates)[1]
               .Should()
               .Be(3);
 
