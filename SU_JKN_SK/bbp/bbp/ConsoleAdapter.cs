@@ -5,7 +5,7 @@ namespace bbp
 {
     public static class ConsoleAdapter
     {
-        public static void Output(List<int> data)
+        public static void Output(IEnumerable<int> data)
         {
             foreach (var i in data)
             {

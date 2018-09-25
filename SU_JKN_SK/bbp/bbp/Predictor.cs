@@ -1,42 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
+using bbp.dto;
 
 namespace bbp
 {
-    public static class Predictor
+    internal static class Predictor
     {
-        public static int CalcDuration(string startDate, string endDate)
-        {
-            var start = DateTime.ParseExact(startDate, "yyyy-MM-dd", CultureInfo.CurrentCulture);
-            var end = DateTime.ParseExact(endDate, "yyyy-MM-dd", CultureInfo.CurrentCulture);
-
-            var duration = (end - start).Days + 1;
-            return duration;
-        }
-
-        public static List<int> CalcDurations(List<Tuple<string, string>> data)
-        {
-            var result = new List<int>();
-            foreach (var tuple in data)
-            {
-                result.Add(CalcDuration(tuple.Item1, tuple.Item2));
-            }
-
-            return result;
-        }
-
-        public static List<int> Predict(List<Tuple<string, string>> data)
+        public static IEnumerable<int> CalculateSortedDurations(IEnumerable<UserStory> data)
         {
             var unsortedDurations = CalcDurations(data);
             var sortedDurations = SortDurations(unsortedDurations);
             return sortedDurations;
         }
 
-        public static List<int> SortDurations(List<int> unsortedDurations)
-        {
-            return unsortedDurations.OrderBy(i => i).ToList();
-        }
+        #region Private methods
+
+        private static int CalcDuration(DateTime startDate, DateTime endDate) => (endDate - startDate).Days + 1;
+
+
+        private static IEnumerable<int> CalcDurations(IEnumerable<UserStory> data)
+            => data.Select(d => CalcDuration(d.StartDate, d.EndDate));
+
+
+        private static IEnumerable<int> SortDurations(IEnumerable<int> unsortedDurations) => unsortedDurations.OrderBy(i => i);
+
+        #endregion
     }
 }
