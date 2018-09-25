@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using bbp.dto;
 
 namespace bbp
@@ -11,8 +12,9 @@ namespace bbp
         {
             var testData = GetTestData();
 
-            var sortedDurations = Predictor.CalculateSortedDurations(testData);
-            ConsoleAdapter.Output(sortedDurations);
+            var result = Predictor.Predict(testData);
+            foreach (var r in result)
+                ConsoleAdapter.Output($"{r.Duration}: {r.AccumulatedPercentile:F3} - {r.Frequency}\n");
         }
 
         private static List<UserStory> GetTestData()

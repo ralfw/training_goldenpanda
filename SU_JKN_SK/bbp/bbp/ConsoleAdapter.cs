@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace bbp
 {
     public static class ConsoleAdapter
     {
-        public static void Output(IEnumerable<int> data)
+        public static void Output(string text)
         {
-            foreach (var i in data)
-            {
-                Console.WriteLine(i);
-            }
+            Console.Write(text);
         }
     }
 }

@@ -3,10 +3,12 @@ using System.Globalization;
 
 namespace bbp.dto
 {
-    internal class UserStory
+    public class UserStory
     {
         public DateTime StartDate { get; }
         public DateTime EndDate { get; }
+
+        public int Duration => (EndDate - StartDate).Days + 1;
 
         public UserStory(DateTime startDate, DateTime endDate)
         {
@@ -14,8 +16,9 @@ namespace bbp.dto
             EndDate = endDate;
         }
 
-        public UserStory(string startDate, string endDate) : this(DateTime.ParseExact(startDate, "yyyy-MM-dd", CultureInfo.CurrentCulture),
-            DateTime.ParseExact(endDate, "yyyy-MM-dd", CultureInfo.CurrentCulture))
+        public UserStory(string startDate, string endDate) 
+            : this(DateTime.ParseExact(startDate, "yyyy-MM-dd", CultureInfo.CurrentCulture),
+                   DateTime.ParseExact(endDate, "yyyy-MM-dd", CultureInfo.CurrentCulture))
         {
         }
     }

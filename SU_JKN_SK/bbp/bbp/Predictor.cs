@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using bbp.dto;
 
@@ -7,23 +6,29 @@ namespace bbp
 {
     internal static class Predictor
     {
-        public static IEnumerable<int> CalculateSortedDurations(IEnumerable<UserStory> data)
+        public static IEnumerable<PredictorResult> Predict(IEnumerable<UserStory> data)
         {
-            var unsortedDurations = CalcDurations(data);
-            var sortedDurations = SortDurations(unsortedDurations);
-            return sortedDurations;
+            var sortedGroupedUserStories = GroupSortedUserStories(data).ToArray();
+            return CalculateHistogramData(sortedGroupedUserStories);
         }
 
         #region Private methods
 
-        private static int CalcDuration(DateTime startDate, DateTime endDate) => (endDate - startDate).Days + 1;
+        private static IEnumerable<IGrouping<int, UserStory>> GroupSortedUserStories(IEnumerable<UserStory> data)
+            => data.OrderBy(u => u.Duration)
+                   .GroupBy(u => u.Duration);
 
+        private static IEnumerable<PredictorResult> CalculateHistogramData(IGrouping<int, UserStory>[] sortedGroupedUserStories)
+        {
+            var percentageIncrement = 1f / sortedGroupedUserStories.Sum(u => u.Count());
+            var position = 0;
 
-        private static IEnumerable<int> CalcDurations(IEnumerable<UserStory> data)
-            => data.Select(d => CalcDuration(d.StartDate, d.EndDate));
-
-
-        private static IEnumerable<int> SortDurations(IEnumerable<int> unsortedDurations) => unsortedDurations.OrderBy(i => i);
+            return sortedGroupedUserStories.Select(u =>
+            {
+                position += u.Count();
+                return new PredictorResult(u.Key, position * percentageIncrement, u.Count());
+            });
+        }
 
         #endregion
     }
