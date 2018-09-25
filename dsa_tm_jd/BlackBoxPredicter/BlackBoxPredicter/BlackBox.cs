@@ -16,6 +16,28 @@ namespace BlackBoxPredicter
             int CalcCycleTime(DateTime start, DateTime end) => (end - start).Days + 1;
         }
 
+        internal static IEnumerable<Tuple<int, double>> FindHighestPercentils(IEnumerable<Tuple<int, double>> percentils)
+        {
+            IList<Tuple<int, double> >  result = new List<Tuple<int, double>>();
+
+            foreach (var percentil in percentils)
+            {
+                if (result.All(o => o.Item1 != percentil.Item1))
+                {
+                    result.Add(new Tuple<int, double>(percentil.Item1,percentil.Item2));
+                }
+
+                var itm = result.First(o => o.Item1 == percentil.Item1);
+                if (itm.Item2 < percentil.Item2)
+                {
+                    result.Remove(itm);
+                    result.Add(new Tuple<int, double>(percentil.Item1, percentil.Item2));                    
+                }
+            }
+
+            return result;
+        }
+
         internal static IEnumerable<Tuple<int, double>> CalculatePercentiles(IEnumerable<int> cycleTimes)
         {
             IList<Tuple<int, double>> result = new List<Tuple<int, double>>();
@@ -26,8 +48,9 @@ namespace BlackBoxPredicter
             {
                 result.Add(new Tuple<int, double>(cycleTimesArray[i], (i+1.0)/cycleTimesArray.Length));                                    
             }
-
             return result;
         }
+
+
     }
 }

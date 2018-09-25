@@ -17,10 +17,32 @@ namespace BlackBoxPredicter_UnitTest
     [TestFixture]
     public class BackBoxTest
     {
+
+        [Test]
+        public void ShouldGetFighestPercentiles()
+        {
+            IList<Tuple<int, double> > input = new List<Tuple<int, double>>()
+                                                   {
+                                                       new Tuple<int, double>(1,2),
+                                                       new Tuple<int, double>(1,3),
+                                                       new Tuple<int, double>(3,4),
+                                                       new Tuple<int, double>(3,5),
+                                                   };
+
+            var filtered = BlackBox.FindHighestPercentils(input);
+
+            filtered.Count()
+                    .Should()
+                    .Be(2);
+        }
+
         [Test]
         public void ShouldCalculatePercentiles()
         {
             IList<int> inputList = new List<int>(){2,2,3,3,3,4,5,7};
+
+            var r = inputList.GroupBy(o => o);
+            
 
             var result = BlackBox.CalculatePercentiles(inputList).ToArray();
 
