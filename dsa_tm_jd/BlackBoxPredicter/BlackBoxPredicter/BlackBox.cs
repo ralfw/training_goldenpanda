@@ -7,7 +7,7 @@ namespace BlackBoxPredicter
 {
     public class BlackBox
     {
-        public static IList<int> CalculateCycleTimes(IEnumerable<UserStory> userStories)
+        internal static IList<int> CalculateCycleTimes(IEnumerable<UserStory> userStories)
         {
             return userStories.Select(o => CalcCycleTime(o.Start, o.End))
                         .OrderBy(o => o)
@@ -16,7 +16,7 @@ namespace BlackBoxPredicter
             int CalcCycleTime(DateTime start, DateTime end) => (end - start).Days + 1;
         }
 
-        public static IEnumerable<Tuple<int, double>> CalculatePercintles(IEnumerable<int> cycleTimes)
+        internal static IEnumerable<Tuple<int, double>> CalculatePercentiles(IEnumerable<int> cycleTimes)
         {
             IList<Tuple<int, double>> result = new List<Tuple<int, double>>();
 

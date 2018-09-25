@@ -7,7 +7,7 @@
         {
             var dates = DatesProvider.GetDates();
             var cycles = BlackBox.CalculateCycleTimes(dates);
-            var percintels = BlackBox.CalculatePercintles(cycles);
+            var percintels = BlackBox.CalculatePercentiles(cycles);
             DisplayAdapter.Display(percintels);
         }
     }

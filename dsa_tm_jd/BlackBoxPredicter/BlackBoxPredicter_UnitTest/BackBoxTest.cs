@@ -18,11 +18,11 @@ namespace BlackBoxPredicter_UnitTest
     public class BackBoxTest
     {
         [Test]
-        public void ShouldCalculatePercentils()
+        public void ShouldCalculatePercentiles()
         {
             IList<int> inputList = new List<int>(){2,2,3,3,3,4,5,7};
 
-            var result = BlackBox.CalculatePercintles(inputList).ToArray();
+            var result = BlackBox.CalculatePercentiles(inputList).ToArray();
 
             result[0]
                 .Item1.Should()
