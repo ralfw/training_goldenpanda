@@ -34,6 +34,10 @@ namespace BlackBoxPredicter_UnitTest
             filtered.Count()
                     .Should()
                     .Be(2);
+
+            filtered.First()
+                    .Item2.Should()
+                    .Be(3);
         }
 
         [Test]
