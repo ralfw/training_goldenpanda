@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
 using BlackBoxPredicter.Dto;
 
 namespace BlackBoxPredicter
@@ -9,10 +9,17 @@ namespace BlackBoxPredicter
         {
             var dates = DatesProvider.GetDates();
             var cycles = BlackBox.CalculateCycleTimes(dates);
-            var percintels = BlackBox.CalculatePercentiles(cycles);
-            var histogram = BlackBox.GenerateHistogramm(percintels);
-           
-            DisplayAdapter.Display(histogram);
+            var percentiles = BlackBox.CalculatePercentiles(cycles);
+            var histogram = BlackBox.GenerateHistogramm(percentiles);
+
+            var histogram2 = new Histogram()
+            {
+                Entries = histogram.ToList(),
+                MarkerIndex = 2,
+                MarkerValue = 83.3f
+            };
+
+            DisplayAdapter.Display(histogram2);
         }
     }
 }
