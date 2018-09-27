@@ -11,12 +11,33 @@ using BlackBoxPredicter;
 using BlackBoxPredicter.Dto;
 using FluentAssertions;
 using NUnit.Framework;
+using NUnit.Framework.Internal;
 
 namespace BlackBoxPredicter_UnitTest
 {
     [TestFixture]
     public class BackBoxTest
     {
+        [Test]
+        public void ShouldDetectMarkerIndex()
+        {
+            Histogram histogram = new Histogram();
+
+            histogram.Entries.Add(new HistogramEntry(1,2,0.3));
+            histogram.Entries.Add(new HistogramEntry(2,2,0.4));
+            histogram.Entries.Add(new HistogramEntry(3,2,0.6));
+            histogram.Entries.Add(new HistogramEntry(4,2,0.8));
+            histogram.MarkerValue = 50;
+            BlackBox.DetectMarkerIndex(histogram)
+                    .Should()
+                    .Be(1);
+
+
+            histogram.MarkerValue = 80;
+            BlackBox.DetectMarkerIndex(histogram)
+                    .Should()
+                    .Be(3);
+        }
 
         [Test]
         public void ShouldGetFighestPercentiles()

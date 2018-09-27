@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace BlackBoxPredicter.Dto
 {
-    class Histogram
+    internal class Histogram
     {
-        public IList<HistogramEntry> Entries { get; set; }
+        public IList<HistogramEntry> Entries { get; set; } = new List<HistogramEntry>();
         public int MarkerIndex { get; set; }
         public float MarkerValue { get; set; }
+
     }
 }

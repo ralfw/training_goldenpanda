@@ -11,8 +11,14 @@ namespace BlackBoxPredicter
             var cycles = BlackBox.CalculateCycleTimes(dates);
             var percintels = BlackBox.CalculatePercentiles(cycles);
             var histogram = BlackBox.GenerateHistogramm(percintels);
-           
-            DisplayAdapter.Display(histogram);
+            histogram.MarkerValue = 83.0f;
+
+            histogram.MarkerIndex = BlackBox.DetectMarkerIndex(histogram);
+
+
+
+
+            // DisplayAdapter.Display(histogram);
         }
     }
 }
