@@ -4,14 +4,39 @@ using BlackBoxPredicter.Dto;
 
 namespace BlackBoxPredicter
 {
-    public class DisplayAdapter
+    internal class DisplayAdapter
     {
-        public static void Display(IEnumerable<HistogramEntry> historyEntries)
+        public static void Display(Histogram histogram)
+        {
+            PrintHeader();
+            PrintMarkerValue(histogram);
+            PrintHistogramData(histogram);
+        }
+
+        private static void PrintHeader()
         {
             Console.Out.WriteLine("Histogram");
             Console.Out.WriteLine("-----------");
-            foreach (var histogramEntry in historyEntries)
-                Console.Out.WriteLine(FormatHistoryLine(histogramEntry));
+        }
+
+        private static void PrintMarkerValue(Histogram histogram)
+        {
+            Console.Out.WriteLine("");
+            Console.Out.WriteLine($"Verlässlichkeitsniveau = {histogram.MarkerValue:##.##} %");
+            Console.Out.WriteLine("");
+        }
+
+        private static void PrintHistogramData(Histogram histogram)
+        {
+            for (var i = 0; i < histogram.Entries.Count; i++)
+            {
+                Console.Out.WriteLine(FormatHistoryLine(histogram.Entries[i]));
+                if (i != histogram.MarkerIndex)
+                    continue;
+
+                Console.Out.WriteLine("______________________");
+                Console.Out.WriteLine("");
+            }
 
             Console.Out.WriteLine("");
         }
@@ -19,6 +44,12 @@ namespace BlackBoxPredicter
         private static string FormatHistoryLine(HistogramEntry histogramEntry)
         {
             return $"{histogramEntry.CycleTime};{histogramEntry.Frequence}x, {histogramEntry.Percentil}";
+        }
+
+        [Obsolete("Use overwrite with parameter type History instead. /TMa")]
+        public static void Display(IEnumerable<HistogramEntry> historyEntries)
+        {
+            throw new NotSupportedException("Displaying single history entries is no longer supported.");
         }
     }
 }

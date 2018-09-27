@@ -19,7 +19,7 @@ namespace BlackBoxPredicter_UnitTest
     public class BackBoxTest
     {
         [Test]
-        public void ShouldDetectMarkerIndex()
+        public void ShouldGenerateHistogramm()
         {
             Histogram histogram = new Histogram();
 
@@ -27,20 +27,25 @@ namespace BlackBoxPredicter_UnitTest
             histogram.Entries.Add(new HistogramEntry(2,2,0.4));
             histogram.Entries.Add(new HistogramEntry(3,2,0.6));
             histogram.Entries.Add(new HistogramEntry(4,2,0.8));
-            histogram.MarkerValue = 50;
-            BlackBox.DetectMarkerIndex(histogram)
-                    .Should()
-                    .Be(1);
+
+            var result50 = BlackBox.GenerateHistogramm(histogram.Entries, 50);
+            result50.MarkerValue.Should()
+                  .Be(50);
+
+            result50.MarkerIndex.Should()
+                  .Be(1);
 
 
-            histogram.MarkerValue = 80;
-            BlackBox.DetectMarkerIndex(histogram)
-                    .Should()
+            var result90 = BlackBox.GenerateHistogramm(histogram.Entries, 90);
+            result90.MarkerValue.Should()
+                    .Be(90);
+
+            result90.MarkerIndex.Should()
                     .Be(3);
         }
 
         [Test]
-        public void ShouldGetFighestPercentiles()
+        public void ShouldGetHighestPercentiles()
         {
             IList<Tuple<int, double> > input = new List<Tuple<int, double>>()
                                                    {

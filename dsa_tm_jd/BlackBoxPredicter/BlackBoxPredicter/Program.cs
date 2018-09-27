@@ -7,18 +7,16 @@ namespace BlackBoxPredicter
     {
         static void Main(string[] args)
         {
+            float markerValue = 83.0f;
+
             var dates = DatesProvider.GetDates();
             var cycles = BlackBox.CalculateCycleTimes(dates);
             var percintels = BlackBox.CalculatePercentiles(cycles);
-            var histogram = BlackBox.GenerateHistogramm(percintels);
-            histogram.MarkerValue = 83.0f;
+            var histogramEntries = BlackBox.GenerateHistogramEntries(percintels);
 
-            histogram.MarkerIndex = BlackBox.DetectMarkerIndex(histogram);
+            Histogram histogram = BlackBox.GenerateHistogramm(histogramEntries, markerValue);
 
-
-
-
-            // DisplayAdapter.Display(histogram);
+            DisplayAdapter.Display(histogram);
         }
     }
 }

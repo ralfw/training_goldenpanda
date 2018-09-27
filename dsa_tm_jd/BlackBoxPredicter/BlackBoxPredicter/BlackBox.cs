@@ -9,14 +9,15 @@ namespace BlackBoxPredicter
     {
         #region Private methods
 
-        private static Histogram CreateHistogram(IEnumerable<Tuple<int, int>> cycleTimeFrequence, IEnumerable<Tuple<int, double>> highestPercentilForCycle)
+        private static IEnumerable<HistogramEntry> CreateHistogram(IEnumerable<Tuple<int, int>> cycleTimeFrequence,
+                                                                   IEnumerable<Tuple<int, double>> highestPercentilForCycle)
         {
-            var result = new Histogram();
+            var result = new List<HistogramEntry>();
             foreach (var cf in cycleTimeFrequence)
             {
                 var percentil = highestPercentilForCycle.First(c => c.Item1 == cf.Item1)
                                                         .Item2;
-                result.Entries.Add(new HistogramEntry(cf.Item1, cf.Item2, percentil));
+                result.Add(new HistogramEntry(cf.Item1, cf.Item2, percentil));
             }
 
             return result;
@@ -82,25 +83,36 @@ namespace BlackBoxPredicter
             return result;
         }
 
-        internal static Histogram GenerateHistogramm(IEnumerable<Tuple<int, double>> cycleTimesPercentils)
+        internal static Histogram GenerateHistogramm(IEnumerable<HistogramEntry> entries, float markerValue)
+        {
+            Histogram result = new Histogram { Entries = entries.ToList(), MarkerValue = markerValue };
+            result.MarkerIndex = DetectMarkerIndex(result.Entries, markerValue);
+
+            return result;
+        }
+
+        internal static IEnumerable<HistogramEntry> GenerateHistogramEntries(IEnumerable<Tuple<int, double>> cycleTimesPercentils)
         {
             var cycleTimeFrequence = CalculateFrequencies(cycleTimesPercentils.Select(_ => _.Item1));
             var highestPercentilForCycle = FindHighestPercentils(cycleTimesPercentils);
+
             return CreateHistogram(cycleTimeFrequence, highestPercentilForCycle);
         }
 
-        internal static int DetectMarkerIndex(Histogram histogram)
+        private static int DetectMarkerIndex(IList<HistogramEntry> entries, float markerValue)
         {
-            int result = 0;
+            int result = -1;
 
-            for (int i = 0; i < histogram.Entries.Count; i++)
+            for (int i = 0; i < entries.Count; i++)
             {
-                if (histogram.Entries[i]
-                             .Percentil * 100 <= histogram.MarkerValue)
+                if (entries[i]
+                        .Percentil * 100 <= markerValue)
                 {
                     result = i;
                 }
             }
+
+            if (result < 0) result = entries.Count - 1;
 
             return result;
         }
