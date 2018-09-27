@@ -15,8 +15,8 @@ namespace BlackBoxPredicter
 
         private static void PrintHeader()
         {
-            Console.Out.WriteLine("Histogram");
-            Console.Out.WriteLine("-----------");
+            Console.Out.WriteLine("Histogramm");
+            Console.Out.WriteLine("----------");
         }
 
         private static void PrintMarkerValue(Histogram histogram)
@@ -43,13 +43,7 @@ namespace BlackBoxPredicter
 
         private static string FormatHistoryLine(HistogramEntry histogramEntry)
         {
-            return $"{histogramEntry.CycleTime};{histogramEntry.Frequence}x, {histogramEntry.Percentil}";
-        }
-
-        [Obsolete("Use overwrite with parameter type History instead. /TMa")]
-        public static void Display(IEnumerable<HistogramEntry> historyEntries)
-        {
-            throw new NotSupportedException("Displaying single history entries is no longer supported.");
+            return $"{histogramEntry.CycleTime};{histogramEntry.Frequency}x, {histogramEntry.Percentile}";
         }
     }
 }

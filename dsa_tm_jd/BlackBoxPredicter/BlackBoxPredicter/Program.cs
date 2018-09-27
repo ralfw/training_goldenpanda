@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using BlackBoxPredicter.Dto;
+﻿using BlackBoxPredicter.Dto;
 
 namespace BlackBoxPredicter
 {
@@ -7,14 +6,13 @@ namespace BlackBoxPredicter
     {
         static void Main(string[] args)
         {
-            float markerValue = 83.0f;
-
+            const float markerValue = 83.0f;
             var dates = DatesProvider.GetDates();
-            var cycles = BlackBox.CalculateCycleTimes(dates);
-            var percintels = BlackBox.CalculatePercentiles(cycles);
-            var histogramEntries = BlackBox.GenerateHistogramEntries(percintels);
 
-            Histogram histogram = BlackBox.GenerateHistogramm(histogramEntries, markerValue);
+            var cycleTimes = BlackBox.CalculateCycleTimes(dates);
+            var percentiles = BlackBox.CalculatePercentiles(cycleTimes);
+            var histogramEntries = BlackBox.GenerateHistogramEntries(percentiles);
+            var histogram = BlackBox.GenerateHistogram(histogramEntries, markerValue);
 
             DisplayAdapter.Display(histogram);
         }

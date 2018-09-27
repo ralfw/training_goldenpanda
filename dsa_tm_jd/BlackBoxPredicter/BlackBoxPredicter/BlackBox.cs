@@ -9,15 +9,15 @@ namespace BlackBoxPredicter
     {
         #region Private methods
 
-        private static IEnumerable<HistogramEntry> CreateHistogram(IEnumerable<Tuple<int, int>> cycleTimeFrequence,
-                                                                   IEnumerable<Tuple<int, double>> highestPercentilForCycle)
+        private static IEnumerable<HistogramEntry> CreateHistogram(IEnumerable<Tuple<int, int>> cycleTimeFrequency,
+                                                                   IEnumerable<Tuple<int, double>> highestPercentileForCycle)
         {
             var result = new List<HistogramEntry>();
-            foreach (var cf in cycleTimeFrequence)
+            foreach (var cf in cycleTimeFrequency)
             {
-                var percentil = highestPercentilForCycle.First(c => c.Item1 == cf.Item1)
+                var percentile = highestPercentileForCycle.First(c => c.Item1 == cf.Item1)
                                                         .Item2;
-                result.Add(new HistogramEntry(cf.Item1, cf.Item2, percentil));
+                result.Add(new HistogramEntry(cf.Item1, cf.Item2, percentile));
             }
 
             return result;
@@ -47,22 +47,22 @@ namespace BlackBoxPredicter
             int CalcCycleTime(DateTime start, DateTime end) => (end - start).Days + 1;
         }
 
-        internal static IEnumerable<Tuple<int, double>> FindHighestPercentils(IEnumerable<Tuple<int, double>> percentils)
+        internal static IEnumerable<Tuple<int, double>> FindHighestPercentiles(IEnumerable<Tuple<int, double>> percentiles)
         {
             IList<Tuple<int, double>> result = new List<Tuple<int, double>>();
 
-            foreach (var percentil in percentils)
+            foreach (var percentile in percentiles)
             {
-                if (result.All(o => o.Item1 != percentil.Item1))
+                if (result.All(o => o.Item1 != percentile.Item1))
                 {
-                    result.Add(new Tuple<int, double>(percentil.Item1, percentil.Item2));
+                    result.Add(new Tuple<int, double>(percentile.Item1, percentile.Item2));
                 }
 
-                var itm = result.First(o => o.Item1 == percentil.Item1);
-                if (itm.Item2 < percentil.Item2)
+                var itm = result.First(o => o.Item1 == percentile.Item1);
+                if (itm.Item2 < percentile.Item2)
                 {
                     result.Remove(itm);
-                    result.Add(new Tuple<int, double>(percentil.Item1, percentil.Item2));
+                    result.Add(new Tuple<int, double>(percentile.Item1, percentile.Item2));
                 }
             }
 
@@ -75,7 +75,7 @@ namespace BlackBoxPredicter
 
             var cycleTimesArray = cycleTimes.ToArray();
 
-            for (int i = 0; i < cycleTimesArray.Length; i++)
+            for (var i = 0; i < cycleTimesArray.Length; i++)
             {
                 result.Add(new Tuple<int, double>(cycleTimesArray[i], (i + 1.0) / cycleTimesArray.Length));
             }
@@ -83,30 +83,30 @@ namespace BlackBoxPredicter
             return result;
         }
 
-        internal static Histogram GenerateHistogramm(IEnumerable<HistogramEntry> entries, float markerValue)
+        internal static Histogram GenerateHistogram(IEnumerable<HistogramEntry> entries, float markerValue)
         {
-            Histogram result = new Histogram { Entries = entries.ToList(), MarkerValue = markerValue };
+            var result = new Histogram { Entries = entries.ToList(), MarkerValue = markerValue };
             result.MarkerIndex = DetectMarkerIndex(result.Entries, markerValue);
 
             return result;
         }
 
-        internal static IEnumerable<HistogramEntry> GenerateHistogramEntries(IEnumerable<Tuple<int, double>> cycleTimesPercentils)
+        internal static IEnumerable<HistogramEntry> GenerateHistogramEntries(IEnumerable<Tuple<int, double>> cycleTimesPercentiles)
         {
-            var cycleTimeFrequence = CalculateFrequencies(cycleTimesPercentils.Select(_ => _.Item1));
-            var highestPercentilForCycle = FindHighestPercentils(cycleTimesPercentils);
+            var cycleTimeFrequency = CalculateFrequencies(cycleTimesPercentiles.Select(_ => _.Item1));
+            var highestPercentileForCycle = FindHighestPercentiles(cycleTimesPercentiles);
 
-            return CreateHistogram(cycleTimeFrequence, highestPercentilForCycle);
+            return CreateHistogram(cycleTimeFrequency, highestPercentileForCycle);
         }
 
         private static int DetectMarkerIndex(IList<HistogramEntry> entries, float markerValue)
         {
-            int result = -1;
+            var result = -1;
 
-            for (int i = 0; i < entries.Count; i++)
+            for (var i = 0; i < entries.Count; i++)
             {
                 if (entries[i]
-                        .Percentil * 100 <= markerValue)
+                        .Percentile * 100 <= markerValue)
                 {
                     result = i;
                 }

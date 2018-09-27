@@ -19,16 +19,16 @@ namespace BlackBoxPredicter_UnitTest
     public class BackBoxTest
     {
         [Test]
-        public void ShouldGenerateHistogramm()
+        public void ShouldGenerateHistogram()
         {
-            Histogram histogram = new Histogram();
+            var histogram = new Histogram();
 
             histogram.Entries.Add(new HistogramEntry(1,2,0.3));
             histogram.Entries.Add(new HistogramEntry(2,2,0.4));
             histogram.Entries.Add(new HistogramEntry(3,2,0.6));
             histogram.Entries.Add(new HistogramEntry(4,2,0.8));
 
-            var result50 = BlackBox.GenerateHistogramm(histogram.Entries, 50);
+            var result50 = BlackBox.GenerateHistogram(histogram.Entries, 50);
             result50.MarkerValue.Should()
                   .Be(50);
 
@@ -36,7 +36,7 @@ namespace BlackBoxPredicter_UnitTest
                   .Be(1);
 
 
-            var result90 = BlackBox.GenerateHistogramm(histogram.Entries, 90);
+            var result90 = BlackBox.GenerateHistogram(histogram.Entries, 90);
             result90.MarkerValue.Should()
                     .Be(90);
 
@@ -55,7 +55,7 @@ namespace BlackBoxPredicter_UnitTest
                                                        new Tuple<int, double>(3,5),
                                                    };
 
-            var filtered = BlackBox.FindHighestPercentils(input);
+            var filtered = BlackBox.FindHighestPercentiles(input);
 
             filtered.Count()
                     .Should()
@@ -69,7 +69,7 @@ namespace BlackBoxPredicter_UnitTest
         [Test]
         public void ShouldCalculatePercentiles()
         {
-            IList<int> inputList = new List<int>(){2,2,3,3,3,4,5,7};
+            IList<int> inputList = new List<int> {2,2,3,3,3,4,5,7};
 
             var r = inputList.GroupBy(o => o);
             
@@ -99,12 +99,13 @@ namespace BlackBoxPredicter_UnitTest
         {
 
 
-            List<UserStory> dates = new List<UserStory>();
+            var dates = new List<UserStory>
+            {
+                new UserStory(DateTime.Parse("2018-01-01"), DateTime.Parse("2018-01-02")),
+                new UserStory(DateTime.Parse("2018-01-01"), DateTime.Parse("2018-01-03"))
+            };
 
-            dates.Add(new UserStory(DateTime.Parse("2018-01-01"), DateTime.Parse("2018-01-02")));
-            dates.Add(new UserStory(DateTime.Parse("2018-01-01"), DateTime.Parse("2018-01-03")));
-  
-        
+
             BlackBox.CalculateCycleTimes(dates).Count.Should().Be(2);
             BlackBox.CalculateCycleTimes(dates)[0]
               .Should()
