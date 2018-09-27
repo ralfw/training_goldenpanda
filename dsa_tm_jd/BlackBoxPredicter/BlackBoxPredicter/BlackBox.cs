@@ -1,5 +1,4 @@
 ﻿using System;
-using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Linq;
 using BlackBoxPredicter.Dto;
@@ -8,8 +7,6 @@ namespace BlackBoxPredicter
 {
     public class BlackBox
     {
-        
-
         internal static IList<int> CalculateCycleTimes(IEnumerable<UserStory> userStories)
         {
             return userStories.Select(o => CalcCycleTime(o.Start, o.End))
@@ -54,10 +51,10 @@ namespace BlackBoxPredicter
             return result;
         }
 
-        internal static IEnumerable<HistogramEntry> GenerateHistogramm(IEnumerable<int> cycleTimes, IEnumerable<Tuple<int, double>> cycleTimesPercentils)
+        internal static IEnumerable<HistogramEntry> GenerateHistogramm(IEnumerable<Tuple<int, double>> cycleTimesPercentils)
         {
-            var cycleTimeFrequence = CalculateFrequence(cycleTimes);
-            var highestPercentilForCycle = new List<Tuple<int, double>>();
+            var cycleTimeFrequence = CalculateFrequencies(cycleTimesPercentils.Select(_ => _.Item1));
+            var highestPercentilForCycle = FindHighestPercentils(cycleTimesPercentils);
             return CreateHistogram(cycleTimeFrequence, highestPercentilForCycle);
         }
 
@@ -72,7 +69,7 @@ namespace BlackBoxPredicter
             return result;
         }
 
-        private static IEnumerable<Tuple<int, int>> CalculateFrequence(IEnumerable<int> cycleTimes)
+        private static IEnumerable<Tuple<int, int>> CalculateFrequencies(IEnumerable<int> cycleTimes)
         {
             var result = new List<Tuple<int, int>>();
 
