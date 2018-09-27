@@ -18,6 +18,15 @@ namespace BlackBoxPredicter_UnitTest
     [TestFixture]
     public class BackBoxTest
     {
+        /*
+         * Dieser Test fliegt uns durch die Refaktorisierung um die Ohren.
+         * Sollte deshalb die Refakt nicht getan werden? Nein.
+         * Ich denke, sie zeigt vielmehr auf, dass dieser Test nicht besonders hilfreich war ;-)
+         * Was steckte denn vorher in GenerateHistogram()? Das war letztlich nur der Aufbau der
+         * Datenstruktur. Die war aber trivial.
+         * Der entscheidende Schritt dabei war ledigtlich der Aufruf von DetectMarkerIndex().
+         * Die Funktion sollte separat mit einem Gerüsttest geprüft werden!
+         */
         [Test]
         public void ShouldGenerateHistogram()
         {

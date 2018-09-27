@@ -11,8 +11,7 @@ namespace BlackBoxPredicter
 
             var cycleTimes = BlackBox.CalculateCycleTimes(dates);
             var percentiles = BlackBox.CalculatePercentiles(cycleTimes);
-            var histogramEntries = BlackBox.GenerateHistogramEntries(percentiles);
-            var histogram = BlackBox.GenerateHistogram(histogramEntries, markerValue);
+            var histogram = BlackBox.CalculateHistogram(percentiles, markerValue);
 
             DisplayAdapter.Display(histogram);
         }

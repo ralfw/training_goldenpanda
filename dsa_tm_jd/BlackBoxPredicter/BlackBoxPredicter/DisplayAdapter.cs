@@ -15,35 +15,33 @@ namespace BlackBoxPredicter
 
         private static void PrintHeader()
         {
-            Console.Out.WriteLine("Histogramm");
-            Console.Out.WriteLine("----------");
+            Console.WriteLine("Histogramm");
+            Console.WriteLine("----------");
         }
 
         private static void PrintMarkerValue(Histogram histogram)
         {
-            Console.Out.WriteLine("");
-            Console.Out.WriteLine($"Verlässlichkeitsniveau = {histogram.MarkerValue:##.##} %");
-            Console.Out.WriteLine("");
+            Console.WriteLine();
+            Console.WriteLine($"Verlässlichkeitsniveau = {histogram.MarkerValue:##.##} %");
+            Console.WriteLine();
         }
 
         private static void PrintHistogramData(Histogram histogram)
         {
-            for (var i = 0; i < histogram.Entries.Count; i++)
-            {
-                Console.Out.WriteLine(FormatHistoryLine(histogram.Entries[i]));
+            for (var i = 0; i < histogram.Entries.Count; i++) {
+                var line = FormatHistoryLine(histogram.Entries[i]); // avoid nesting!
+                Console.WriteLine(line);
                 if (i != histogram.MarkerIndex)
                     continue;
 
-                Console.Out.WriteLine("______________________");
-                Console.Out.WriteLine("");
+                Console.WriteLine("--------------");
             }
-
-            Console.Out.WriteLine("");
+            Console.WriteLine("");
+            
+            
+            string FormatHistoryLine(HistogramEntry histogramEntry)
+                => $"{histogramEntry.CycleTime};{histogramEntry.Frequency}x, {histogramEntry.Percentile}";
         }
 
-        private static string FormatHistoryLine(HistogramEntry histogramEntry)
-        {
-            return $"{histogramEntry.CycleTime};{histogramEntry.Frequency}x, {histogramEntry.Percentile}";
-        }
     }
 }
