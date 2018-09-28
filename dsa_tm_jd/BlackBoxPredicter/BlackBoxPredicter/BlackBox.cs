@@ -108,17 +108,14 @@ namespace BlackBoxPredicter
             return result;
         }
 
-        
-        private static int DetectMarkerIndex(IList<HistogramEntry> entries, float markerValue) {
-            var result = -1;
 
+        internal static int DetectMarkerIndex(IList<HistogramEntry> entries, float markerValue)
+        {
+            var result = 0;
             for (var i = 0; i < entries.Count; i++) {
                 if (entries[i].Percentile * 100 <= markerValue)
                     result = i;
             }
-
-            if (result < 0) result = entries.Count - 1;
-
             return result;
         }
     }

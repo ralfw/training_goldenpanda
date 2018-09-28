@@ -27,31 +27,34 @@ namespace BlackBoxPredicter_UnitTest
          * Der entscheidende Schritt dabei war ledigtlich der Aufruf von DetectMarkerIndex().
          * Die Funktion sollte separat mit einem Gerüsttest geprüft werden!
          */
-        [Test]
-        public void ShouldGenerateHistogram()
-        {
-            var histogram = new Histogram();
 
-            histogram.Entries.Add(new HistogramEntry(1,2,0.3));
-            histogram.Entries.Add(new HistogramEntry(2,2,0.4));
-            histogram.Entries.Add(new HistogramEntry(3,2,0.6));
-            histogram.Entries.Add(new HistogramEntry(4,2,0.8));
+        // TODO: remove old tests /TMa
 
-            var result50 = BlackBox.GenerateHistogram(histogram.Entries, 50);
-            result50.MarkerValue.Should()
-                  .Be(50);
+        //[Test]
+        //public void ShouldGenerateHistogram()
+        //{
+        //    var histogram = new Histogram();
 
-            result50.MarkerIndex.Should()
-                  .Be(1);
+        //    histogram.Entries.Add(new HistogramEntry(1,2,0.3));
+        //    histogram.Entries.Add(new HistogramEntry(2,2,0.4));
+        //    histogram.Entries.Add(new HistogramEntry(3,2,0.6));
+        //    histogram.Entries.Add(new HistogramEntry(4,2,0.8));
+
+        //    var result50 = BlackBox.GenerateHistogram(histogram.Entries, 50);
+        //    result50.MarkerValue.Should()
+        //          .Be(50);
+
+        //    result50.MarkerIndex.Should()
+        //          .Be(1);
 
 
-            var result90 = BlackBox.GenerateHistogram(histogram.Entries, 90);
-            result90.MarkerValue.Should()
-                    .Be(90);
+        //    var result90 = BlackBox.GenerateHistogram(histogram.Entries, 90);
+        //    result90.MarkerValue.Should()
+        //            .Be(90);
 
-            result90.MarkerIndex.Should()
-                    .Be(3);
-        }
+        //    result90.MarkerIndex.Should()
+        //            .Be(3);
+        //}
 
         [Test]
         public void ShouldGetHighestPercentiles()
@@ -127,5 +130,31 @@ namespace BlackBoxPredicter_UnitTest
 
         }
 
+        [TestCase(0f,0)]
+        [TestCase(24f,0)]
+        [TestCase(27f,0)]
+        [TestCase(60f,0)]
+        [TestCase(63f,1)]
+        [TestCase(74.99f,1)]
+        [TestCase(76f,2)]
+        [TestCase(83f,2)]
+        [TestCase(88f,3)]
+        [TestCase(99.99f,3)]
+        [TestCase(100f,4)]
+        public void ShouldDetectMarkerIndex(float marker, int expectedIndex)
+        {
+            IList<HistogramEntry> entries = new List<HistogramEntry>
+            {
+                new HistogramEntry(2,2,.25),
+                new HistogramEntry(3,3,.625),
+                new HistogramEntry(4,1,.75),
+                new HistogramEntry(5,1,.875),
+                new HistogramEntry(7,1,1.0),
+            };
+
+            var index = BlackBox.DetectMarkerIndex(entries, marker);
+
+            index.Should().Be(expectedIndex);
+        }
     }
 }
