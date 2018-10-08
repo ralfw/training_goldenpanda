@@ -10,8 +10,7 @@
             var testData = DataProvider.GetUserStories();
 
             var result = Predictor.Predict(testData, reliabilityLevel);
-            foreach (var r in result)
-                ConsoleAdapter.Output($"{r.Duration}: {r.AccumulatedPercentile:F3} - {r.Frequency}\n");
+            ConsoleAdapter.Output(result, reliabilityLevel);
         }
 
         #endregion
