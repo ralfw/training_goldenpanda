@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConsoleAdapter.cs" />
+    <Compile Include="DataProvider.cs" />
     <Compile Include="dto\PredictorResult.cs" />
     <Compile Include="dto\UserStory.cs" />
     <Compile Include="Predictor.cs" />
