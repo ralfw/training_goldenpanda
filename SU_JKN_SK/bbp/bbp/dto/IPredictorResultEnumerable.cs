@@ -4,5 +4,6 @@ namespace bbp.dto
 {
     internal interface IPredictorResultEnumerable : IEnumerable<PredictorResult>
     {
+        int ReliabilityLevelIndex { get; }
     }
 }

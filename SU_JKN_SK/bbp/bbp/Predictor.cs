@@ -9,7 +9,8 @@ namespace bbp
         public static IPredictorResultEnumerable Predict(IEnumerable<UserStory> data, float reliabilityLevel)
         {
             var sortedGroupedUserStories = GroupSortedUserStories(data).ToArray();
-            return CalculateHistogramData(sortedGroupedUserStories);
+            var predictorResult = CalculateHistogramData(sortedGroupedUserStories);
+            return SetReliabilityLevelIndex(predictorResult, reliabilityLevel);
         }
 
         #region Private methods
@@ -31,6 +32,14 @@ namespace bbp
             }));
 
             return resultEnumerable;
+        }
+
+        private static IPredictorResultEnumerable SetReliabilityLevelIndex(PredictorResultEnumerable enumerable, float reliabilityLevel)
+        {
+            for (var i = 0; enumerable.Count > i && enumerable[i].AccumulatedPercentile < reliabilityLevel; i++)
+                enumerable.SetReliabilityLevelIndex(i);
+
+            return enumerable;
         }
 
         #endregion

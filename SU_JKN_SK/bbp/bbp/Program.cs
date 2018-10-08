@@ -6,7 +6,7 @@
 
         static void Main(string[] args)
         {
-            const float reliabilityLevel = 83f;
+            const float reliabilityLevel = .83f;
             var testData = DataProvider.GetUserStories();
 
             var result = Predictor.Predict(testData, reliabilityLevel);
