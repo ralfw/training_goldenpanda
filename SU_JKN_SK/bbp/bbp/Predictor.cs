@@ -6,7 +6,7 @@ namespace bbp
 {
     internal static class Predictor
     {
-        public static IEnumerable<PredictorResult> Predict(IEnumerable<UserStory> data)
+        public static IPredictorResultEnumerable Predict(IEnumerable<UserStory> data, float reliabilityLevel)
         {
             var sortedGroupedUserStories = GroupSortedUserStories(data).ToArray();
             return CalculateHistogramData(sortedGroupedUserStories);
@@ -18,16 +18,19 @@ namespace bbp
             => data.OrderBy(u => u.Duration)
                    .GroupBy(u => u.Duration);
 
-        private static IEnumerable<PredictorResult> CalculateHistogramData(IGrouping<int, UserStory>[] sortedGroupedUserStories)
+        private static PredictorResultEnumerable CalculateHistogramData(IGrouping<int, UserStory>[] sortedGroupedUserStories)
         {
             var percentageIncrement = 1f / sortedGroupedUserStories.Sum(u => u.Count());
             var position = 0;
 
-            return sortedGroupedUserStories.Select(u =>
+            var resultEnumerable = new PredictorResultEnumerable();
+            resultEnumerable.AddRange(sortedGroupedUserStories.Select(u =>
             {
                 position += u.Count();
                 return new PredictorResult(u.Key, position * percentageIncrement, u.Count());
-            });
+            }));
+
+            return resultEnumerable;
         }
 
         #endregion

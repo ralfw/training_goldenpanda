@@ -12,7 +12,5 @@
         public int Duration { get; }
         public float AccumulatedPercentile { get; }
         public int Frequency { get; }
-
-
     }
 }

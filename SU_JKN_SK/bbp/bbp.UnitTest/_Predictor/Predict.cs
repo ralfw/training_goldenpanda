@@ -12,7 +12,8 @@ namespace bbp.UnitTest._Predictor
         [Test]
         public void ShouldPredict()
         {
-            var testdata = new List<UserStory>
+            const float reliabilityLevel = 83f;
+            var testData = new List<UserStory>
             {
                 new UserStory("2018-01-01", "2018-01-02"),
                 new UserStory("2018-01-01", "2018-01-03"),
@@ -24,7 +25,7 @@ namespace bbp.UnitTest._Predictor
                 new UserStory("2017-12-30", "2018-01-02")
             };
 
-            var result = Predictor.Predict(testdata).ToList();
+            var result = Predictor.Predict(testData, reliabilityLevel).ToList();
 
             result[0].Duration.Should().Be(2);
             result[0].Frequency.Should().Be(2);

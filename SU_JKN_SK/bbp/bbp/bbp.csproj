@@ -44,7 +44,9 @@
   <ItemGroup>
     <Compile Include="ConsoleAdapter.cs" />
     <Compile Include="DataProvider.cs" />
+    <Compile Include="dto\IPredictorResultEnumerable.cs" />
     <Compile Include="dto\PredictorResult.cs" />
+    <Compile Include="dto\PredictorResultEnumerable.cs" />
     <Compile Include="dto\UserStory.cs" />
     <Compile Include="Predictor.cs" />
     <Compile Include="Program.cs" />
