@@ -18,143 +18,96 @@ namespace BlackBoxPredicter_UnitTest
     [TestFixture]
     public class BackBoxTest
     {
-        /*
-         * Dieser Test fliegt uns durch die Refaktorisierung um die Ohren.
-         * Sollte deshalb die Refakt nicht getan werden? Nein.
-         * Ich denke, sie zeigt vielmehr auf, dass dieser Test nicht besonders hilfreich war ;-)
-         * Was steckte denn vorher in GenerateHistogram()? Das war letztlich nur der Aufbau der
-         * Datenstruktur. Die war aber trivial.
-         * Der entscheidende Schritt dabei war ledigtlich der Aufruf von DetectMarkerIndex().
-         * Die Funktion sollte separat mit einem Gerüsttest geprüft werden!
-         */
-
-        // TODO: remove old tests /TMa
-
-        //[Test]
-        //public void ShouldGenerateHistogram()
-        //{
-        //    var histogram = new Histogram();
-
-        //    histogram.Entries.Add(new HistogramEntry(1,2,0.3));
-        //    histogram.Entries.Add(new HistogramEntry(2,2,0.4));
-        //    histogram.Entries.Add(new HistogramEntry(3,2,0.6));
-        //    histogram.Entries.Add(new HistogramEntry(4,2,0.8));
-
-        //    var result50 = BlackBox.GenerateHistogram(histogram.Entries, 50);
-        //    result50.MarkerValue.Should()
-        //          .Be(50);
-
-        //    result50.MarkerIndex.Should()
-        //          .Be(1);
-
-
-        //    var result90 = BlackBox.GenerateHistogram(histogram.Entries, 90);
-        //    result90.MarkerValue.Should()
-        //            .Be(90);
-
-        //    result90.MarkerIndex.Should()
-        //            .Be(3);
-        //}
-
         [Test]
-        public void ShouldGetHighestPercentiles()
+        public void ShouldCalculateCycleTimesFromUserStories()
         {
-            IList<Tuple<int, double> > input = new List<Tuple<int, double>>()
-                                                   {
-                                                       new Tuple<int, double>(1,2),
-                                                       new Tuple<int, double>(1,3),
-                                                       new Tuple<int, double>(3,4),
-                                                       new Tuple<int, double>(3,5),
-                                                   };
-
-            var filtered = BlackBox.FindHighestPercentiles(input);
-
-            filtered.Count()
-                    .Should()
-                    .Be(2);
-
-            filtered.First()
-                    .Item2.Should()
-                    .Be(3);
-        }
-
-        [Test]
-        public void ShouldCalculatePercentiles()
-        {
-            IList<int> inputList = new List<int> {2,2,3,3,3,4,5,7};
-
-            var r = inputList.GroupBy(o => o);
-            
-
-            var result = BlackBox.CalculatePercentiles(inputList).ToArray();
-
-            result[0]
-                .Item1.Should()
-                .Be(2);
-
-            result[0]
-                .Item2.Should()
-                .Be(0.125);
-
-
-            result[7]
-                .Item1.Should()
-                .Be(7);
-
-            result[7]
-                .Item2.Should()
-                .Be(1);
-        }
-
-        [Test]
-        public void ShouldCalculatedDurations()
-        {
-
-
             var dates = new List<UserStory>
             {
+                new UserStory(DateTime.Parse("2018-01-01"), DateTime.Parse("2018-01-01")),
                 new UserStory(DateTime.Parse("2018-01-01"), DateTime.Parse("2018-01-02")),
-                new UserStory(DateTime.Parse("2018-01-01"), DateTime.Parse("2018-01-03"))
             };
 
+            var cycleTimes = BlackBox.CalculateCycleTimes(dates);
 
-            BlackBox.CalculateCycleTimes(dates).Count.Should().Be(2);
-            BlackBox.CalculateCycleTimes(dates)[0]
-              .Should()
-              .Be(2);
-
-            BlackBox.CalculateCycleTimes(dates)[1]
-              .Should()
-              .Be(3);
-
-
+            cycleTimes.Count.Should().Be(2);
+            cycleTimes[0].Should().Be(1);
+            cycleTimes[1].Should().Be(2);
         }
 
+        [Test]
+        public void ShouldCalculatePercentilesFromOrderedCycleTimes()
+        {
+            var orderedInput = new List<int> {2, 2, 3, 3, 3, 4, 5, 7};
+
+            var percentiles = BlackBox.CalculatePercentiles(orderedInput).ToArray();
+
+            percentiles.Should().BeEquivalentTo(new List<Tuple<int, double>>
+            {
+                new Tuple<int, double>(2, 0.125),
+                new Tuple<int, double>(2, 0.25),
+                new Tuple<int, double>(3, 0.375),
+                new Tuple<int, double>(3, 0.5),
+                new Tuple<int, double>(3, 0.625),
+                new Tuple<int, double>(4, 0.75),
+                new Tuple<int, double>(5, 0.875),
+                new Tuple<int, double>(7, 1.0),
+            });
+        }
+
+        [Test]
+        public void ShouldFindHighestPercentilePerCycleTime()
+        {
+            var cycleTimes = new List<Tuple<int, double>>
+            {
+                new Tuple<int, double>(1, 1),
+                new Tuple<int, double>(2, 2),
+                new Tuple<int, double>(2, 3),
+                new Tuple<int, double>(3, 4),
+                new Tuple<int, double>(3, 5),
+                new Tuple<int, double>(3, 6),
+            };
+
+            var highestPercentiles = BlackBox.FindHighestPercentilesPerCycleTime(cycleTimes).ToList();
+
+            highestPercentiles.Count.Should().Be(3);
+            highestPercentiles.Should().BeEquivalentTo(new List<Tuple<int, double>>
+            {
+                new Tuple<int, double>(1, 1),
+                new Tuple<int, double>(2, 3),
+                new Tuple<int, double>(3, 6),
+            });
+        }
+
+        // ---
+        // All values up to the 1st entry's percentile will also get the zero index
+        // because the cycle time of the first entry is the first data point we have.
         [TestCase(0f,0)]
-        [TestCase(24f,0)]
-        [TestCase(27f,0)]
-        [TestCase(60f,0)]
-        [TestCase(63f,1)]
+        [TestCase(24.99f,0)]
+        // --
+        [TestCase(25f,0)]
+        [TestCase(25.01f,0)]
+        [TestCase(62.49f,0)]
+        [TestCase(62.5f,1)]
         [TestCase(74.99f,1)]
-        [TestCase(76f,2)]
-        [TestCase(83f,2)]
-        [TestCase(88f,3)]
+        [TestCase(75f,2)]
+        [TestCase(87.49f,2)]
+        [TestCase(88.5f,3)]
         [TestCase(99.99f,3)]
         [TestCase(100f,4)]
-        public void ShouldDetectMarkerIndex(float marker, int expectedIndex)
+        public void ShouldDetermineMarkerIndex(float marker, int expectedIndex)
         {
-            IList<HistogramEntry> entries = new List<HistogramEntry>
+            var entries = new List<HistogramEntry>
             {
-                new HistogramEntry(2,2,.25),
-                new HistogramEntry(3,3,.625),
-                new HistogramEntry(4,1,.75),
-                new HistogramEntry(5,1,.875),
+                new HistogramEntry(2,2,0.25),
+                new HistogramEntry(3,3,0.625),
+                new HistogramEntry(4,1,0.75),
+                new HistogramEntry(5,1,0.875),
                 new HistogramEntry(7,1,1.0),
             };
 
-            var index = BlackBox.DetectMarkerIndex(entries, marker);
+            var markerIndex = BlackBox.DetermineMarkerIndex(entries, marker);
 
-            index.Should().Be(expectedIndex);
+            markerIndex.Should().Be(expectedIndex);
         }
     }
 }

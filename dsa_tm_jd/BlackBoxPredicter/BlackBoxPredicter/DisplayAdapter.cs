@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using BlackBoxPredicter.Dto;
 
 namespace BlackBoxPredicter
@@ -15,8 +14,8 @@ namespace BlackBoxPredicter
 
         private static void PrintHeader()
         {
-            Console.WriteLine("Histogramm");
-            Console.WriteLine("----------");
+            Console.WriteLine("Histogram");
+            Console.WriteLine("---------");
         }
 
         private static void PrintMarkerValue(Histogram histogram)
@@ -29,7 +28,7 @@ namespace BlackBoxPredicter
         private static void PrintHistogramData(Histogram histogram)
         {
             for (var i = 0; i < histogram.Entries.Count; i++) {
-                var line = FormatHistoryLine(histogram.Entries[i]); // avoid nesting!
+                var line = FormatHistoryLine(histogram.Entries[i]);// avoid nesting! //TMa, why?
                 Console.WriteLine(line);
                 if (i != histogram.MarkerIndex)
                     continue;
