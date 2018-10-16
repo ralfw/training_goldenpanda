@@ -6,15 +6,17 @@ namespace tvspike.sync
 {
     internal class SyncLogProvider : IDisposable
     {
-        public class SyncLogEntry {
-            public string LetztePullSignatur;
-            public string LetztePushSignatur;
+        public class SyncLogEntry
+        {
+            public string LetztePullSignatur = "";
+            public string LetztePushSignatur = "";
         }
 
         readonly JavaScriptSerializer _json = new JavaScriptSerializer();
         
         private readonly string _logFilename;
-        private SyncLogEntry _entry;
+        private SyncLogEntry _entry = new SyncLogEntry();
+        
         
         public SyncLogProvider() : this ("synclog.json") {}
         internal SyncLogProvider(string logFilename) {
@@ -41,7 +43,7 @@ namespace tvspike.sync
         }
         
         private void Store() {
-            var syncLogJson = _json.Serialize(this);
+            var syncLogJson = _json.Serialize(_entry);
             File.WriteAllText(_logFilename, syncLogJson);
         }
 

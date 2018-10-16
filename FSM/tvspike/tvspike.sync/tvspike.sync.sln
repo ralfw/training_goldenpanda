@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tvspike.sync", "tvspike.sync\tvspike.sync.csproj", "{9A960D9A-6E5F-4D26-B166-EAAFDBF8C1B6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tvspike.sync.tests", "tvspike.sync.tests\tvspike.sync.tests.csproj", "{D3FA9086-44A4-4E67-A4D8-69EB4FF61E28}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{9A960D9A-6E5F-4D26-B166-EAAFDBF8C1B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9A960D9A-6E5F-4D26-B166-EAAFDBF8C1B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9A960D9A-6E5F-4D26-B166-EAAFDBF8C1B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3FA9086-44A4-4E67-A4D8-69EB4FF61E28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3FA9086-44A4-4E67-A4D8-69EB4FF61E28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3FA9086-44A4-4E67-A4D8-69EB4FF61E28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3FA9086-44A4-4E67-A4D8-69EB4FF61E28}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
