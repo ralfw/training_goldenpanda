@@ -38,18 +38,20 @@ namespace tvspike.es.tests
 
         }
 
+        // TODO: Test padding of 19 chars for nummer
+
         [Test]
         public void ShouldBuildNameFromEvent()
         {
-            DateTime clientIdSource = DateTime.Parse("2018-10-16 12:30:00");
-            DateTime eventNumberSource = DateTime.Parse("2018-10-16 12:30:01");
+            var clientIdSource = DateTime.Parse("2018-10-16 12:30:00");
+            var eventNumberSource = DateTime.Parse("2018-10-16 12:30:01");
 
             var fakeZeitProvider = new FakeZeitProvider();
             fakeZeitProvider.Add(clientIdSource);
             fakeZeitProvider.Add(eventNumberSource);
 
-            var guidBasedId = Guid.NewGuid().ToString();
-            var @event = new Event { Nummer = 0, Id = guidBasedId, Name = "EventA", Daten = "Nutzdaten-EventA" };
+//            var guidBasedId = Guid.NewGuid().ToString();
+            var @event = new Event { Nummer = 0, Id = "1", Name = "EventA", Daten = "Nutzdaten-EventA" };
 
             var provider = new EventSourceProvider(_eventStoreFolder, fakeZeitProvider);
 
@@ -59,6 +61,17 @@ namespace tvspike.es.tests
                                  $"{clientIdSource.Ticks.ToString()}_" +
                                  $"{@event.Id}_" +
                                  $"{@event.Name}.txt");
+        }
+
+        [Test, Ignore("Manual")]
+        public void ShouldPersistDataToGivenFolder()
+        {
+            var guidBasedId = Guid.NewGuid().ToString();
+            var @event = new Event { Nummer = 0, Id = guidBasedId, Name = "EventA", Daten = "Nutzdaten-EventA" };
+            var provider = new EventSourceProvider(_eventStoreFolder);
+
+            string filename = "persistedEvent.txt";
+            provider.Persist(filename, @event);
         }
     }
 }

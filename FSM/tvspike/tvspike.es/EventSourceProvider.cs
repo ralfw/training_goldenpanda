@@ -4,6 +4,17 @@ using tvspike.contracts;
 
 namespace tvspike.es
 {
+    /*
+     * Idee: Ablage der Events im ordner _path
+     *
+     * Beispieleventstore/
+     *      clientId.txt        //
+     *      events/
+     *          <Nummer>_<ClientId>_<Id>_<EventName>.txt    // Eventsignatur, Inhalt der Datei -> Nutzlast
+     *          ...
+     *
+     */
+
     public class EventSourceProvider
     {
         private readonly string _path;
@@ -28,6 +39,11 @@ namespace tvspike.es
 
             string number = _zeitProvider.Now().Ticks.ToString();
             return $"{number}_{_clientId}_{@event.Id}_{@event.Name}.txt";
+        }
+
+        public void Persist(string filename, Event @event)
+        {
+            throw new NotImplementedException();
         }
     }
 }
