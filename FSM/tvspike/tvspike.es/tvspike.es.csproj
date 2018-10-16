@@ -4,17 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D7A27758-8B33-4C39-B228-5816C317F3C1}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>tvspike.client</RootNamespace>
-    <AssemblyName>tvspike.client</AssemblyName>
+    <ProjectGuid>{313F213D-D48A-4A71-BE36-922D282FD572}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>tvspike.es</RootNamespace>
+    <AssemblyName>tvspike.es</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,7 +23,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -43,28 +41,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\tvspike.contracts\tvspike.contracts.csproj">
       <Project>{972e7967-9ed8-46de-8ba4-d54fa66f9c4f}</Project>
       <Name>tvspike.contracts</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\tvspike.es\tvspike.es.csproj">
-      <Project>{313f213d-d48a-4a71-be36-922d282fd572}</Project>
-      <Name>tvspike.es</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\tvspike.rm\tvspike.rm.csproj">
-      <Project>{c7928cf9-4987-45d8-80d9-5d6b21d25a61}</Project>
-      <Name>tvspike.rm</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\tvspike.ui\tvspike.ui.csproj">
-      <Project>{976ed1cd-92e6-44fc-9d1c-a88e96632c2d}</Project>
-      <Name>tvspike.ui</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
