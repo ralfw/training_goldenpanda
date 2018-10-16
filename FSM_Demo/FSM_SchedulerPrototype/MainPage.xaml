@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:FSM_SchedulerPrototype"
+             xmlns:schedule="clr-namespace:Syncfusion.SfSchedule.XForms;assembly=Syncfusion.SfSchedule.XForms"
+			x:Class="FSM_SchedulerPrototype.MainPage" Title="FSM" SizeChanged="MainPage_OnSizeChanged" x:Name="MyPage">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="toggleViewItem" Text="Day" Priority="0" Command="{Binding ToggleCommand}" />
+    </ContentPage.ToolbarItems>
+
+    <schedule:SfSchedule x:Name="schedule" ScheduleView="WeekView" DataSource="{Binding Appointments}" TimeIntervalHeight="{Binding CurrentIntervalHeight}" Locale="de" >
+        <schedule:SfSchedule.ViewHeaderStyle>
+            <schedule:ViewHeaderStyle DateFontSize="16" DayFontSize="12" />
+        </schedule:SfSchedule.ViewHeaderStyle>
+        <schedule:SfSchedule.WeekViewSettings>
+            <schedule:WeekViewSettings >
+                <schedule:WeekViewSettings.WeekLabelSettings>
+                    <schedule:WeekLabelSettings TimeFormat="HH" TimeLabelSize="10" />
+                </schedule:WeekViewSettings.WeekLabelSettings>
+            </schedule:WeekViewSettings>
+        </schedule:SfSchedule.WeekViewSettings>
+        <schedule:SfSchedule.DayViewSettings>
+            <schedule:DayViewSettings>
+                <schedule:DayViewSettings.DayLabelSettings>
+                    <schedule:DayLabelSettings TimeFormat="HH" TimeLabelSize="10" />
+                </schedule:DayViewSettings.DayLabelSettings>
+            </schedule:DayViewSettings>
+        </schedule:SfSchedule.DayViewSettings>
+        <schedule:SfSchedule.AppointmentTemplate>
+           <DataTemplate>
+                <Grid BackgroundColor="{Binding Color}">
+                    <Grid IsVisible="{Binding Source={x:Reference MyPage}, Path=ShowDetails}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" RowSpacing="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <Label Grid.Row="0" Text="{Binding Subject}" TextColor="White" FontAttributes="Bold" FontSize="10" LineBreakMode="TailTruncation" HorizontalOptions="FillAndExpand" Margin="2,0" WidthRequest="1024" />
+                        <Label Grid.Row="1" Text="1256" TextColor="LightGray" FontSize="8" LineBreakMode="TailTruncation" HorizontalOptions="FillAndExpand" Margin="2,0" />
+                        <Label Grid.Row="2" Text="{Binding Notes}" TextColor="LightGray" FontSize="8" LineBreakMode="WordWrap" HorizontalOptions="FillAndExpand" Margin="2,0" />
+                    </Grid>
+                </Grid>
+           </DataTemplate>
+        </schedule:SfSchedule.AppointmentTemplate>
+    </schedule:SfSchedule>
+
+</ContentPage>
