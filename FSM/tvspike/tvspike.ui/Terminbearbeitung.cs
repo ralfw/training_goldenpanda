@@ -9,23 +9,22 @@ namespace tvspike.ui
 {
     internal static class Terminbearbeitung
     {
-        public static void TerminBearbeiten(ref TerminRM termin)
+        public static NeuerTerminCommand TerminBearbeiten()
         {
             var kunde = KundenDatenEingeben(out var behandler, out var startDatum, out var startZeit, out var endDatum, out var endZeit);
-            KundenDatenSetzen(termin, kunde, behandler, startDatum, startZeit, endDatum, endZeit);
-            Console.WriteLine();
+            return  NeuerTerminCommandErzeugen(kunde, behandler, startDatum, startZeit, endDatum, endZeit);
         }
 
-        private static void KundenDatenSetzen(TerminRM termin, string kunde, string behandler, string startDatum, string startZeit, string endDatum, string endZeit)
+        private static NeuerTerminCommand NeuerTerminCommandErzeugen(string kunde, string behandler, string startDatum, string startZeit, string endDatum, string endZeit)
         {
-            termin.Id = Guid.NewGuid()
-                            .ToString();
-            termin.Kunde = kunde;
-            termin.Behandler = behandler;
+            var neuerTerminCommand = new NeuerTerminCommand();
+            neuerTerminCommand.Kunde = kunde;
+            neuerTerminCommand.Behandler = behandler;
             if (DateTime.TryParse($"{startDatum}T{startZeit}", out DateTime von))
-                termin.Von = von;
+                neuerTerminCommand.Von = von;
             if (DateTime.TryParse($"{endDatum}T{endZeit}", out DateTime bis))
-                termin.Bis = bis;
+                neuerTerminCommand.Bis = bis;
+            return neuerTerminCommand;
         }
 
         private static string KundenDatenEingeben(out string behandler, out string startDatum, out string startZeit, out string endDatum, out string endZeit)

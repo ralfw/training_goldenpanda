@@ -7,15 +7,11 @@ using tvspike.contracts;
 
 namespace tvspike.ui
 {
-    public delegate void TerminLöschenDelegate(TerminRM termin);
-    public delegate void TerminAnlegenDelegate(TerminRM termin);
-    public delegate List<TerminRM> TermineAktualisierenDelegate();
-
     public class Terminübersicht
     {
-        public event TerminLöschenDelegate TerminLöschenEvent = delegate { };
-        public event TerminAnlegenDelegate TerminAnlegenEvent = delegate { };
-        public event TermineAktualisierenDelegate TermineAktualisierenEvent;
+        public event Action<TerminLöschenCommand> TerminLöschen;
+        public event Action<NeuerTerminCommand> TerminAnlegen;
+        public event Action TerminlisteAnzeigen;
 
         public void ZeigeTerminUI(IEnumerable<TerminRM> termine)
         {
@@ -24,7 +20,7 @@ namespace tvspike.ui
             ZeigeMenüUndWarteAufEingabe(terminListe);
         }
 
-        private void  TerminListeZeigen(IEnumerable<TerminRM> termine)
+        public void  TerminListeZeigen(IEnumerable<TerminRM> termine)
         {
             var index = 0;
             foreach (var termin in termine)
@@ -57,12 +53,12 @@ namespace tvspike.ui
                 }
                 case "r":
                 {
-                    TerminListeZeigen(termine);
+                    TerminlisteAnzeigen?.Invoke();
                     break;
                 }
                 case "a":
                 {
-                    TerminListeAktualisierenBefehlAusführen(ref termine);
+                    //TODO
                     break;
                 }
                 case "l":
@@ -77,13 +73,7 @@ namespace tvspike.ui
                 }
             }
         }
-
-        private void TerminListeAktualisierenBefehlAusführen(ref List<TerminRM> termine)
-        {
-            var termineAkualisiert = TermineAktualisierenEvent?.Invoke();
-            termine = termineAkualisiert ?? termine;
-        }
-
+        
         private static void MenüBefehlEndeAusführen(out bool ende)
         {
             ende = true;
@@ -91,9 +81,8 @@ namespace tvspike.ui
 
         private void TerminNeuAnlegenBefehlAusführen()
         {
-            var termin = new TerminRM();
-            Terminbearbeitung.TerminBearbeiten(ref termin);
-            TerminAnlegenEvent(termin);
+            var neuerTerminCommand = Terminbearbeitung.TerminBearbeiten();
+            TerminAnlegen?.Invoke(neuerTerminCommand);
         }
 
         private void TerminLöschenBefehlAusführen(List<TerminRM> termine)
@@ -103,7 +92,7 @@ namespace tvspike.ui
             Console.WriteLine();
             if (!int.TryParse(eingabe, out int terminnummer)) return;
             var termin = termine[terminnummer];
-            TerminLöschenEvent(termin);
+            TerminLöschen?.Invoke(new TerminLöschenCommand { Id = termin.Id });
         }
 
         private static string WarteAufMenüAuswahl()

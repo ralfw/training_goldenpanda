@@ -10,6 +10,8 @@ namespace tvspike.ui.tests
     class Program
     {
         static List<TerminRM> _terminRms;
+        private static Terminübersicht _terminübersicht;
+
         static void Main(string[] args)
         {
             
@@ -20,30 +22,30 @@ namespace tvspike.ui.tests
                                 new TerminRM{Behandler = "Sonja",Kunde = "Frau Schmidt",Von = DateTime.Parse("2018-10-16T12:00"),Bis = DateTime.Parse("2018-10-16T14:30"),Id=Guid.NewGuid().ToString()},
                             };
 
-            var terminübersicht = new Terminübersicht();
-            terminübersicht.TerminAnlegenEvent += TerminübersichtTerminAnlegenEvent;
-            terminübersicht.TerminLöschenEvent += TerminübersichtTerminLöschenEvent;
-            terminübersicht.TermineAktualisierenEvent += TerminübersichtTermineAktualisierenEvent;
+            _terminübersicht = new Terminübersicht();
+            _terminübersicht.TerminAnlegen += TerminübersichtTerminAnlegen;
+            _terminübersicht.TerminLöschen += TerminübersichtTerminLöschen;
+            _terminübersicht.TerminlisteAnzeigen += TerminübersichtTerminlisteAnzeigen;
 
-            terminübersicht.ZeigeTerminUI(_terminRms);
+            _terminübersicht.ZeigeTerminUI(_terminRms);
         }
 
-        private static List<TerminRM> TerminübersichtTermineAktualisierenEvent()
+        private static void TerminübersichtTerminlisteAnzeigen()
         {
-            Console.WriteLine($"TEST: Terminliste aktualisiert!");
-            return _terminRms;
+            Console.WriteLine($"TEST: Terminliste anzeigen");
+            _terminübersicht.TerminListeZeigen(_terminRms);
         }
 
-        private static void TerminübersichtTerminLöschenEvent(TerminRM termin)
+        private static void TerminübersichtTerminLöschen(TerminLöschenCommand obj)
         {
-            Console.WriteLine($"TEST: Termin gelöscht:ID:{termin.Id}");
-            _terminRms.Remove(termin);
+            Console.WriteLine($"TEST: Termin gelöscht:ID:{obj.Id}");
         }
 
-        private static void TerminübersichtTerminAnlegenEvent(TerminRM termin)
+        private static void TerminübersichtTerminAnlegen(NeuerTerminCommand obj)
         {
-            Console.WriteLine($"TEST: Termin angelegt:ID:{termin.Id}");
-            _terminRms.Add(termin);
+            Console.WriteLine($"TEST: Termin angelegt für Kunde:{obj.Kunde}");
         }
+
+        
     }
 }
