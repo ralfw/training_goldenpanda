@@ -13,6 +13,7 @@ namespace tvspike.rm.tests
     [TestFixture]
     public class ReadModelProviderTest
     {
+        
         public void Sollte3TermineAus3EventsAufbauen()
         {
             var events = Generiere3FakeEvents();
