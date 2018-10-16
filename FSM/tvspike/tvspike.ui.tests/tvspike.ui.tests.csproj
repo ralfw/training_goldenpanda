@@ -60,6 +60,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\tvspike.contracts\tvspike.contracts.csproj">
+      <Project>{972E7967-9ED8-46DE-8BA4-D54FA66F9C4F}</Project>
+      <Name>tvspike.contracts</Name>
+    </ProjectReference>
     <ProjectReference Include="..\tvspike.ui\tvspike.ui.csproj">
       <Project>{976ed1cd-92e6-44fc-9d1c-a88e96632c2d}</Project>
       <Name>tvspike.ui</Name>
