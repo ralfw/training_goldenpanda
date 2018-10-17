@@ -22,7 +22,7 @@ namespace tvspike.es.tests
             _eventStoreFolder = TestContext.CurrentContext.TestDirectory;
         }
 
-        [Test, Ignore("Manual")]
+        [Test, Category("Manual")]
         public void ShouldRecordEvents()
         {
             var path = Path.Combine(_eventStoreFolder, @"\TestFiles\eventstore");
@@ -50,10 +50,8 @@ namespace tvspike.es.tests
             fakeZeitProvider.Add(clientIdSource);
             fakeZeitProvider.Add(eventNumberSource);
 
-//            var guidBasedId = Guid.NewGuid().ToString();
-            var @event = new Event { Nummer = 0, Id = "1", Name = "EventA", Daten = "Nutzdaten-EventA" };
-
             var provider = new EventSourceProvider(_eventStoreFolder, fakeZeitProvider);
+            var @event = new Event { Nummer = 100, Id = "1", Name = "EventA"};
 
             var fileName = provider.BuildFileName(@event);
 
@@ -63,7 +61,7 @@ namespace tvspike.es.tests
                                  $"{@event.Name}.txt");
         }
 
-        [Test, Ignore("Manual")]
+        [Test, Category("Manual")]
         public void ShouldPersistDataToGivenFolder()
         {
             var guidBasedId = Guid.NewGuid().ToString();
