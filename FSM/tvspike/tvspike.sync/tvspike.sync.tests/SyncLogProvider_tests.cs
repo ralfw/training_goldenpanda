@@ -10,8 +10,7 @@ namespace tvspike.sync.tests
         private const string TEST_FILENAME = "testsl.txt";
         
         [SetUp]
-        public void Setup()
-        {
+        public void Setup() {
             Environment.CurrentDirectory = TestContext.CurrentContext.TestDirectory;
         }
         
