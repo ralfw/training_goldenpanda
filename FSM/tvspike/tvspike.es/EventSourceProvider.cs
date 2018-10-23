@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using tvspike.contracts;
 
 namespace tvspike.es
@@ -18,30 +19,43 @@ namespace tvspike.es
     public class EventSourceProvider
     {
         private readonly string _path;
-        private readonly string _clientId;
-        private readonly IZeitProvider _zeitProvider;
 
-        public EventSourceProvider(string path, IZeitProvider zeitProvider = null)
+        public EventSourceProvider(string path)
         {
             _path = path;
-            _zeitProvider = zeitProvider ?? new ZeitProvider();
-            _clientId = _zeitProvider.Now().Ticks.ToString();
         }
+
+        public string ClientId { get; set; }
 
         public void Record(IEnumerable<Event> events)
         {
+            foreach (var @event in events)
+            {
+                AssignUniqueNumberToEvent(@event);
+                var eventFilename = BuildFileNameFromEvent(@event);
+                PersistEvent(eventFilename, @event);
+            }
+
             throw new NotImplementedException();
         }
 
-        public string BuildFileName(Event @event)
+        private void AssignUniqueNumberToEvent(Event @event)
         {
-            // wir ignorieren event.nummer hier, weil wir hierfür die Verantwortlichkeit tragen.
-
-            string number = _zeitProvider.Now().Ticks.ToString();
-            return $"{number}_{_clientId}_{@event.Id}_{@event.Name}.txt";
+            @event.Nummer = 0;
         }
 
-        public void Persist(string filename, Event @event)
+        public string BuildFileNameFromEvent(Event @event)
+        {
+            var paddedNumber = @event.Nummer.ToString().PadLeft(20,'0');
+            var paddedEventId = @event.Id.PadLeft(36, '0');
+
+            if (@event.Name.Length > 20)
+                throw new InvalidOperationException("Event name exceeds maximum of 20 characters.");
+
+            return $"{paddedNumber}_{ClientId}_{paddedEventId}_{@event.Name}.txt";
+        }
+
+        public void PersistEvent(string filename, Event @event)
         {
             throw new NotImplementedException();
         }

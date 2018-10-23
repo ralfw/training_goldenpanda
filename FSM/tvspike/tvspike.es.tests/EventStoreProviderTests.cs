@@ -31,45 +31,60 @@ namespace tvspike.es.tests
 
             IEnumerable<Event> events = new Event[]
             {
-                new Event{Nummer = 1, Id = "2", Name = "EventA", Daten = "NutzdatenEventA"}
+                new Event {Nummer = 1, Id = "2", Name = "EventA", Daten = "NutzdatenEventA"}
             };
 
             provider.Record(events);
 
         }
 
-        // TODO: Test padding of 19 chars for nummer
-
-        [Test]
-        public void ShouldBuildNameFromEvent()
-        {
-            var clientIdSource = DateTime.Parse("2018-10-16 12:30:00");
-            var eventNumberSource = DateTime.Parse("2018-10-16 12:30:01");
-
-            var fakeZeitProvider = new FakeZeitProvider();
-            fakeZeitProvider.Add(clientIdSource);
-            fakeZeitProvider.Add(eventNumberSource);
-
-            var provider = new EventSourceProvider(_eventStoreFolder, fakeZeitProvider);
-            var @event = new Event { Nummer = 100, Id = "1", Name = "EventA"};
-
-            var fileName = provider.BuildFileName(@event);
-
-            fileName.Should().Be($"{eventNumberSource.Ticks.ToString()}_" +
-                                 $"{clientIdSource.Ticks.ToString()}_" +
-                                 $"{@event.Id}_" +
-                                 $"{@event.Name}.txt");
-        }
-
         [Test, Category("Manual")]
         public void ShouldPersistDataToGivenFolder()
         {
             var guidBasedId = Guid.NewGuid().ToString();
-            var @event = new Event { Nummer = 0, Id = guidBasedId, Name = "EventA", Daten = "Nutzdaten-EventA" };
+            var @event = new Event {Nummer = 0, Id = guidBasedId, Name = "EventA", Daten = "Nutzdaten-EventA"};
             var provider = new EventSourceProvider(_eventStoreFolder);
 
             string filename = "persistedEvent.txt";
-            provider.Persist(filename, @event);
+            provider.PersistEvent(filename, @event);
+        }
+
+        [Test]
+        public void ShouldBuildNameFromEvent()
+        {
+            var provider = GetProvider();
+
+            var @event = new Event {Nummer = 100, Id = "1", Name = "EventA"};
+
+            var fileName = provider.BuildFileNameFromEvent(@event);
+
+            Console.Out.WriteLine(fileName);
+
+            fileName.Should().Be($"{@event.Nummer.ToString().PadLeft(20, '0')}_" +
+                                 $"{provider.ClientId}_" +
+                                 $"{@event.Id.PadLeft(36, '0')}_" +
+                                 $"{@event.Name}.txt");
+        }
+
+        [Test]
+        public void ShouldThrowExceptionIfEventNameIsLongerThan20Characters()
+        {
+            var provider = GetProvider();
+
+            var @event = new Event { Nummer = 100, Id = "1", Name = "123456789012345678901" };
+
+            Action call = () => provider.BuildFileNameFromEvent(@event);
+
+            call.ShouldThrow<InvalidOperationException>().WithMessage("Event name exceeds maximum of 20 characters.");
+        }
+
+        private EventSourceProvider GetProvider()
+        {
+            var provider = new EventSourceProvider(_eventStoreFolder)
+            {
+                ClientId = Guid.NewGuid().ToString()
+            };
+            return provider;
         }
     }
 }
