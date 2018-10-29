@@ -67,5 +67,13 @@
       <Name>tvspike.es</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="testfiles\eventstore\eventnumbers.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="testfiles\eventstore\events\dummy.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

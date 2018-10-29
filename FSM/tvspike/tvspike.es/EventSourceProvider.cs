@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using tvspike.contracts;
 
@@ -19,6 +20,7 @@ namespace tvspike.es
     public class EventSourceProvider
     {
         private readonly string _path;
+        private long? _lastId;
 
         public EventSourceProvider(string path)
         {
@@ -36,12 +38,29 @@ namespace tvspike.es
                 PersistEvent(eventFilename, @event);
             }
 
-            throw new NotImplementedException();
+            PersistLastId();
+        }
+
+        private void PersistLastId()
+        {
+            File.WriteAllText(Path.Combine(_path, "eventnumbers.txt"), _lastId.ToString());
         }
 
         private void AssignUniqueNumberToEvent(Event @event)
         {
-            @event.Nummer = 0;
+            if (!_lastId.HasValue)
+            {
+                _lastId = LoadLastNumber();
+            }
+
+            @event.Nummer = _lastId.Value;
+            _lastId += 1;
+        }
+
+        private long LoadLastNumber()
+        {
+            var readAllLines = File.ReadAllText(Path.Combine(_path, "eventnumbers.txt"));
+            return long.Parse(readAllLines);
         }
 
         public string BuildFileNameFromEvent(Event @event)
@@ -57,7 +76,9 @@ namespace tvspike.es
 
         public void PersistEvent(string filename, Event @event)
         {
-            throw new NotImplementedException();
+            var eventData = "Fake for " + filename;
+            var eventsFolder = Path.Combine(_path, "events\\");
+            File.WriteAllText(Path.Combine(eventsFolder, filename), eventData);
         }
     }
 }
