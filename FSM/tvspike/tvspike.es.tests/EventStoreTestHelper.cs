@@ -7,7 +7,7 @@ namespace tvspike.es.tests
     {
         public static void DumpEvent(Event @event)
         {
-            Console.WriteLine($"{@event.Nummer}, {@event.Id}, {@event.Name}, {@event.Daten}");
+            Console.WriteLine($"{@event.Nummer}, {@event.Id}, {@event.Name}\r\n    Data '{@event.Daten}'");
         }
     }
 }

@@ -8,7 +8,6 @@ namespace tvspike.es.tests
     [TestFixture]
     public class EventStoreProviderUsageTests
     {
-
         [Test, Category("Manual")]
         public void Usage()
         {

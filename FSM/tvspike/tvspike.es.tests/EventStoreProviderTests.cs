@@ -64,7 +64,7 @@ namespace tvspike.es.tests
             Guid.Parse(clientId).Should().Be(Guid.Parse(provider.ClientId));
         }
 
-        [Test, Category("Manual")]
+        [Test]//, Category("Manual")]
         public void ShouldReplayEvents()
         {
             var eventSourceProvider = GetProvider();
@@ -72,22 +72,23 @@ namespace tvspike.es.tests
             var events = eventSourceProvider.Replay().ToList();
 
             // expected data see 'Record' test
-//            events[0].Id.Should().Be("1");
-//            events[0].Name.Should().Be("EventA");
-//            events[0].Name.Should().Be("NutzdatenEventA");
-//
-//            events[1].Id.Should().Be("2");
-//            events[1].Name.Should().Be("EventB");
-//            events[1].Name.Should().Be("NutzdatenEventB");
-//
-//            events[2].Id.Should().Be("3");
-//            events[2].Name.Should().Be("EventA");
-//            events[2].Name.Should().Be("NutzdatenEventA");
+            events[0].Nummer.Should().Be(500L);
+            events[0].Id.Should().Be("000000000000000000000000000000000001");
+            events[0].Name.Should().Be("EventA");
+            //events[0].Daten.Should().Be("NutzdatenEventA");
+
+            events[1].Nummer.Should().Be(501L);
+            events[1].Id.Should().Be("000000000000000000000000000000000002");
+            events[1].Name.Should().Be("EventB");
+            // events[1].Daten.Should().Be("NutzdatenEventB");
+
+            events[2].Nummer.Should().Be(502L);
+            events[2].Id.Should().Be("000000000000000000000000000000000003");
+            events[2].Name.Should().Be("EventA");
+            // events[2].Daten.Should().Be("NutzdatenEventA");
 
             foreach (var @event in events)
-            {
                 EventStoreTestHelper.DumpEvent(@event);
-            }
         }
 
         [Test]
