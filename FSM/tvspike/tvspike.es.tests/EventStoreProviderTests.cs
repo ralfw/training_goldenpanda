@@ -86,8 +86,7 @@ namespace tvspike.es.tests
 
             foreach (var @event in events)
             {
-                var dump = $"{@event.Nummer}, {@event.Id}, {@event.Name}, {@event.Daten}";
-                Console.WriteLine(dump);
+                EventStoreTestHelper.DumpEvent(@event);
             }
         }
 

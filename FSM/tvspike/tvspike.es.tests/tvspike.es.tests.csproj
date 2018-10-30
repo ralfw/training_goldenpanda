@@ -51,6 +51,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EventStoreProviderTests.cs" />
+    <Compile Include="EventStoreProviderUsageTests.cs" />
+    <Compile Include="EventStoreTestHelper.cs" />
     <Compile Include="FakeZeitProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

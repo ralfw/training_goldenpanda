@@ -28,7 +28,26 @@ namespace tvspike.es
         public EventSourceProvider(string eventStoreFolderPath)
         {
             _eventStoreFolderPath = eventStoreFolderPath;
+            InitWorkFolder();
+        }
+
+        private void InitWorkFolder()
+        {
+            if(!Directory.Exists(_eventStoreFolderPath))
+                Directory.CreateDirectory(_eventStoreFolderPath);
+
+            var eventSubDirPath = Path.Combine(_eventStoreFolderPath, DIRNAME_EVENTS_SUBDIR);
+            if (!Directory.Exists(eventSubDirPath))
+                Directory.CreateDirectory(eventSubDirPath);
+
             LoadOrCreateClientId();
+
+            var numberFilePath = Path.Combine(_eventStoreFolderPath, FILENAME_EVENT_NUMBERS);
+            if (!File.Exists(numberFilePath))
+            {
+                _lastId = 500;
+                File.WriteAllText(numberFilePath, _lastId.ToString());
+            }
         }
 
         private void LoadOrCreateClientId()
@@ -119,10 +138,7 @@ namespace tvspike.es
 
         private bool IsEventFile(string fullPath)
         {
-            Console.WriteLine(fullPath);
             var filename = fullPath.Substring(fullPath.LastIndexOf('\\') + 1 );
-            Console.WriteLine(filename);
-            
             // workaround to ignore test dummy and other test files for now
             return filename.Length >= 94;
         }
