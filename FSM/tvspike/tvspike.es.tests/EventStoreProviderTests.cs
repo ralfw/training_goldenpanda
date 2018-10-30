@@ -19,15 +19,13 @@ namespace tvspike.es.tests
         [SetUp]
         public void SetUp()
         {
-            _eventStoreFolder = Path.Combine(TestContext.CurrentContext.TestDirectory, "testfiles\\");
+            _eventStoreFolder = Path.Combine(TestContext.CurrentContext.TestDirectory, "testfiles\\eventstore\\");
         }
 
         [Test, Category("Manual")]
         public void ShouldRecordEvents()
         {
-            var path = Path.Combine(_eventStoreFolder, "eventstore\\");
-
-            var provider = new EventSourceProvider(path);
+            var provider = new EventSourceProvider(_eventStoreFolder);
 
             IEnumerable<Event> events = new Event[]
             {

@@ -76,9 +76,14 @@ namespace tvspike.es
 
         public void PersistEvent(string filename, Event @event)
         {
-            var eventData = "Fake for " + filename;
+            var lines = new[]
+            {
+                $"{filename}",
+                $"{@event.Daten}"
+            };
+
             var eventsFolder = Path.Combine(_path, "events\\");
-            File.WriteAllText(Path.Combine(eventsFolder, filename), eventData);
+            File.WriteAllLines(Path.Combine(eventsFolder, filename), lines);
         }
     }
 }
