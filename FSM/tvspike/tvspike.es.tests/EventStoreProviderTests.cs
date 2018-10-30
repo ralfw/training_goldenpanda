@@ -55,13 +55,54 @@ namespace tvspike.es.tests
             if(File.Exists(clientIdFilePath))
                 File.Delete(clientIdFilePath);
 
-            var provider = new EventSourceProvider(_eventStoreFolder);
+            var provider = GetProvider();
 
             Guid.Parse(provider.ClientId).Should().NotBe(Guid.Empty);
 
             var clientId = File.ReadAllText(clientIdFilePath);
 
             Guid.Parse(clientId).Should().Be(Guid.Parse(provider.ClientId));
+        }
+
+        [Test, Category("Manual")]
+        public void ShouldReplayEvents()
+        {
+            var eventSourceProvider = GetProvider();
+
+            var events = eventSourceProvider.Replay().ToList();
+
+            // expected data see 'Record' test
+//            events[0].Id.Should().Be("1");
+//            events[0].Name.Should().Be("EventA");
+//            events[0].Name.Should().Be("NutzdatenEventA");
+//
+//            events[1].Id.Should().Be("2");
+//            events[1].Name.Should().Be("EventB");
+//            events[1].Name.Should().Be("NutzdatenEventB");
+//
+//            events[2].Id.Should().Be("3");
+//            events[2].Name.Should().Be("EventA");
+//            events[2].Name.Should().Be("NutzdatenEventA");
+
+            foreach (var @event in events)
+            {
+                var dump = $"{@event.Nummer}, {@event.Id}, {@event.Name}, {@event.Daten}";
+                Console.WriteLine(dump);
+            }
+        }
+
+        [Test]
+        public void ShouldBuildEventFromFilename()
+        {
+            var fileName = "00000000000000000500_e89449a1-37bf-41bd-bb92-2f906ff3386b_000000000000000000000000000000000001_EventA.txt";
+            var eventFromFilename = EventSourceProvider.CreateEventFromFile(fileName);
+
+            eventFromFilename.Nummer.Should().Be(500L);
+            eventFromFilename.Id.Should().Be("000000000000000000000000000000000001");
+            eventFromFilename.Name.Should().Be("EventA");
+            // eventFromFilename.Daten.Should().Be("");
+
+            // TODO: add reading of data /TMa
         }
 
 
@@ -96,11 +137,7 @@ namespace tvspike.es.tests
 
         private EventSourceProvider GetProvider()
         {
-            var provider = new EventSourceProvider(_eventStoreFolder)
-            {
-                //ClientId = Guid.NewGuid().ToString()
-            };
-            return provider;
+            return new EventSourceProvider(_eventStoreFolder);
         }
     }
 }
