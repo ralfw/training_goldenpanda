@@ -12,18 +12,18 @@ namespace tvspike.client
     {
         public static Event ErstelleTerminLöschenEvent(TerminLöschenCommand terminLöschenCommand)
         {
-            var id = GeneriereNeueEvent();
+            var id = GeneriereNeueEventId();
             return ErstelleEvent(id, "", "LoescheTermin");
         }
 
         public static Event ErstelleNeuerTerminEvent(NeuerTerminCommand neuerTerminCommand)
         {
-            var id = GeneriereNeueEvent();
+            var id = GeneriereNeueEventId();
             var daten = ZuDatenString(neuerTerminCommand);
             return ErstelleEvent(id, daten, "NeuerTermin");
         }
 
-        private static string GeneriereNeueEvent()
+        private static string GeneriereNeueEventId()
         {
             return Guid.NewGuid().ToString();
         }
