@@ -19,15 +19,32 @@ namespace tvspike.es
 
     public class EventSourceProvider
     {
-        private readonly string _path;
         private long? _lastId;
+        private readonly string _eventStoreFolderPath;
+        private const string FILENAME_CLIENT_ID = "clientId.txt";
+        private const string FILENAME_EVENT_NUMBERS = "eventnumbers.txt";
 
-        public EventSourceProvider(string path)
+        public EventSourceProvider(string eventStoreFolderPath)
         {
-            _path = path;
+            _eventStoreFolderPath = eventStoreFolderPath;
+            LoadOrCreateClientId();
         }
 
-        public string ClientId { get; set; }
+        private void LoadOrCreateClientId()
+        {
+            var clientIdFilePath = Path.Combine(_eventStoreFolderPath, FILENAME_CLIENT_ID);
+            if (!File.Exists(clientIdFilePath))
+            {
+                ClientId = Guid.NewGuid().ToString();
+                File.WriteAllText(clientIdFilePath, ClientId);
+            }
+            else
+            {
+                ClientId = Guid.Parse(File.ReadAllText(clientIdFilePath)).ToString();
+            }
+        }
+
+        public string ClientId { get; private set; }
 
         public void Record(IEnumerable<Event> events)
         {
@@ -43,7 +60,7 @@ namespace tvspike.es
 
         private void PersistLastId()
         {
-            File.WriteAllText(Path.Combine(_path, "eventnumbers.txt"), _lastId.ToString());
+            File.WriteAllText(Path.Combine(_eventStoreFolderPath, FILENAME_EVENT_NUMBERS), _lastId.ToString());
         }
 
         private void AssignUniqueNumberToEvent(Event @event)
@@ -59,7 +76,7 @@ namespace tvspike.es
 
         private long LoadLastNumber()
         {
-            var readAllLines = File.ReadAllText(Path.Combine(_path, "eventnumbers.txt"));
+            var readAllLines = File.ReadAllText(Path.Combine(_eventStoreFolderPath, FILENAME_EVENT_NUMBERS));
             return long.Parse(readAllLines);
         }
 
@@ -82,7 +99,7 @@ namespace tvspike.es
                 $"{@event.Daten}"
             };
 
-            var eventsFolder = Path.Combine(_path, "events\\");
+            var eventsFolder = Path.Combine(_eventStoreFolderPath, "events\\");
             File.WriteAllLines(Path.Combine(eventsFolder, filename), lines);
         }
     }

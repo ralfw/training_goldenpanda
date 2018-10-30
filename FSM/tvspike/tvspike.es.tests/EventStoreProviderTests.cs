@@ -48,6 +48,23 @@ namespace tvspike.es.tests
             provider.PersistEvent(filename, @event);
         }
 
+        [Test, Category("Manual")]
+        public void ShouldCreateClientIdIfNotYetSet()
+        {
+            var clientIdFilePath = Path.Combine(_eventStoreFolder, "clientId.txt");
+            if(File.Exists(clientIdFilePath))
+                File.Delete(clientIdFilePath);
+
+            var provider = new EventSourceProvider(_eventStoreFolder);
+
+            Guid.Parse(provider.ClientId).Should().NotBe(Guid.Empty);
+
+            var clientId = File.ReadAllText(clientIdFilePath);
+
+            Guid.Parse(clientId).Should().Be(Guid.Parse(provider.ClientId));
+        }
+
+
         [Test]
         public void ShouldBuildNameFromEvent()
         {
@@ -81,7 +98,7 @@ namespace tvspike.es.tests
         {
             var provider = new EventSourceProvider(_eventStoreFolder)
             {
-                ClientId = Guid.NewGuid().ToString()
+                //ClientId = Guid.NewGuid().ToString()
             };
             return provider;
         }
