@@ -19,7 +19,7 @@ namespace tvspike.es
 
     public class EventSourceProvider
     {
-        private long? _lastId;
+        private long _lastId;
         private readonly string _eventStoreFolderPath;
         private const string FILENAME_CLIENT_ID = "clientId.txt";
         private const string FILENAME_EVENT_NUMBERS = "eventnumbers.txt";
@@ -47,6 +47,11 @@ namespace tvspike.es
             {
                 _lastId = 500;
                 File.WriteAllText(numberFilePath, _lastId.ToString());
+            }
+            else
+            {
+                var readAllLines = File.ReadAllText(numberFilePath);
+                _lastId = long.Parse(readAllLines);
             }
         }
 
@@ -78,26 +83,9 @@ namespace tvspike.es
             PersistLastId();
         }
 
-        private void PersistLastId()
-        {
-            File.WriteAllText(Path.Combine(_eventStoreFolderPath, FILENAME_EVENT_NUMBERS), _lastId.ToString());
-        }
-
         private void AssignUniqueNumberToEvent(Event @event)
         {
-            if (!_lastId.HasValue)
-            {
-                _lastId = LoadLastNumber();
-            }
-
-            @event.Nummer = _lastId.Value;
-            _lastId += 1;
-        }
-
-        private long LoadLastNumber()
-        {
-            var readAllLines = File.ReadAllText(Path.Combine(_eventStoreFolderPath, FILENAME_EVENT_NUMBERS));
-            return long.Parse(readAllLines);
+            @event.Nummer = _lastId++;
         }
 
         public string BuildFileNameFromEvent(Event @event)
@@ -122,6 +110,12 @@ namespace tvspike.es
             var eventsFolder = Path.Combine(_eventStoreFolderPath, DIRNAME_EVENTS_SUBDIR);
             File.WriteAllLines(Path.Combine(eventsFolder, filename), lines);
         }
+
+        private void PersistLastId()
+        {
+            File.WriteAllText(Path.Combine(_eventStoreFolderPath, FILENAME_EVENT_NUMBERS), _lastId.ToString());
+        }
+
 
         public IEnumerable<Event> Replay()
         {
