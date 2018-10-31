@@ -125,22 +125,42 @@ namespace tvspike.es
 
         public IEnumerable<Event> Replay()
         {
+            return Replay(Guid.Empty);
+        }
+
+        public IEnumerable<Event> Replay(Guid id)
+        {
             // get all files
             var eventsFolder = Path.Combine(_eventStoreFolderPath, DIRNAME_EVENTS_SUBDIR);
             var allFiles = Directory.GetFiles(eventsFolder).ToList();
 
             // filter files
-            var eventFile = allFiles.Where(IsEventFile);
+            var eventFiles = allFiles.Where(IsEventFile);
+            if (id != Guid.Empty)
+                eventFiles = eventFiles.Where(file => MatchesAggregateId(file, id));
 
             // foreach file, get event
-            return eventFile.Select(CreateEventFromFile);
+            return eventFiles.Select(CreateEventFromFile);
+        }
+
+        private bool MatchesAggregateId(string fullPath, Guid id)
+        {
+            var filename = GetFileNameFromFullPath(fullPath);
+
+            var parts = filename.Split('_');
+            return Guid.Parse(parts[2]) == id;
         }
 
         private bool IsEventFile(string fullPath)
         {
-            var filename = fullPath.Substring(fullPath.LastIndexOf('\\') + 1 );
+            var filename = GetFileNameFromFullPath(fullPath);
             // workaround to ignore test dummy and other test files for now
             return filename.Length >= 94;
+        }
+
+        private static string GetFileNameFromFullPath(string fullPath)
+        {
+            return fullPath.Substring(fullPath.LastIndexOf('\\') + 1 );
         }
 
         public Event CreateEventFromFile(string fullPath)
@@ -151,7 +171,7 @@ namespace tvspike.es
             // 1st line in file contains filename.
             // 2nd line in file contains data string.
 
-            var filename = fullPath.Substring(fullPath.LastIndexOf('\\') + 1);
+            var filename = GetFileNameFromFullPath(fullPath);
             var parts = filename.Split('_');
 
             var parsedNumber = long.Parse(parts[0]);

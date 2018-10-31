@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using NUnit.Framework;
 using tvspike.contracts;
+// ReSharper disable InconsistentNaming
 
 namespace tvspike.es.tests
 {
-    [TestFixture]
+    [TestFixture, Category("Manual")]
     public class EventStoreProviderUsageTests
     {
-        [Test, Category("Manual")]
-        public void Usage()
+        [Test]
+        public void Usage_Replay()
         {
             var eventSource = new EventSourceProvider(@"D:\temp\eventSource1");
 
@@ -28,6 +29,46 @@ namespace tvspike.es.tests
             {
                 EventStoreTestHelper.DumpEvent(replayedEvent);
             }
+        }
+
+        [Test]
+        public void Usage_ReplayWithAggregateId()
+        {
+            var eventSource = new EventSourceProvider(@"D:\temp\eventSource2");
+
+            var id1 = Guid.NewGuid();
+            var id2 = Guid.NewGuid();
+            IEnumerable<Event> eventsToRecord = new[]
+            {
+                new Event {Nummer = 0, Id = id1.ToString(), Name = "EventA", Daten = "Nutzdaten EventA-1#1"},
+                new Event {Nummer = 0, Id = id2.ToString(), Name = "EventA", Daten = "Nutzdaten EventA-1#2"},
+
+                new Event {Nummer = 0, Id = id1.ToString(), Name = "EventB", Daten = "Nutzdaten EventB-0#1"},
+                new Event {Nummer = 0, Id = id2.ToString(), Name = "EventB", Daten = "Nutzdaten EventB-0#2"},
+
+                new Event {Nummer = 0, Id = id1.ToString(), Name = "EventC", Daten = "Nutzdaten EventC-0#1"},
+                new Event {Nummer = 0, Id = id2.ToString(), Name = "EventC", Daten = "Nutzdaten EventC-0#2"},
+
+                new Event {Nummer = 0, Id = id1.ToString(), Name = "EventA", Daten = "Nutzdaten EventA-2#1"},
+            };
+
+            eventSource.Record(eventsToRecord);
+
+            DumpReplayedEventsFor(id1, eventSource);
+            DumpReplayedEventsFor(id2, eventSource);
+        }
+
+        private static void DumpReplayedEventsFor(Guid currentId, EventSourceProvider eventSource)
+        {
+            Console.WriteLine($"Replay for AggregateId: {currentId}");
+            Console.WriteLine("");
+            var replayedEvents = eventSource.Replay(currentId);
+            foreach (var replayedEvent in replayedEvents)
+            {
+                EventStoreTestHelper.DumpEvent(replayedEvent);
+            }
+
+            Console.WriteLine("");
         }
     }
 }
