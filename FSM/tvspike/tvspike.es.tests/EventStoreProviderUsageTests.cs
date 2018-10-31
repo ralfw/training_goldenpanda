@@ -62,7 +62,9 @@ namespace tvspike.es.tests
         {
             Console.WriteLine($"Replay for AggregateId: {currentId}");
             Console.WriteLine("");
+
             var replayedEvents = eventSource.Replay(currentId);
+
             foreach (var replayedEvent in replayedEvents)
             {
                 EventStoreTestHelper.DumpEvent(replayedEvent);
