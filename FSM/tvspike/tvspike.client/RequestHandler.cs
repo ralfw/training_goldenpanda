@@ -22,7 +22,8 @@ namespace tvspike.client
 
         public void TerminHinzufuegen(NeuerTerminCommand neuerTerminCommand)
         {
-
+            var neuesEvent = TerminAggregator.ErstelleNeuerTerminEvent(neuerTerminCommand);
+            _eventSourceProvider.Record(new []{neuesEvent});
         }
     }
 }

@@ -21,10 +21,17 @@ namespace tvspike.client
             var eventSourceProvider = new EventSourceProvider(pathToEventStore);
             _requestHandler = new RequestHandler(eventSourceProvider);
             _terminübersicht = new Terminübersicht();
+
             _terminübersicht.TerminlisteAnzeigen += TerminübersichtTerminlisteAnzeigen;
+            _terminübersicht.TerminAnlegen += TerminübersichtTerminAnlegen;
 
             var terminliste = _requestHandler.TerminlisteLaden();
             _terminübersicht.ZeigeTerminUI(terminliste);
+        }
+
+        private static void TerminübersichtTerminAnlegen(NeuerTerminCommand neuerTerminCommand)
+        {
+            _requestHandler.TerminHinzufuegen(neuerTerminCommand);
         }
 
         private static void TerminübersichtTerminlisteAnzeigen()
