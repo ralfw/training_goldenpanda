@@ -143,7 +143,7 @@ namespace tvspike.es
             return filename.Length >= 94;
         }
 
-        public static Event CreateEventFromFile(string fullPath)
+        public Event CreateEventFromFile(string fullPath)
         {
             // e.g.
             // number               clientId                             eventId                           event name
@@ -158,11 +158,14 @@ namespace tvspike.es
             var parsedId = parts[2];
             var eventName = parts[3].Split('.')[0];
 
+            var data = File.ReadAllLines(fullPath)[1];
+
             return new Event
             {
                 Nummer = parsedNumber,
                 Id = parsedId,
-                Name = eventName
+                Name = eventName,
+                Daten = data
             };
         }
     }

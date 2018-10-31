@@ -44,7 +44,7 @@ namespace tvspike.es.tests
             var @event = new Event {Nummer = 0, Id = guidBasedId, Name = "EventA", Daten = "Nutzdaten-EventA"};
             var provider = new EventSourceProvider(_eventStoreFolder);
 
-            string filename = "persistedEvent.txt";
+            string filename = "persistedEvent2.txt";
             provider.PersistEvent(filename, @event);
         }
 
@@ -64,45 +64,63 @@ namespace tvspike.es.tests
             Guid.Parse(clientId).Should().Be(Guid.Parse(provider.ClientId));
         }
 
-        [Test]//, Category("Manual")]
+        [Test, Category("Manual")]
         public void ShouldReplayEvents()
         {
+            // arrange
             var eventSourceProvider = GetProvider();
 
+            IEnumerable<Event> eventsToRecord = new Event[]
+            {
+                new Event {Nummer = 0, Id = "1", Name = "EventA", Daten = "NutzdatenEventA"},
+                new Event {Nummer = 0, Id = "2", Name = "EventB", Daten = "NutzdatenEventB"},
+                new Event {Nummer = 0, Id = "3", Name = "EventA", Daten = "NutzdatenEventA"},
+            };
+
+            eventSourceProvider.Record(eventsToRecord);
+
+
+            // act
             var events = eventSourceProvider.Replay().ToList();
 
-            // expected data see 'Record' test
+
+            //assert
             events[0].Nummer.Should().Be(500L);
             events[0].Id.Should().Be("000000000000000000000000000000000001");
             events[0].Name.Should().Be("EventA");
-            //events[0].Daten.Should().Be("NutzdatenEventA");
+            events[0].Daten.Should().Be("NutzdatenEventA");
 
             events[1].Nummer.Should().Be(501L);
             events[1].Id.Should().Be("000000000000000000000000000000000002");
             events[1].Name.Should().Be("EventB");
-            // events[1].Daten.Should().Be("NutzdatenEventB");
+            events[1].Daten.Should().Be("NutzdatenEventB");
 
             events[2].Nummer.Should().Be(502L);
             events[2].Id.Should().Be("000000000000000000000000000000000003");
             events[2].Name.Should().Be("EventA");
-            // events[2].Daten.Should().Be("NutzdatenEventA");
+            events[2].Daten.Should().Be("NutzdatenEventA");
 
             foreach (var @event in events)
                 EventStoreTestHelper.DumpEvent(@event);
         }
 
-        [Test]
+        [Test, Category("Manual")]
         public void ShouldBuildEventFromFilename()
         {
-            var fileName = "00000000000000000500_e89449a1-37bf-41bd-bb92-2f906ff3386b_000000000000000000000000000000000001_EventA.txt";
-            var eventFromFilename = EventSourceProvider.CreateEventFromFile(fileName);
+            var eventStoreFolder = Path.Combine(TestContext.CurrentContext.TestDirectory, "testfiles\\eventstore2\\");
+
+            var provider = new EventSourceProvider(eventStoreFolder);
+
+            var eFolderName = Path.Combine(eventStoreFolder, "events\\");
+            var fileName = "00000000000000000500_1b5b501f-680f-4e53-b09b-8c39689e2f6e_000000000000000000000000000000000001_EventA.txt";
+            var fullPathToFile = Path.Combine(eFolderName, fileName);
+
+            var eventFromFilename = provider.CreateEventFromFile(fullPathToFile);
 
             eventFromFilename.Nummer.Should().Be(500L);
             eventFromFilename.Id.Should().Be("000000000000000000000000000000000001");
             eventFromFilename.Name.Should().Be("EventA");
-            // eventFromFilename.Daten.Should().Be("");
-
-            // TODO: add reading of data /TMa
+            eventFromFilename.Daten.Should().Be("NutzdatenEventA");
         }
 
 
