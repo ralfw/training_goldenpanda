@@ -26,7 +26,7 @@ namespace tvspike.client
             _terminübersicht.TerminAnlegen += TerminübersichtTerminAnlegen;
             _terminübersicht.TerminLöschen += TerminübersichtOnTerminLöschen;
 
-            var terminliste = _requestHandler.TerminlisteLaden();
+            var terminliste = _requestHandler.TerminlisteLaden(new QueryTerminliste());
             _terminübersicht.ZeigeTerminUI(terminliste);
         }
 
@@ -40,9 +40,10 @@ namespace tvspike.client
             _requestHandler.TerminHinzufuegen(neuerTerminKommando);
         }
 
+        // TODO: query need to to into the ui project
         private static void TerminübersichtTerminlisteAnzeigen()
         {
-            _terminübersicht.TerminListeZeigen(_requestHandler.TerminlisteLaden());
+            _terminübersicht.TerminListeZeigen(_requestHandler.TerminlisteLaden(new QueryTerminliste()));
         }
     }
 }
