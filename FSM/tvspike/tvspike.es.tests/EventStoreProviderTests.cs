@@ -14,45 +14,19 @@ namespace tvspike.es.tests
     [TestFixture]
     public class EventStoreProviderTests
     {
-        private string _eventStoreFolder;
+        private string _eventStoreTestFolder;
 
         [SetUp]
         public void SetUp()
         {
-            _eventStoreFolder = Path.Combine(TestContext.CurrentContext.TestDirectory, "testfiles\\eventstore\\");
-        }
-
-        [Test, Category("Manual")]
-        public void ShouldRecordEvents()
-        {
-            var provider = new EventSourceProvider(_eventStoreFolder);
-
-            IEnumerable<Event> events = new Event[]
-            {
-                new Event {Nummer = 0, Id = "1", Name = "EventA", Daten = "NutzdatenEventA"},
-                new Event {Nummer = 0, Id = "2", Name = "EventB", Daten = "NutzdatenEventB"},
-                new Event {Nummer = 0, Id = "3", Name = "EventA", Daten = "NutzdatenEventA"},
-            };
-
-            provider.Record(events);
-        }
-
-        [Test, Category("Manual")]
-        public void ShouldPersistDataToGivenFolder()
-        {
-            var guidBasedId = Guid.NewGuid().ToString();
-            var @event = new Event {Nummer = 0, Id = guidBasedId, Name = "EventA", Daten = "Nutzdaten-EventA"};
-            var provider = new EventSourceProvider(_eventStoreFolder);
-
-            string filename = "persistedEvent2.txt";
-            provider.PersistEvent(filename, @event);
+            _eventStoreTestFolder = Path.Combine(TestContext.CurrentContext.TestDirectory, "testfiles\\eventstore\\");
         }
 
         [Test, Category("Manual")]
         public void ShouldCreateClientIdIfNotYetSet()
         {
-            var clientIdFilePath = Path.Combine(_eventStoreFolder, "clientId.txt");
-            if(File.Exists(clientIdFilePath))
+            var clientIdFilePath = Path.Combine(_eventStoreTestFolder, "clientId.txt");
+            if (File.Exists(clientIdFilePath))
                 File.Delete(clientIdFilePath);
 
             var provider = GetProvider();
@@ -65,25 +39,26 @@ namespace tvspike.es.tests
         }
 
         [Test, Category("Manual")]
-        public void ShouldReplayEvents()
+        public void ShouldRecordAndReplayEvents()
         {
             // arrange
             var eventSourceProvider = GetProvider();
 
-            IEnumerable<Event> eventsToRecord = new Event[]
+            IEnumerable<Event> eventsToRecord = new[]
             {
                 new Event {Nummer = 0, Id = "1", Name = "EventA", Daten = "NutzdatenEventA"},
                 new Event {Nummer = 0, Id = "2", Name = "EventB", Daten = "NutzdatenEventB"},
                 new Event {Nummer = 0, Id = "3", Name = "EventA", Daten = "NutzdatenEventA"},
             };
 
-            eventSourceProvider.Record(eventsToRecord);
-
-
             // act
+            
+            // - record
+            eventSourceProvider.Record(eventsToRecord);
+            
+            // - replay
             var events = eventSourceProvider.Replay().ToList();
-
-
+            
             //assert
             events[0].Nummer.Should().Be(500L);
             events[0].Id.Should().Be("000000000000000000000000000000000001");
@@ -102,6 +77,8 @@ namespace tvspike.es.tests
 
             foreach (var @event in events)
                 EventStoreTestHelper.DumpEvent(@event);
+
+
         }
 
         [Test, Category("Manual")]
@@ -123,7 +100,6 @@ namespace tvspike.es.tests
             eventFromFilename.Daten.Should().Be("NutzdatenEventA");
         }
 
-
         [Test]
         public void ShouldBuildNameFromEvent()
         {
@@ -141,21 +117,20 @@ namespace tvspike.es.tests
                                  $"{@event.Name}.txt");
         }
 
-        [Test]
+        [Test, Category("Manual")]
         public void ShouldThrowExceptionIfEventNameIsLongerThan20Characters()
         {
             var provider = GetProvider();
-
             var @event = new Event { Nummer = 100, Id = "1", Name = "123456789012345678901" };
 
-            Action call = () => provider.BuildFileNameFromEvent(@event);
+            Action call = () => provider.Record(@event);
 
             call.ShouldThrow<InvalidOperationException>().WithMessage("Event name exceeds maximum of 20 characters.");
         }
 
         private EventSourceProvider GetProvider()
         {
-            return new EventSourceProvider(_eventStoreFolder);
+            return new EventSourceProvider(_eventStoreTestFolder);
         }
     }
 }

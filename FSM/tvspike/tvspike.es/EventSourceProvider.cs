@@ -83,6 +83,11 @@ namespace tvspike.es
             PersistLastId();
         }
 
+        public void Record(Event @event)
+        {
+            Record(new[] { @event });
+        }
+
         private void AssignUniqueNumberToEvent(Event @event)
         {
             @event.Nummer = _lastId++;
@@ -99,7 +104,7 @@ namespace tvspike.es
             return $"{paddedNumber}_{ClientId}_{paddedEventId}_{@event.Name}.txt";
         }
 
-        public void PersistEvent(string filename, Event @event)
+        private void PersistEvent(string filename, Event @event)
         {
             var lines = new[]
             {
@@ -182,5 +187,7 @@ namespace tvspike.es
                 Daten = data
             };
         }
+
+
     }
 }
