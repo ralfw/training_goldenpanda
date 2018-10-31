@@ -24,14 +24,20 @@ namespace tvspike.client
 
             _terminübersicht.TerminlisteAnzeigen += TerminübersichtTerminlisteAnzeigen;
             _terminübersicht.TerminAnlegen += TerminübersichtTerminAnlegen;
+            _terminübersicht.TerminLöschen += TerminübersichtOnTerminLöschen;
 
             var terminliste = _requestHandler.TerminlisteLaden();
             _terminübersicht.ZeigeTerminUI(terminliste);
         }
 
-        private static void TerminübersichtTerminAnlegen(NeuerTerminCommand neuerTerminCommand)
+        private static void TerminübersichtOnTerminLöschen(TerminLöschenCommand terminLöschenKommando)
         {
-            _requestHandler.TerminHinzufuegen(neuerTerminCommand);
+            _requestHandler.TerminLöschen(terminLöschenKommando);
+        }
+
+        private static void TerminübersichtTerminAnlegen(NeuerTerminCommand neuerTerminKommando)
+        {
+            _requestHandler.TerminHinzufuegen(neuerTerminKommando);
         }
 
         private static void TerminübersichtTerminlisteAnzeigen()

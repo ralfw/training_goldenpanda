@@ -20,6 +20,12 @@ namespace tvspike.client
             return ReadModelProvider.Aufbauen(events);
         }
 
+        public void TerminLöschen(TerminLöschenCommand terminLöschenCommand)
+        {
+            var neuesEvent = TerminAggregator.ErstelleTerminLöschenEvent(terminLöschenCommand);
+            _eventSourceProvider.Record(new[] { neuesEvent });
+        }
+
         public void TerminHinzufuegen(NeuerTerminCommand neuerTerminCommand)
         {
             var neuesEvent = TerminAggregator.ErstelleNeuerTerminEvent(neuerTerminCommand);
