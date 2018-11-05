@@ -10,13 +10,13 @@ namespace tvspike.client
 {
     public class TerminAggregator
     {
-        public static Event ErstelleTerminLöschenEvent(TerminLöschenCommand terminLöschenCommand)
+        public static Event[] Process(TerminLöschenCommand terminLöschenCommand)
         {
             var id = terminLöschenCommand.Id;
-            return ErstelleEvent(id, "", "LoescheTermin");
+            return new[] {ErstelleEvent(id, "", "LoescheTermin")};
         }
 
-        public static Event ErstelleNeuerTerminEvent(NeuerTerminCommand neuerTerminCommand)
+        public static Event Process(NeuerTerminCommand neuerTerminCommand)
         {
             var id = GeneriereNeueEventId();
             var daten = ZuDatenString(neuerTerminCommand);

@@ -17,7 +17,7 @@ namespace tvspike.ui
         {
             var terminListe = termine.ToList();
             TerminListeZeigen(terminListe);
-            ZeigeMenüUndWarteAufEingabe(terminListe);
+            Menü(terminListe);
         }
 
         public void  TerminListeZeigen(IEnumerable<TerminRM> termine)
@@ -30,7 +30,7 @@ namespace tvspike.ui
             
         }
 
-        private void ZeigeMenüUndWarteAufEingabe(List<TerminRM> termine)
+        private void Menü(List<TerminRM> termine)
         {
             var ende = false;
             while (!ende)

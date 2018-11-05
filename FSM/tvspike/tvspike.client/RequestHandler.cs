@@ -14,21 +14,20 @@ namespace tvspike.client
             _eventSourceProvider = eventSourceProvider;
         }
 
-        public IEnumerable<TerminRM> TerminlisteLaden(QueryTerminliste queryTerminliste)
+        public IEnumerable<TerminRM> Handle(QueryTerminliste queryTerminliste)
         {
             var events = _eventSourceProvider.Replay();
             return ReadModelProvider.Aufbauen(events);
         }
 
-        public void TerminLöschen(TerminLöschenCommand terminLöschenCommand)
-        {
-            var neuesEvent = TerminAggregator.ErstelleTerminLöschenEvent(terminLöschenCommand);
-            _eventSourceProvider.Record(new[] { neuesEvent });
+        public void Handle(TerminLöschenCommand terminLöschenCommand) {
+            var events = TerminAggregator.Process(terminLöschenCommand);
+            _eventSourceProvider.Record(events);
         }
 
-        public void TerminHinzufuegen(NeuerTerminCommand neuerTerminCommand)
+        public void Handle(NeuerTerminCommand neuerTerminCommand)
         {
-            var neuesEvent = TerminAggregator.ErstelleNeuerTerminEvent(neuerTerminCommand);
+            var neuesEvent = TerminAggregator.Process(neuerTerminCommand);
             _eventSourceProvider.Record(new []{neuesEvent});
         }
     }
