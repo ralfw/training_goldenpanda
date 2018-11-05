@@ -19,59 +19,65 @@ namespace tvspike.es
 
     public class EventSourceProvider
     {
-        private long _lastId;
+        private long _nextEventNumber;
         private readonly string _eventStoreFolderPath;
         private const string FILENAME_CLIENT_ID = "clientId.txt";
         private const string FILENAME_EVENT_NUMBERS = "eventnumbers.txt";
         private const string DIRNAME_EVENTS_SUBDIR = "events\\";
 
+        public string ClientId { get; private set; }
+
         public EventSourceProvider(string eventStoreFolderPath)
         {
             _eventStoreFolderPath = eventStoreFolderPath;
+
             InitWorkFolder();
         }
 
         private void InitWorkFolder()
         {
-            // Ensure ES directories exist
-            if(Directory.Exists(_eventStoreFolderPath) is false)
-                Directory.CreateDirectory(_eventStoreFolderPath);
-
-            var eventSubDirPath = Path.Combine(_eventStoreFolderPath, DIRNAME_EVENTS_SUBDIR);
-            if (Directory.Exists(eventSubDirPath) is false)
-                Directory.CreateDirectory(eventSubDirPath);
-
-            LoadOrCreateClientId();
-
-            // Get last event id
-            var numberFilePath = Path.Combine(_eventStoreFolderPath, FILENAME_EVENT_NUMBERS);
-            if (File.Exists(numberFilePath) is false)
-            {
-                _lastId = 500; // magic number????
-                File.WriteAllText(numberFilePath, _lastId.ToString());
-            }
-            else
-            {
-                var readAllLines = File.ReadAllText(numberFilePath);
-                _lastId = long.Parse(readAllLines);
-            }
+            EnsureWorkingDirectoryStructure(_eventStoreFolderPath);
+            ClientId = EnsureClientId(_eventStoreFolderPath);
+            _nextEventNumber = EnsureNextUniqueEventNumber(_eventStoreFolderPath);
         }
 
-        private void LoadOrCreateClientId()
+        internal static long EnsureNextUniqueEventNumber(string rootFolderPath)
+            {
+            var eventNumbersFilePath = Path.Combine(rootFolderPath, FILENAME_EVENT_NUMBERS);
+            if (File.Exists(eventNumbersFilePath))
+            {
+                var eventNumberFileContent = File.ReadAllText(eventNumbersFilePath).Trim();
+                return long.Parse(eventNumberFileContent);
+            }
+
+            const long id = 500; // initial value
+            File.WriteAllText(eventNumbersFilePath, id.ToString());
+            return id;
+        }
+
+        internal static void EnsureWorkingDirectoryStructure(string rootFolderPath)
         {
-            var clientIdFilePath = Path.Combine(_eventStoreFolderPath, FILENAME_CLIENT_ID);
-            if (!File.Exists(clientIdFilePath))
-            {
-                ClientId = Guid.NewGuid().ToString();
-                File.WriteAllText(clientIdFilePath, ClientId);
-            }
-            else
-            {
-                ClientId = Guid.Parse(File.ReadAllText(clientIdFilePath)).ToString();
-            }
+            if (!Directory.Exists(rootFolderPath))
+                Directory.CreateDirectory(rootFolderPath);
+
+            var eventSubDirPath = Path.Combine(rootFolderPath, DIRNAME_EVENTS_SUBDIR);
+            if (!Directory.Exists(eventSubDirPath))
+                Directory.CreateDirectory(eventSubDirPath);
         }
 
-        public string ClientId { get; private set; }
+        internal static string EnsureClientId(string rootFolderPath)
+            {
+            var clientIdFilePath = Path.Combine(rootFolderPath, FILENAME_CLIENT_ID);
+            if (File.Exists(clientIdFilePath))
+            {
+                var content = File.ReadAllText(clientIdFilePath).Trim();
+                return Guid.Parse(content).ToString();
+            }
+
+            var clientId = Guid.NewGuid().ToString();
+            File.WriteAllText(clientIdFilePath, clientId);
+            return clientId;
+        }
 
         public void Record(IEnumerable<Event> events)
         {
@@ -81,9 +87,9 @@ namespace tvspike.es
 
         public void Record(Event @event) {
             AssignUniqueNumberToEvent();
-            var eventFilename = BuildFileNameFromEvent(@event);
-            PersistEvent(eventFilename, @event);
-            
+                var eventFilename = BuildFileNameFromEvent(@event);
+                PersistEvent(eventFilename, @event);
+
             void AssignUniqueNumberToEvent() => @event.Nummer = _lastId++;
         }
 
@@ -111,7 +117,7 @@ namespace tvspike.es
             File.WriteAllLines(Path.Combine(eventsFolder, filename), lines);
         }
 
-        private void PersistLastId()
+        private void PersistNextId()
         {
             File.WriteAllText(Path.Combine(_eventStoreFolderPath, FILENAME_EVENT_NUMBERS), _lastId.ToString());
         }
