@@ -78,38 +78,23 @@ namespace tvspike.es
             File.WriteAllText(clientIdFilePath, clientId);
             return clientId;
         }
-        
-        public void Record(IEnumerable<Event> events)
-        {
-            foreach (var @event in events)
-            {
-                AssignUniqueNumberToEvent(@event);
-                var eventFilename = BuildFileNameFromEvent(@event);
-                PersistEvent(eventFilename, @event);
-            }
-
-            PersistNextId();
-        }
 
         public void Record(Event @event)
         {
-            Record(new[] { @event });
+            AssignNextUniqueNumberToEvent(@event);
+            var eventFilename = EventFilename.From(@event, ClientId).Name;
+            PersistEvent(eventFilename, @event);
         }
 
-        private void AssignUniqueNumberToEvent(Event @event)
+        public void Record(IEnumerable<Event> events)
+        {
+            events.ToList().ForEach(Record);
+        }
+
+        private void AssignNextUniqueNumberToEvent(Event @event)
         {
             @event.Nummer = _nextEventNumber++;
-        }
-
-        public string BuildFileNameFromEvent(Event @event)
-        {
-            var paddedNumber = @event.Nummer.ToString().PadLeft(20,'0');
-            var paddedEventId = @event.Id.PadLeft(36, '0');
-
-            if (@event.Name.Length > 20)
-                throw new InvalidOperationException("Event name exceeds maximum of 20 characters.");
-
-            return $"{paddedNumber}_{ClientId}_{paddedEventId}_{@event.Name}.txt";
+            PersistNextId(_nextEventNumber);
         }
 
         private void PersistEvent(string filename, Event @event)
@@ -124,9 +109,9 @@ namespace tvspike.es
             File.WriteAllLines(Path.Combine(eventsFolder, filename), lines);
         }
 
-        private void PersistNextId()
+        private void PersistNextId(long nextEventNumber)
         {
-            File.WriteAllText(Path.Combine(_eventStoreFolderPath, FILENAME_EVENT_NUMBERS), _nextEventNumber.ToString());
+            File.WriteAllText(Path.Combine(_eventStoreFolderPath, FILENAME_EVENT_NUMBERS), nextEventNumber.ToString());
         }
 
 
