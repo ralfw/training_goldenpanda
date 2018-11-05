@@ -91,7 +91,7 @@ namespace tvspike.es.tests
 
             var @event = new Event {Nummer = 100, Id = "1", Name = "EventA"};
 
-            var fileName = provider.BuildFileNameFromEvent(@event);
+            var fileName = EventFilename.From(@event, provider.ClientId).Name;
 
             Console.Out.WriteLine(fileName);
 

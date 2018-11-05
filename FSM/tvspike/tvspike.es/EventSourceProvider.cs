@@ -42,7 +42,7 @@ namespace tvspike.es
         }
 
         internal static long EnsureNextUniqueEventNumber(string rootFolderPath)
-            {
+        {
             var eventNumbersFilePath = Path.Combine(rootFolderPath, FILENAME_EVENT_NUMBERS);
             if (File.Exists(eventNumbersFilePath))
             {
@@ -66,7 +66,7 @@ namespace tvspike.es
         }
 
         internal static string EnsureClientId(string rootFolderPath)
-            {
+        {
             var clientIdFilePath = Path.Combine(rootFolderPath, FILENAME_CLIENT_ID);
             if (File.Exists(clientIdFilePath))
             {
@@ -78,31 +78,23 @@ namespace tvspike.es
             File.WriteAllText(clientIdFilePath, clientId);
             return clientId;
         }
+        
+        public void Record(Event @event)
+        {
+            AssignNextUniqueNumberToEvent(@event);
+            var eventFilename = EventFilename.From(@event, ClientId).Name;
+                PersistEvent(eventFilename, @event);
+            }
 
         public void Record(IEnumerable<Event> events)
         {
             events.ToList().ForEach(Record);
-            PersistLastId();
         }
 
-        public void Record(Event @event) {
-            AssignUniqueNumberToEvent();
-                var eventFilename = BuildFileNameFromEvent(@event);
-                PersistEvent(eventFilename, @event);
-
-            void AssignUniqueNumberToEvent() => @event.Nummer = _lastId++;
-        }
-
-
-        public string BuildFileNameFromEvent(Event @event)
+        private void AssignNextUniqueNumberToEvent(Event @event)
         {
-            var paddedNumber = @event.Nummer.ToString().PadLeft(20,'0');
-            var paddedEventId = @event.Id.PadLeft(36, '0');
-
-            if (@event.Name.Length > 20)
-                throw new InvalidOperationException("Event name exceeds maximum of 20 characters.");
-
-            return $"{paddedNumber}_{ClientId}_{paddedEventId}_{@event.Name}.txt";
+            @event.Nummer = _nextEventNumber++;
+            PersistNextId(_nextEventNumber);
         }
 
         private void PersistEvent(string filename, Event @event)
@@ -117,9 +109,9 @@ namespace tvspike.es
             File.WriteAllLines(Path.Combine(eventsFolder, filename), lines);
         }
 
-        private void PersistNextId()
+        private void PersistNextId(long nextEventNumber)
         {
-            File.WriteAllText(Path.Combine(_eventStoreFolderPath, FILENAME_EVENT_NUMBERS), _lastId.ToString());
+            File.WriteAllText(Path.Combine(_eventStoreFolderPath, FILENAME_EVENT_NUMBERS), nextEventNumber.ToString());
         }
 
 
@@ -175,12 +167,14 @@ namespace tvspike.es
             
             // parse filename
             var parts = filename.Split('_');
+
             var parsedNumber = long.Parse(parts[0]);
             var parsedId = parts[2];
             var eventName = parts[3].Split('.')[0];
 
             // load event
             var data = File.ReadAllLines(fullPath)[1];
+
             return new Event
             {
                 Nummer = parsedNumber,
