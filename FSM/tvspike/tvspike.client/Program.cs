@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,7 +19,7 @@ namespace tvspike.client
         static void Main(string[] args)
         {
             // build
-            var pathToEventStore = @"c:\temp\eventStore";
+            var pathToEventStore = Path.Combine(Path.GetTempPath(), "eventStore");
             var eventSourceProvider = new EventSourceProvider(pathToEventStore);
             _requestHandler = new RequestHandler(eventSourceProvider);
             _terminübersicht = new Terminübersicht();
