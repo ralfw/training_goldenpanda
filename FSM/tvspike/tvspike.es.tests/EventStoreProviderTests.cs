@@ -66,22 +66,30 @@ namespace tvspike.es.tests
         }
 
         [Test, Category("Manual")]
-        public void ShouldBuildEventFromFilename()
+        public void ShouldBuildEventFromFilenameNew()
         {
-            var eventStoreFolder = Path.Combine(TestContext.CurrentContext.TestDirectory, "testfiles\\eventstore2\\");
+            var eventStoreFolder = Path.Combine(TestContext.CurrentContext.TestDirectory, "testfiles\\eventstore3\\");
+            if (Directory.Exists(eventStoreFolder))
+                Directory.Delete(eventStoreFolder, true);
+            Directory.CreateDirectory(eventStoreFolder);
+            var eventFolderName = Path.Combine(eventStoreFolder, "events");
+            Directory.CreateDirectory(eventFolderName);
 
-            var provider = new EventSourceProvider(eventStoreFolder);
+            // create 
+            var eventFileName = "00000000000000000500_1b5b501f-680f-4e53-b09b-8c39689e2f6e_000000000000000000000000000000000001_EventA.txt";
+            var fileContent = new[]
+            {
+                eventFileName,
+                "NutzdatenEventA" // event data
+            };
+            File.WriteAllLines(Path.Combine(eventFolderName, eventFileName), fileContent);
 
-            var eFolderName = Path.Combine(eventStoreFolder, "events\\");
-            var fileName = "00000000000000000500_1b5b501f-680f-4e53-b09b-8c39689e2f6e_000000000000000000000000000000000001_EventA.txt";
-            var fullPathToFile = Path.Combine(eFolderName, fileName);
+            var @event = EventSourceProvider.CreateEventFromFile(eventFolderName, eventFileName);
 
-            var eventFromFilename = provider.CreateEventFromFile(fullPathToFile);
-
-            eventFromFilename.Nummer.Should().Be(500L);
-            eventFromFilename.Id.Should().Be("000000000000000000000000000000000001");
-            eventFromFilename.Name.Should().Be("EventA");
-            eventFromFilename.Daten.Should().Be("NutzdatenEventA");
+            @event.Nummer.Should().Be(500L);
+            @event.Id.Should().Be("000000000000000000000000000000000001");
+            @event.Name.Should().Be("EventA");
+            @event.Daten.Should().Be("NutzdatenEventA");
         }
 
         [Test, Category("Manual")]

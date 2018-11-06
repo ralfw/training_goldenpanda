@@ -132,7 +132,7 @@ namespace tvspike.es
                 eventFiles = eventFiles.Where(file => MatchesAggregateId(file, id));
 
             // foreach file, get event
-            return eventFiles.Select(CreateEventFromFile);
+            return eventFiles.Select(f => CreateEventFromFile(eventsFolder, f));
         }
 
         private bool MatchesAggregateId(string fullPath, Guid id)
@@ -155,7 +155,7 @@ namespace tvspike.es
             return fullPath.Substring(fullPath.LastIndexOf('\\') + 1 );
         }
 
-        public Event CreateEventFromFile(string fullPath)
+        public static Event CreateEventFromFile(string directory, string filename)
         {
             // e.g.
             // number               clientId                             eventId                           event name
@@ -163,8 +163,6 @@ namespace tvspike.es
             // 1st line in file contains filename.
             // 2nd line in file contains data string.
 
-            var filename = GetFileNameFromFullPath(fullPath);
-            
             // parse filename
             var parts = filename.Split('_');
 
@@ -173,7 +171,7 @@ namespace tvspike.es
             var eventName = parts[3].Split('.')[0];
 
             // load event
-            var data = File.ReadAllLines(fullPath)[1];
+            var data = File.ReadAllLines(Path.Combine(directory, filename))[1];
 
             return new Event
             {
