@@ -84,23 +84,6 @@ namespace tvspike.es.tests
             eventFromFilename.Daten.Should().Be("NutzdatenEventA");
         }
 
-        [Test]
-        public void ShouldBuildNameFromEvent()
-        {
-            var provider = GetProvider();
-
-            var @event = new Event {Nummer = 100, Id = "1", Name = "EventA"};
-
-            var fileName = EventFilename.From(@event, provider.ClientId).Name;
-
-            Console.Out.WriteLine(fileName);
-
-            fileName.Should().Be($"{@event.Nummer.ToString().PadLeft(20, '0')}_" +
-                                 $"{provider.ClientId}_" +
-                                 $"{@event.Id.PadLeft(36, '0')}_" +
-                                 $"{@event.Name}.txt");
-        }
-
         [Test, Category("Manual")]
         public void ShouldThrowExceptionIfEventNameIsLongerThan20Characters()
         {
