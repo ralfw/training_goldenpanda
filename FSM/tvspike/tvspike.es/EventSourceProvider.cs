@@ -115,12 +115,12 @@ namespace tvspike.es
         }
 
 
-        public IEnumerable<Event> ReplayAll() // ReplayAll()?
+        public IEnumerable<Event> ReplayAll()
         {
             return ReplayFor(Guid.Empty);
         }
 
-        public IEnumerable<Event> ReplayFor(Guid id) // ReplayFrom()?
+        public IEnumerable<Event> ReplayFor(Guid id)
         {
             // get all files
             var eventsFolder = Path.Combine(_eventStoreFolderPath, DIRNAME_EVENTS_SUBDIR);
