@@ -53,7 +53,7 @@ namespace tvspike.es.tests
                 Directory.Delete(rootFolder, true);
             Directory.CreateDirectory(rootFolder);
 
-            var ensureClientId = EventSourceProvider.EnsureClientId(rootFolder);
+            var ensureClientId = EventSourceProvider.GetClientId(rootFolder);
 
             Guid.TryParse(ensureClientId, out var generatedClientId).Should().BeTrue();
 
@@ -72,7 +72,7 @@ namespace tvspike.es.tests
             var clientId = Guid.Parse("D876B013-22A9-4B4D-9F32-C6646AC351BD").ToString();
             File.WriteAllText(Path.Combine(rootFolder, "clientId.txt"), clientId);
 
-            var loadedClientId = EventSourceProvider.EnsureClientId(rootFolder);
+            var loadedClientId = EventSourceProvider.GetClientId(rootFolder);
 
             loadedClientId.Should().Be(clientId);
         }
@@ -85,7 +85,7 @@ namespace tvspike.es.tests
                 Directory.Delete(rootFolder, true);
             Directory.CreateDirectory(rootFolder);
 
-            var lastEventId = EventSourceProvider.EnsureNextUniqueEventNumber(rootFolder);
+            var lastEventId = EventSourceProvider.GetNextUniqueEventNumber(rootFolder);
 
             lastEventId.Should().Be(500); // check for initial value of 500
 
@@ -102,7 +102,7 @@ namespace tvspike.es.tests
             Directory.CreateDirectory(rootFolder);
             File.WriteAllText(Path.Combine(rootFolder, "eventnumbers.txt"), 501L.ToString());
 
-            var lastEventId = EventSourceProvider.EnsureNextUniqueEventNumber(rootFolder);
+            var lastEventId = EventSourceProvider.GetNextUniqueEventNumber(rootFolder);
 
             lastEventId.Should().Be(501L);
         }

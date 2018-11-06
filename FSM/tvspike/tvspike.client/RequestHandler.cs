@@ -16,7 +16,7 @@ namespace tvspike.client
 
         public IEnumerable<TerminRM> Handle(QueryTerminliste queryTerminliste)
         {
-            var events = _eventSourceProvider.Replay();
+            var events = _eventSourceProvider.ReplayAll();
             return ReadModelProvider.Aufbauen(events);
         }
 

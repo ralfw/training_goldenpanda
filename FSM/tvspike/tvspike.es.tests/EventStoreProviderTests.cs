@@ -41,7 +41,7 @@ namespace tvspike.es.tests
             eventSourceProvider.Record(eventsToRecord);
             
             // - replay
-            var events = eventSourceProvider.Replay().ToList();
+            var events = eventSourceProvider.ReplayAll().ToList();
             
             //assert
             events[0].Nummer.Should().Be(500L);

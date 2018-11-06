@@ -37,11 +37,11 @@ namespace tvspike.es
         private void InitWorkFolder()
         {
             EnsureWorkingDirectoryStructure(_eventStoreFolderPath);
-            ClientId = EnsureClientId(_eventStoreFolderPath);
-            _nextEventNumber = EnsureNextUniqueEventNumber(_eventStoreFolderPath);
+            ClientId = GetClientId(_eventStoreFolderPath);
+            _nextEventNumber = GetNextUniqueEventNumber(_eventStoreFolderPath);
         }
 
-        internal static long EnsureNextUniqueEventNumber(string rootFolderPath)
+        internal static long GetNextUniqueEventNumber(string rootFolderPath)
         {
             var eventNumbersFilePath = Path.Combine(rootFolderPath, FILENAME_EVENT_NUMBERS);
             if (File.Exists(eventNumbersFilePath))
@@ -65,7 +65,7 @@ namespace tvspike.es
                 Directory.CreateDirectory(eventSubDirPath);
         }
 
-        internal static string EnsureClientId(string rootFolderPath)
+        internal static string GetClientId(string rootFolderPath)
         {
             var clientIdFilePath = Path.Combine(rootFolderPath, FILENAME_CLIENT_ID);
             if (File.Exists(clientIdFilePath))
@@ -78,13 +78,13 @@ namespace tvspike.es
             File.WriteAllText(clientIdFilePath, clientId);
             return clientId;
         }
-        
+
         public void Record(Event @event)
         {
             AssignNextUniqueNumberToEvent(@event);
             var eventFilename = EventFilename.From(@event, ClientId).Name;
-                PersistEvent(eventFilename, @event);
-            }
+            PersistEvent(eventFilename, @event);
+        }
 
         public void Record(IEnumerable<Event> events)
         {
@@ -115,12 +115,12 @@ namespace tvspike.es
         }
 
 
-        public IEnumerable<Event> Replay() // ReplayAll()?
+        public IEnumerable<Event> ReplayAll() // ReplayAll()?
         {
-            return Replay(Guid.Empty);
+            return ReplayFor(Guid.Empty);
         }
 
-        public IEnumerable<Event> Replay(Guid id) // ReplayFrom()?
+        public IEnumerable<Event> ReplayFor(Guid id) // ReplayFrom()?
         {
             // get all files
             var eventsFolder = Path.Combine(_eventStoreFolderPath, DIRNAME_EVENTS_SUBDIR);
