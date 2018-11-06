@@ -54,9 +54,7 @@
     <Compile Include="EventStoreProviderTests.cs" />
     <Compile Include="EventStoreProviderUsageTests.cs" />
     <Compile Include="EventStoreTestHelper.cs" />
-    <Compile Include="FakeZeitProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestsNew.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -70,23 +68,6 @@
       <Project>{313f213d-d48a-4a71-be36-922d282fd572}</Project>
       <Name>tvspike.es</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="testfiles\eventstore2\clientId.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="testfiles\eventstore2\eventnumbers.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="testfiles\eventstore2\events\00000000000000000500_1b5b501f-680f-4e53-b09b-8c39689e2f6e_000000000000000000000000000000000001_EventA.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="testfiles\eventstore\eventnumbers.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="testfiles\eventstore\events\dummy.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
