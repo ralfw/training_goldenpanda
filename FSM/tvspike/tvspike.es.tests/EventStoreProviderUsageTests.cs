@@ -36,29 +36,29 @@ namespace tvspike.es.tests
         {
             var eventSource = new EventSourceProvider(@"D:\temp\eventSource2");
 
-            var id1 = Guid.NewGuid();
-            var id2 = Guid.NewGuid();
+            var eventId1 = Guid.NewGuid().ToString();
+            var eventId2 = Guid.NewGuid().ToString();
             IEnumerable<Event> eventsToRecord = new[]
             {
-                new Event {Nummer = 0, Id = id1.ToString(), Name = "EventA", Daten = "Nutzdaten EventA-1#1"},
-                new Event {Nummer = 0, Id = id2.ToString(), Name = "EventA", Daten = "Nutzdaten EventA-1#2"},
+                new Event {Nummer = 0, Id = eventId1, Name = "EventA", Daten = "Nutzdaten EventA-1#1"},
+                new Event {Nummer = 0, Id = eventId2, Name = "EventA", Daten = "Nutzdaten EventA-1#2"},
 
-                new Event {Nummer = 0, Id = id1.ToString(), Name = "EventB", Daten = "Nutzdaten EventB-0#1"},
-                new Event {Nummer = 0, Id = id2.ToString(), Name = "EventB", Daten = "Nutzdaten EventB-0#2"},
+                new Event {Nummer = 0, Id = eventId1, Name = "EventB", Daten = "Nutzdaten EventB-0#1"},
+                new Event {Nummer = 0, Id = eventId2, Name = "EventB", Daten = "Nutzdaten EventB-0#2"},
 
-                new Event {Nummer = 0, Id = id1.ToString(), Name = "EventC", Daten = "Nutzdaten EventC-0#1"},
-                new Event {Nummer = 0, Id = id2.ToString(), Name = "EventC", Daten = "Nutzdaten EventC-0#2"},
+                new Event {Nummer = 0, Id = eventId1, Name = "EventC", Daten = "Nutzdaten EventC-0#1"},
+                new Event {Nummer = 0, Id = eventId2, Name = "EventC", Daten = "Nutzdaten EventC-0#2"},
 
-                new Event {Nummer = 0, Id = id1.ToString(), Name = "EventA", Daten = "Nutzdaten EventA-2#1"},
+                new Event {Nummer = 0, Id = eventId1, Name = "EventA", Daten = "Nutzdaten EventA-2#1"},
             };
 
             eventSource.Record(eventsToRecord);
 
-            DumpReplayedEventsFor(id1, eventSource);
-            DumpReplayedEventsFor(id2, eventSource);
+            DumpReplayedEventsFor(eventId1, eventSource);
+            DumpReplayedEventsFor(eventId2, eventSource);
         }
 
-        private static void DumpReplayedEventsFor(Guid currentId, EventSourceProvider eventSource)
+        private static void DumpReplayedEventsFor(string currentId, EventSourceProvider eventSource)
         {
             Console.WriteLine($"Replay for AggregateId: {currentId}");
             Console.WriteLine("");

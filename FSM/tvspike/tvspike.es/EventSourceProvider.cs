@@ -117,10 +117,10 @@ namespace tvspike.es
 
         public IEnumerable<Event> ReplayAll()
         {
-            return ReplayFor(Guid.Empty);
+            return ReplayFor(string.Empty);
         }
 
-        public IEnumerable<Event> ReplayFor(Guid id)
+        public IEnumerable<Event> ReplayFor(string eventId)
         {
             // get all files
             var eventsFolder = Path.Combine(_eventStoreFolderPath, DIRNAME_EVENTS_SUBDIR);
@@ -128,17 +128,17 @@ namespace tvspike.es
                                     .Select(GetFileNameFromFullPath);
 
             // filter files
-            if (id != Guid.Empty)
-                eventFiles = eventFiles.Where(file => MatchesAggregateId(file, id));
+            if (!string.IsNullOrWhiteSpace(eventId))
+                eventFiles = eventFiles.Where(file => MatchesAggregateId(file, eventId));
 
             // foreach file, get event
             return eventFiles.Select(f => CreateEventFromFile(eventsFolder, f));
         }
 
-        private bool MatchesAggregateId(string filename, Guid id)
+        private bool MatchesAggregateId(string filename, string eventId)
         {
             var parts = filename.Split('_');
-            return Guid.Parse(parts[2]) == id;
+            return parts[2] == eventId;
         }
 
         private static string GetFileNameFromFullPath(string fullPath)
