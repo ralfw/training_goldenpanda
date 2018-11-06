@@ -23,7 +23,7 @@ namespace tvspike.es
         private readonly string _eventStoreFolderPath;
         private const string FILENAME_CLIENT_ID = "clientId.txt";
         private const string FILENAME_EVENT_NUMBERS = "eventnumbers.txt";
-        private const string DIRNAME_EVENTS_SUBDIR = "events\\";
+        private const string DIRNAME_EVENTS_SUBDIR = "events";
 
         public string ClientId { get; private set; }
 
@@ -124,10 +124,10 @@ namespace tvspike.es
         {
             // get all files
             var eventsFolder = Path.Combine(_eventStoreFolderPath, DIRNAME_EVENTS_SUBDIR);
-            var allFiles = Directory.GetFiles(eventsFolder).ToList();
+            var eventFiles = Directory.GetFiles(eventsFolder).ToList()
+                                    .Select(GetFileNameFromFullPath);
 
             // filter files
-            var eventFiles = allFiles.Where(IsEventFile);
             if (id != Guid.Empty)
                 eventFiles = eventFiles.Where(file => MatchesAggregateId(file, id));
 
@@ -135,24 +135,15 @@ namespace tvspike.es
             return eventFiles.Select(f => CreateEventFromFile(eventsFolder, f));
         }
 
-        private bool MatchesAggregateId(string fullPath, Guid id)
+        private bool MatchesAggregateId(string filename, Guid id)
         {
-            var filename = GetFileNameFromFullPath(fullPath);
-
             var parts = filename.Split('_');
             return Guid.Parse(parts[2]) == id;
         }
 
-        private bool IsEventFile(string fullPath)
-        {
-            var filename = GetFileNameFromFullPath(fullPath);
-            // workaround to ignore test dummy and other test files for now
-            return filename.Length >= 94;
-        }
-
         private static string GetFileNameFromFullPath(string fullPath)
         {
-            return fullPath.Substring(fullPath.LastIndexOf('\\') + 1 );
+            return fullPath.Substring(fullPath.LastIndexOf(Path.DirectorySeparatorChar) + 1 );
         }
 
         public static Event CreateEventFromFile(string directory, string filename)
@@ -181,7 +172,5 @@ namespace tvspike.es
                 Daten = data
             };
         }
-
-
     }
 }

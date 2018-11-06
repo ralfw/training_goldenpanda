@@ -106,5 +106,32 @@ namespace tvspike.es.tests
 
             lastEventId.Should().Be(501L);
         }
+
+        [Test]
+        public void ShouldBuildEventFromFilenameNew()
+        {
+            var eventStoreFolder = Path.Combine(TestContext.CurrentContext.TestDirectory, "eventstore_4");
+            if (Directory.Exists(eventStoreFolder))
+                Directory.Delete(eventStoreFolder, true);
+            Directory.CreateDirectory(eventStoreFolder);
+            var eventFolderName = Path.Combine(eventStoreFolder, "events");
+            Directory.CreateDirectory(eventFolderName);
+
+            // create 
+            var eventFileName = "00000000000000000500_1b5b501f-680f-4e53-b09b-8c39689e2f6e_000000000000000000000000000000000001_EventA.txt";
+            var fileContent = new[]
+            {
+                eventFileName,
+                "NutzdatenEventA" // event data
+            };
+            File.WriteAllLines(Path.Combine(eventFolderName, eventFileName), fileContent);
+
+            var @event = EventSourceProvider.CreateEventFromFile(eventFolderName, eventFileName);
+
+            @event.Nummer.Should().Be(500L);
+            @event.Id.Should().Be("000000000000000000000000000000000001");
+            @event.Name.Should().Be("EventA");
+            @event.Daten.Should().Be("NutzdatenEventA");
+        }
     }
 }
