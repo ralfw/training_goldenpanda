@@ -10,7 +10,7 @@ namespace tvspike.es.tests
     public class EventStoreProviderUsageTests
     {
         [Test]
-        public void Usage_Replay()
+        public void Usage_ReplayAll()
         {
             var eventSource = new EventSourceProvider(@"D:\temp\eventSource1");
 
@@ -24,7 +24,7 @@ namespace tvspike.es.tests
 
             eventSource.Record(eventsToRecord);
 
-            var replayedEvents = eventSource.Replay();
+            var replayedEvents = eventSource.ReplayAll();
             foreach (var replayedEvent in replayedEvents)
             {
                 EventStoreTestHelper.DumpEvent(replayedEvent);
@@ -32,7 +32,7 @@ namespace tvspike.es.tests
         }
 
         [Test]
-        public void Usage_ReplayWithAggregateId()
+        public void Usage_ReplayFromGivenAggregateId()
         {
             var eventSource = new EventSourceProvider(@"D:\temp\eventSource2");
 
@@ -63,7 +63,7 @@ namespace tvspike.es.tests
             Console.WriteLine($"Replay for AggregateId: {currentId}");
             Console.WriteLine("");
 
-            var replayedEvents = eventSource.Replay(currentId);
+            var replayedEvents = eventSource.ReplayFor(currentId);
 
             foreach (var replayedEvent in replayedEvents)
             {

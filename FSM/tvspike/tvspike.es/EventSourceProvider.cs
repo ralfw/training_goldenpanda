@@ -19,84 +19,82 @@ namespace tvspike.es
 
     public class EventSourceProvider
     {
-        private long _lastId;
+        private long _nextEventNumber;
         private readonly string _eventStoreFolderPath;
         private const string FILENAME_CLIENT_ID = "clientId.txt";
         private const string FILENAME_EVENT_NUMBERS = "eventnumbers.txt";
         private const string DIRNAME_EVENTS_SUBDIR = "events\\";
 
+        public string ClientId { get; private set; }
+
         public EventSourceProvider(string eventStoreFolderPath)
         {
             _eventStoreFolderPath = eventStoreFolderPath;
+
             InitWorkFolder();
         }
 
         private void InitWorkFolder()
         {
-            // Ensure ES directories exist
-            if(Directory.Exists(_eventStoreFolderPath) is false)
-                Directory.CreateDirectory(_eventStoreFolderPath);
-
-            var eventSubDirPath = Path.Combine(_eventStoreFolderPath, DIRNAME_EVENTS_SUBDIR);
-            if (Directory.Exists(eventSubDirPath) is false)
-                Directory.CreateDirectory(eventSubDirPath);
-
-            LoadOrCreateClientId();
-
-            // Get last event id
-            var numberFilePath = Path.Combine(_eventStoreFolderPath, FILENAME_EVENT_NUMBERS);
-            if (File.Exists(numberFilePath) is false)
-            {
-                _lastId = 500; // magic number????
-                File.WriteAllText(numberFilePath, _lastId.ToString());
-            }
-            else
-            {
-                var readAllLines = File.ReadAllText(numberFilePath);
-                _lastId = long.Parse(readAllLines);
-            }
+            EnsureWorkingDirectoryStructure(_eventStoreFolderPath);
+            ClientId = GetClientId(_eventStoreFolderPath);
+            _nextEventNumber = GetNextUniqueEventNumber(_eventStoreFolderPath);
         }
 
-        private void LoadOrCreateClientId()
+        internal static long GetNextUniqueEventNumber(string rootFolderPath)
         {
-            var clientIdFilePath = Path.Combine(_eventStoreFolderPath, FILENAME_CLIENT_ID);
-            if (!File.Exists(clientIdFilePath))
+            var eventNumbersFilePath = Path.Combine(rootFolderPath, FILENAME_EVENT_NUMBERS);
+            if (File.Exists(eventNumbersFilePath))
             {
-                ClientId = Guid.NewGuid().ToString();
-                File.WriteAllText(clientIdFilePath, ClientId);
+                var eventNumberFileContent = File.ReadAllText(eventNumbersFilePath).Trim();
+                return long.Parse(eventNumberFileContent);
             }
-            else
-            {
-                ClientId = Guid.Parse(File.ReadAllText(clientIdFilePath)).ToString();
-            }
+
+            const long id = 500; // initial value
+            File.WriteAllText(eventNumbersFilePath, id.ToString());
+            return id;
         }
 
-        public string ClientId { get; private set; }
+        internal static void EnsureWorkingDirectoryStructure(string rootFolderPath)
+        {
+            if (!Directory.Exists(rootFolderPath))
+                Directory.CreateDirectory(rootFolderPath);
+
+            var eventSubDirPath = Path.Combine(rootFolderPath, DIRNAME_EVENTS_SUBDIR);
+            if (!Directory.Exists(eventSubDirPath))
+                Directory.CreateDirectory(eventSubDirPath);
+        }
+
+        internal static string GetClientId(string rootFolderPath)
+        {
+            var clientIdFilePath = Path.Combine(rootFolderPath, FILENAME_CLIENT_ID);
+            if (File.Exists(clientIdFilePath))
+            {
+                var content = File.ReadAllText(clientIdFilePath).Trim();
+                return Guid.Parse(content).ToString();
+            }
+
+            var clientId = Guid.NewGuid().ToString();
+            File.WriteAllText(clientIdFilePath, clientId);
+            return clientId;
+        }
+
+        public void Record(Event @event)
+        {
+            AssignNextUniqueNumberToEvent(@event);
+            var eventFilename = EventFilename.From(@event, ClientId).Name;
+            PersistEvent(eventFilename, @event);
+        }
 
         public void Record(IEnumerable<Event> events)
         {
             events.ToList().ForEach(Record);
-            PersistLastId();
         }
 
-        public void Record(Event @event) {
-            AssignUniqueNumberToEvent();
-            var eventFilename = BuildFileNameFromEvent(@event);
-            PersistEvent(eventFilename, @event);
-            
-            void AssignUniqueNumberToEvent() => @event.Nummer = _lastId++;
-        }
-
-
-        public string BuildFileNameFromEvent(Event @event)
+        private void AssignNextUniqueNumberToEvent(Event @event)
         {
-            var paddedNumber = @event.Nummer.ToString().PadLeft(20,'0');
-            var paddedEventId = @event.Id.PadLeft(36, '0');
-
-            if (@event.Name.Length > 20)
-                throw new InvalidOperationException("Event name exceeds maximum of 20 characters.");
-
-            return $"{paddedNumber}_{ClientId}_{paddedEventId}_{@event.Name}.txt";
+            @event.Nummer = _nextEventNumber++;
+            PersistNextId(_nextEventNumber);
         }
 
         private void PersistEvent(string filename, Event @event)
@@ -111,18 +109,18 @@ namespace tvspike.es
             File.WriteAllLines(Path.Combine(eventsFolder, filename), lines);
         }
 
-        private void PersistLastId()
+        private void PersistNextId(long nextEventNumber)
         {
-            File.WriteAllText(Path.Combine(_eventStoreFolderPath, FILENAME_EVENT_NUMBERS), _lastId.ToString());
+            File.WriteAllText(Path.Combine(_eventStoreFolderPath, FILENAME_EVENT_NUMBERS), nextEventNumber.ToString());
         }
 
 
-        public IEnumerable<Event> Replay() // ReplayAll()?
+        public IEnumerable<Event> ReplayAll() // ReplayAll()?
         {
-            return Replay(Guid.Empty);
+            return ReplayFor(Guid.Empty);
         }
 
-        public IEnumerable<Event> Replay(Guid id) // ReplayFrom()?
+        public IEnumerable<Event> ReplayFor(Guid id) // ReplayFrom()?
         {
             // get all files
             var eventsFolder = Path.Combine(_eventStoreFolderPath, DIRNAME_EVENTS_SUBDIR);
@@ -169,12 +167,14 @@ namespace tvspike.es
             
             // parse filename
             var parts = filename.Split('_');
+
             var parsedNumber = long.Parse(parts[0]);
             var parsedId = parts[2];
             var eventName = parts[3].Split('.')[0];
 
             // load event
             var data = File.ReadAllLines(fullPath)[1];
+
             return new Event
             {
                 Nummer = parsedNumber,

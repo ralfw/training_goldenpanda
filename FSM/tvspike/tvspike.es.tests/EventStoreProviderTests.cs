@@ -23,22 +23,6 @@ namespace tvspike.es.tests
         }
 
         [Test, Category("Manual")]
-        public void ShouldCreateClientIdIfNotYetSet()
-        {
-            var clientIdFilePath = Path.Combine(_eventStoreTestFolder, "clientId.txt");
-            if (File.Exists(clientIdFilePath))
-                File.Delete(clientIdFilePath);
-
-            var provider = GetProvider();
-
-            Guid.Parse(provider.ClientId).Should().NotBe(Guid.Empty);
-
-            var clientId = File.ReadAllText(clientIdFilePath);
-
-            Guid.Parse(clientId).Should().Be(Guid.Parse(provider.ClientId));
-        }
-
-        [Test, Category("Manual")]
         public void ShouldRecordAndReplayEvents()
         {
             // arrange
@@ -57,7 +41,7 @@ namespace tvspike.es.tests
             eventSourceProvider.Record(eventsToRecord);
             
             // - replay
-            var events = eventSourceProvider.Replay().ToList();
+            var events = eventSourceProvider.ReplayAll().ToList();
             
             //assert
             events[0].Nummer.Should().Be(500L);
@@ -107,7 +91,7 @@ namespace tvspike.es.tests
 
             var @event = new Event {Nummer = 100, Id = "1", Name = "EventA"};
 
-            var fileName = provider.BuildFileNameFromEvent(@event);
+            var fileName = EventFilename.From(@event, provider.ClientId).Name;
 
             Console.Out.WriteLine(fileName);
 

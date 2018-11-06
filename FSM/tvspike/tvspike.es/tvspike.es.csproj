@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EventFilename.cs" />
     <Compile Include="EventSourceProvider.cs" />
     <Compile Include="IZeitProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
