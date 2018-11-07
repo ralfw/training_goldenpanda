@@ -26,6 +26,29 @@ namespace tvspike.es.tests
 
         }
 
+        [TestCase("00000000000000000500_572e2387-00f9-4f8c-af7a-952f1a06b8d2_a2a45ecd-3060-415d-ab5c-ff1f33b8c9a4_EventA.txt")]
+        [TestCase(@"somedir\00000000000000000500_572e2387-00f9-4f8c-af7a-952f1a06b8d2_a2a45ecd-3060-415d-ab5c-ff1f33b8c9a4_EventA.txt")]
+        [TestCase(@"c:\somedir\00000000000000000500_572e2387-00f9-4f8c-af7a-952f1a06b8d2_a2a45ecd-3060-415d-ab5c-ff1f33b8c9a4_EventA.txt")]
+        public void ShouldCreateFilenameFromFullPathString(string path)
+        {
+            var eventFilename = EventFilename.From(path);
+
+            eventFilename.Number.Should().Be("00000000000000000500");
+            eventFilename.ClientId.Should().Be("572e2387-00f9-4f8c-af7a-952f1a06b8d2");
+            eventFilename.EventId.Should().Be("a2a45ecd-3060-415d-ab5c-ff1f33b8c9a4");
+            eventFilename.EventName.Should().Be("EventA");
+        }
+
+        [Test]
+        public void ShouldThrowExceptionIfEventNameInInputStringIsLongerThan20Characters()
+        {
+            const string path = "00000000000000000500_572e2387-00f9-4f8c-af7a-952f1a06b8d2_a2a45ecd-3060-415d-ab5c-ff1f33b8c9a4_123456789012345678901.txt";
+
+            Action call = () => EventFilename.From(path);
+
+            call.ShouldThrow<InvalidOperationException>().WithMessage("Event name exceeds maximum of 20 characters.");
+        }
+
         [Test]
         public void ShouldThrowExceptionIfEventNameIsLongerThan20Characters()
         {
