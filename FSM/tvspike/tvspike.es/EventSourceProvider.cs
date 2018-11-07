@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -21,6 +22,7 @@ namespace tvspike.es
     {
         private long _nextEventNumber;
         private readonly string _eventStoreFolderPath;
+        private FileEventStore _fileEventStore;
         private const string FILENAME_CLIENT_ID = "clientId.txt";
         private const string FILENAME_EVENT_NUMBERS = "eventnumbers.txt";
         private const string DIRNAME_EVENTS_SUBDIR = "events";
@@ -32,6 +34,8 @@ namespace tvspike.es
             _eventStoreFolderPath = eventStoreFolderPath;
 
             InitWorkFolder();
+
+            _fileEventStore = new FileEventStore(Path.Combine(_eventStoreFolderPath, DIRNAME_EVENTS_SUBDIR));
         }
 
         private void InitWorkFolder()
@@ -117,7 +121,26 @@ namespace tvspike.es
 
         public IEnumerable<Event> ReplayAll()
         {
-            return ReplayFor(string.Empty);
+            var allFileNames = _fileEventStore.GetAllFileNames();
+            var eventFileInfos = _fileEventStore.BuildEventFileInfos(allFileNames);
+            return CreateEvents(eventFileInfos);
+        }
+
+        private IEnumerable<Event> CreateEvents(EventFileInfo[] eventFileInfos)
+        {
+            return eventFileInfos.Select(BuildEvent);
+        }
+
+        private Event BuildEvent(EventFileInfo eventFileInfo)
+        {
+            var parsedNumber = long.Parse(eventFileInfo.EventNumber);
+            return new Event
+            {
+                Nummer = parsedNumber,
+                Id = eventFileInfo.EventId,
+                Name = eventFileInfo.EventName,
+                Daten = eventFileInfo.EventData
+            };
         }
 
         public IEnumerable<Event> ReplayFor(string eventId)
