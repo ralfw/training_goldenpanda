@@ -5,44 +5,51 @@ namespace tvspike.es
 {
     internal class FileEventStore
     {
-        private readonly string _absolutePathToWorkingDirectory;
+        public FileEventStore(string absolutePathToWorkingDirectory)
+        {
+            _absolutePathToWorkingDirectory = absolutePathToWorkingDirectory;
+        }
 
         public string[] GetAllFileNames()
         {
             return Directory.GetFiles(_absolutePathToWorkingDirectory);
         }
 
-        public FileEventStore(string absolutePathToWorkingDirectory)
+        public EventFileInfo[] BuildEventFileInfos(string[] filenames)
         {
-            _absolutePathToWorkingDirectory = absolutePathToWorkingDirectory;
-        }
-
-        public EventFileInfo[] CreateEventFileInfos(string[] filenames)
-        {
-            return filenames.Select(CreateEventFileInfoFromFilename)
+            return filenames.Select(BuildEventFileInfo)
+                            .OrderBy(e => e.EventNumber)
                             .ToArray();
         }
 
-        private EventFileInfo CreateEventFileInfoFromFilename(string fullPath)
+        private EventFileInfo BuildEventFileInfo(string fullPath)
         {
             // get data from file
-            var data = "";
+            var data = ReadDataFromEventFile(fullPath);
 
             // get file name only
-            var fileName = new FileInfo(fullPath).Name;
+            return CreateEventFileInfo(fullPath, data);
+        }
 
+        private static string ReadDataFromEventFile(string fullPath)
+        {
+            return File.ReadAllLines(fullPath)[1].Trim();
+        }
+
+        private static EventFileInfo CreateEventFileInfo(string fullPath, string data)
+        {
+            var eventFilename = EventFilename.From(fullPath);
+
+            var eventFilenameNumber = eventFilename.Number.TrimStart('0');
             return new EventFileInfo
             {
-                EventName = fileName
+                EventNumber = eventFilenameNumber,
+                EventId = eventFilename.EventId,
+                EventName = eventFilename.EventName,
+                EventData = data
             };
         }
-    }
 
-    internal class EventFileInfo
-    {
-        public string EventNumber { get; set; }
-        public string EventId { get; set; }
-        public string EventName { get; set; }
-        public string EventData { get; set; }
+        private readonly string _absolutePathToWorkingDirectory;
     }
 }

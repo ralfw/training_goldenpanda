@@ -26,11 +26,9 @@ namespace tvspike.es
 
         public static EventFilename From(string filePath)
         {
-            // e.g.
+            // File name format
             // number               clientId                             eventId                           event name
             // 00000000000000000500_1b5b501f-680f-4e53-b09b-8c39689e2f6e_000000000000000000000000000000000001_EventA.txt
-            // 1st line in file contains filename.
-            // 2nd line in file contains data string.
 
             var fileName = Path.GetFileName(filePath);
             var fileNameParts = fileName.Split('_');

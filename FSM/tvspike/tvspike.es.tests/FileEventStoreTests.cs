@@ -17,7 +17,7 @@ namespace tvspike.es.tests
             Environment.CurrentDirectory = TestContext.CurrentContext.TestDirectory;
         }
 
-        [Test]
+        [Test, Ignore("This test tests an .net API call and should be removed /TMa")]
         public void ShouldGetAllFileNamesFromTheStore()
         {
             // arrange
@@ -65,17 +65,15 @@ namespace tvspike.es.tests
                 Path.Combine(eventStoreRootFolder, fileName2),
             };
 
-            var eventFileInfos = fileEventStore.CreateEventFileInfos(fileNames);
+            var eventFileInfos = fileEventStore.BuildEventFileInfos(fileNames);
 
             eventFileInfos.Length.Should().Be(2);
             // TODO: get specific data /TMa
-//            eventFileInfos.Any(x => x.EventNumber == "500").Should().BeTrue();
-//            var file1Info = eventFileInfos.Single(x => x.EventNumber == "500");
-//            file1Info.EventId.Should().Be("a2a45ecd-3060-415d-ab5c-ff1f33b8c9a4");
-//            file1Info.EventName.Should().Be("EventA");
-//            file1Info.EventData.Should().Be(fileContent1);
-
-
+            eventFileInfos.Any(x => x.EventNumber == "500").Should().BeTrue();
+            var file1Info = eventFileInfos.Single(x => x.EventNumber == "500");
+            file1Info.EventId.Should().Be("a2a45ecd-3060-415d-ab5c-ff1f33b8c9a4");
+            file1Info.EventName.Should().Be("EventA");
+            file1Info.EventData.Should().Be(fileContent1);
         }
 
     }
