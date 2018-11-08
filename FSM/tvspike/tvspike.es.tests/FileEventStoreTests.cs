@@ -51,9 +51,9 @@ namespace tvspike.es.tests
             Directory.CreateDirectory(eventStoreRootFolder);
 
             const string fileName1 = "00000000000000000500_572e2387-00f9-4f8c-af7a-952f1a06b8d2_a2a45ecd-3060-415d-ab5c-ff1f33b8c9a4_EventA.txt";
-            const string fileContent1 = "";
+            const string fileContent1 = "Content 500";
             const string fileName2 = "00000000000000000501_572e2387-00f9-4f8c-af7a-952f1a06b8d2_2a990294-8f3c-467d-ae0b-0b84685a4c4a_EventA.txt";
-            const string fileContent2 = "";
+            const string fileContent2 = "Content 501";
 
             File.WriteAllLines(Path.Combine(eventStoreRootFolder, fileName1), new[] {fileName1, fileContent1});
             File.WriteAllLines(Path.Combine(eventStoreRootFolder, fileName2), new[] {fileName2, fileContent2});
@@ -68,12 +68,18 @@ namespace tvspike.es.tests
             var eventFileInfos = fileEventStore.BuildEventFileInfos(fileNames);
 
             eventFileInfos.Length.Should().Be(2);
-            // TODO: get specific data /TMa
+
             eventFileInfos.Any(x => x.EventNumber == "500").Should().BeTrue();
-            var file1Info = eventFileInfos.Single(x => x.EventNumber == "500");
-            file1Info.EventId.Should().Be("a2a45ecd-3060-415d-ab5c-ff1f33b8c9a4");
-            file1Info.EventName.Should().Be("EventA");
-            file1Info.EventData.Should().Be(fileContent1);
+            var fileInfo1 = eventFileInfos.Single(x => x.EventNumber == "500");
+            fileInfo1.EventId.Should().Be("a2a45ecd-3060-415d-ab5c-ff1f33b8c9a4");
+            fileInfo1.EventName.Should().Be("EventA");
+            fileInfo1.EventData.Should().Be(fileContent1);
+
+            eventFileInfos.Any(x => x.EventNumber == "501").Should().BeTrue();
+            var fileInfo2 = eventFileInfos.Single(x => x.EventNumber == "501");
+            fileInfo2.EventId.Should().Be("2a990294-8f3c-467d-ae0b-0b84685a4c4a");
+            fileInfo2.EventName.Should().Be("EventA");
+            fileInfo2.EventData.Should().Be(fileContent2);
         }
 
     }
