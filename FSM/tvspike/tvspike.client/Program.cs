@@ -21,7 +21,8 @@ namespace tvspike.client
             // build
             var pathToEventStore = Path.Combine(Path.GetTempPath(), "eventStore");
             var eventSourceProvider = new EventSourceProvider(pathToEventStore);
-            _requestHandler = new RequestHandler(eventSourceProvider);
+            var readModelProvider = new ReadModelProvider("store.rm");
+            _requestHandler = new RequestHandler(eventSourceProvider, readModelProvider);
             _terminübersicht = new Terminübersicht();
 
             // bind

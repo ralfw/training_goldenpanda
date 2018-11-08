@@ -8,16 +8,18 @@ namespace tvspike.client
     public class RequestHandler
     {
         private readonly EventSourceProvider _eventSourceProvider;
+        private readonly ReadModelProvider _readModelProvider;
 
-        public RequestHandler(EventSourceProvider eventSourceProvider)
+        public RequestHandler(EventSourceProvider eventSourceProvider, ReadModelProvider readModelProvider)
         {
             _eventSourceProvider = eventSourceProvider;
+            _readModelProvider = readModelProvider;
         }
 
         public IEnumerable<TerminRM> Handle(QueryTerminliste queryTerminliste)
         {
             var events = _eventSourceProvider.ReplayAll();
-            return ReadModelProvider.Aufbauen(events);
+            return _readModelProvider.Aufbauen(events);
         }
 
         public void Handle(TerminLöschenCommand terminLöschenCommand) {

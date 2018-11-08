@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace tvspike.contracts
 {
+    [Serializable]
     public class TerminRM
     {
         public string Id { get; set; }

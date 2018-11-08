@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="ReadModelProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReadModelStorage.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\tvspike.contracts\tvspike.contracts.csproj">

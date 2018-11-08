@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,20 +14,29 @@ namespace tvspike.rm.tests
     [TestFixture]
     public class ReadModelProviderTest
     {
-        
-        public void Sollte3TermineAus3EventsAufbauen()
+        [SetUp]
+        public void ReleteStorageFile()
         {
-            var events = Generiere3FakeEvents();
-
-            var result = ReadModelProvider.Aufbauen(events);
-            result.Should().HaveCount(3);
+            if (File.Exists("store.rm"))
+            {
+                File.Delete("store.rm");
+            }
         }
 
+        [Test]
+        public void Sollte3TermineAus3EventsAufbauen()
+        {
+            var rmProiver = new ReadModelProvider("store.rm");
+            var events = Generiere3FakeEvents();
 
+            var result = rmProiver.Aufbauen(events);
+            result.Should().HaveCount(3);
+        }
 
         [Test]
         public void Sollte2TermineAus3NeuUnd1LoeschEventAufbauen()
         {
+            var rmProiver = new ReadModelProvider("store.rm");
             var events = Generiere3FakeEvents();
             events.Add(new Event()
             {
@@ -35,13 +45,14 @@ namespace tvspike.rm.tests
                 Nummer = events[1].Nummer + 1
             });
 
-            var result = ReadModelProvider.Aufbauen(events);
+            var result = rmProiver.Aufbauen(events);
             result.Should().HaveCount(2);
         }
 
         [Test]
         public void Sollte2TermineAus2NeuUnd2GleichenLoeschEventsAufbauen()
         {
+            var rmProiver = new ReadModelProvider("store.rm");
             var events = Generiere3FakeEvents();
             events.Add(new Event()
             {
@@ -56,8 +67,19 @@ namespace tvspike.rm.tests
                 Nummer = events[1].Nummer + 2
             });
 
-            var result = ReadModelProvider.Aufbauen(events);
+            var result = rmProiver.Aufbauen(events);
             result.Should().HaveCount(2);
+        }
+
+        [Test]
+        public void SollteStorageFileAnlegen()
+        {
+            var rmProiver = new ReadModelProvider("store.rm");
+            var events = Generiere3FakeEvents();
+
+            rmProiver.Aufbauen(events);
+
+            File.Exists("store.rm").Should().BeTrue();
         }
 
         private static List<Event> Generiere3FakeEvents()
@@ -85,5 +107,6 @@ namespace tvspike.rm.tests
 
             return events;
         }
+
     }
 }
