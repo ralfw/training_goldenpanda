@@ -178,36 +178,6 @@ namespace tvspike.es.tests
         }
 
         [Test]
-        public void ShouldCreateAndStoreNextUniqueEventNumber()
-        {
-            var rootFolder = Path.Combine(TestContext.CurrentContext.TestDirectory, "eventstore_3");
-            if (Directory.Exists(rootFolder))
-                Directory.Delete(rootFolder, true);
-            Directory.CreateDirectory(rootFolder);
-
-            var lastEventId = EventSourceProvider.GetNextUniqueEventNumber(rootFolder);
-
-            lastEventId.Should().Be(500); // check for initial value of 500
-
-            var eventNumbersFileContent = File.ReadAllText(Path.Combine(rootFolder, "eventnumbers.txt")).Trim();
-            long.Parse(eventNumbersFileContent).Should().Be(lastEventId);
-        }
-
-        [Test]
-        public void ShouldLoadNextUniqueEventNumber()
-        {
-            var rootFolder = Path.Combine(TestContext.CurrentContext.TestDirectory, "eventstore_3_2");
-            if (Directory.Exists(rootFolder))
-                Directory.Delete(rootFolder, true);
-            Directory.CreateDirectory(rootFolder);
-            File.WriteAllText(Path.Combine(rootFolder, "eventnumbers.txt"), 501L.ToString());
-
-            var lastEventId = EventSourceProvider.GetNextUniqueEventNumber(rootFolder);
-
-            lastEventId.Should().Be(501L);
-        }
-
-        [Test]
         public void ShouldBuildEventFromFilenameNew()
         {
             var eventStoreFolder = Path.Combine(TestContext.CurrentContext.TestDirectory, "eventstore_4");

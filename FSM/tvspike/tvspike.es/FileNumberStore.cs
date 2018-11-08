@@ -10,17 +10,26 @@ namespace tvspike.es
         public FileNumberStore(string workingFolder)
         {
             _storageFilePath = Path.Combine(workingFolder, "eventnumbers.txt");
+            if (!File.Exists(_storageFilePath))
+            {
+                WriteNextNumber(499);
+            }
         }
 
         public long NextNumber()
         {
             var lastNumber = ReadLastNumber();
             var nextNumber = GenerateNextNumber();
-            WriteNextNumber();
+            WriteNextNumber(nextNumber);
             return nextNumber;
 
             long GenerateNextNumber() => lastNumber + 1;
-            void WriteNextNumber() => File.WriteAllText(_storageFilePath, nextNumber.ToString());
+            
+        }
+
+        void WriteNextNumber(long nextNumber)
+        {
+            File.WriteAllText(_storageFilePath, nextNumber.ToString());
         }
 
         private long ReadLastNumber()
