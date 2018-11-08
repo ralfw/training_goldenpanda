@@ -45,6 +45,7 @@
     <Compile Include="EventFilename.cs" />
     <Compile Include="EventSourceProvider.cs" />
     <Compile Include="FileEventStore.cs" />
+    <Compile Include="FileNumberStore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
