@@ -15,20 +15,20 @@ namespace tvspike.es
             return Directory.GetFiles(_absolutePathToWorkingDirectory);
         }
 
-        public EventFileInfo[] BuildEventFileInfos(string[] filenames)
+        public EventFileInfo[] CreateEventFileInfos(string[] filenames)
         {
-            return filenames.Select(BuildEventFileInfo)
+            return filenames.Select(CreateEventFileInfo)
                             .OrderBy(e => e.EventNumber)
                             .ToArray();
         }
 
-        private EventFileInfo BuildEventFileInfo(string fullPath)
+        private EventFileInfo CreateEventFileInfo(string fullPath)
         {
             // get data from file
             var data = ReadDataFromEventFile(fullPath);
 
             // get file name only
-            return CreateEventFileInfo(fullPath, data);
+            return CreateEventFileInfoFrom(fullPath, data);
         }
 
         private static string ReadDataFromEventFile(string fullPath)
@@ -36,7 +36,7 @@ namespace tvspike.es
             return File.ReadAllLines(fullPath)[1].Trim();
         }
 
-        private static EventFileInfo CreateEventFileInfo(string fullPath, string data)
+        private static EventFileInfo CreateEventFileInfoFrom(string fullPath, string data)
         {
             var eventFilename = EventFilename.From(fullPath);
 

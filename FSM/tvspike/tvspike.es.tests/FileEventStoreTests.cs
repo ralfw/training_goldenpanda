@@ -65,7 +65,7 @@ namespace tvspike.es.tests
                 Path.Combine(eventStoreRootFolder, fileName2),
             };
 
-            var eventFileInfos = fileEventStore.BuildEventFileInfos(fileNames);
+            var eventFileInfos = fileEventStore.CreateEventFileInfos(fileNames);
 
             eventFileInfos.Length.Should().Be(2);
 

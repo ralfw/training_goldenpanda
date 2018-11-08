@@ -121,17 +121,22 @@ namespace tvspike.es
 
         public IEnumerable<Event> ReplayAll()
         {
-            var allFileNames = _fileEventStore.GetAllFileNames();
-            var eventFileInfos = _fileEventStore.BuildEventFileInfos(allFileNames);
+            var eventFileInfos = GetAllEventFileInfos();
             return CreateEvents(eventFileInfos);
+        }
+
+        private EventFileInfo[] GetAllEventFileInfos()
+        {
+            var allFileNames = _fileEventStore.GetAllFileNames();
+            return _fileEventStore.CreateEventFileInfos(allFileNames);
         }
 
         private IEnumerable<Event> CreateEvents(EventFileInfo[] eventFileInfos)
         {
-            return eventFileInfos.Select(BuildEvent);
+            return eventFileInfos.Select(CreateEvent);
         }
 
-        private Event BuildEvent(EventFileInfo eventFileInfo)
+        private Event CreateEvent(EventFileInfo eventFileInfo)
         {
             var parsedNumber = long.Parse(eventFileInfo.EventNumber);
             return new Event
