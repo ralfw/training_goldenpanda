@@ -82,5 +82,23 @@ namespace tvspike.es.tests
             fileInfo2.EventData.Should().Be(fileContent2);
         }
 
+        [Test]
+        public void ShouldFilterFileNamesByEventId()
+        {
+            const string fileName1 = "00000000000000000500_572e2387-00f9-4f8c-af7a-952f1a06b8d2_a2a45ecd-3060-415d-ab5c-ff1f33b8c9a4_EventA.txt";
+            const string fileName2 = "00000000000000000501_572e2387-00f9-4f8c-af7a-952f1a06b8d2_2a990294-8f3c-467d-ae0b-0b84685a4c4a_EventA.txt";
+            var fileNames = new[]
+            {
+                Path.Combine(TestContext.CurrentContext.TestDirectory, fileName1),
+                Path.Combine(TestContext.CurrentContext.TestDirectory, fileName2),
+            };
+            var fileEventStore = new FileEventStore(string.Empty);
+
+            var filteredNames = fileEventStore.FilterFileNames("a2a45ecd-3060-415d-ab5c-ff1f33b8c9a4", fileNames);
+
+            filteredNames.Length.Should().Be(1);
+            filteredNames[0].Should().EndWith(fileName1);
+        }
+
     }
 }

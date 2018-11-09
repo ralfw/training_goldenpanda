@@ -10,6 +10,13 @@ namespace tvspike.es
             _absolutePathToWorkingDirectory = absolutePathToWorkingDirectory;
         }
 
+        // ToDo: check if we need integration test for this method
+        public EventFileInfo[] GetAllEventFileInfos()
+        {
+            var allFileNames = this.GetAllFileNames();
+            return this.CreateEventFileInfos(allFileNames);
+        }
+
         public string[] GetAllFileNames()
         {
             return Directory.GetFiles(_absolutePathToWorkingDirectory);
@@ -20,6 +27,11 @@ namespace tvspike.es
             return filenames.Select(CreateEventFileInfo)
                             .OrderBy(e => e.EventNumber)
                             .ToArray();
+        }
+
+        public string[] FilterFileNames(string eventId, string[] fileNames)
+        {
+            return fileNames.Where(f => f.Contains(eventId)).ToArray();
         }
 
         private EventFileInfo CreateEventFileInfo(string fullPath)
