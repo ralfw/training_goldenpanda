@@ -55,6 +55,7 @@
     <Compile Include="EventStoreProviderUsageTests.cs" />
     <Compile Include="EventStoreTestHelper.cs" />
     <Compile Include="FileEventStoreTests.cs" />
+    <Compile Include="FileNumberStoreTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
