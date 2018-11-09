@@ -13,8 +13,16 @@ namespace tvspike.es
         // ToDo: check if we need integration test for this method
         public EventFileInfo[] GetAllEventFileInfos()
         {
-            var allFileNames = this.GetAllFileNames();
-            return this.CreateEventFileInfos(allFileNames);
+            var allFileNames = GetAllFileNames();
+            return CreateEventFileInfos(allFileNames);
+        }
+
+        // ToDo: check if we need integration test for this method
+        public EventFileInfo[] GetEventFileInfosBy(string eventId)
+        {
+            var allFileNames = GetAllFileNames();
+            var filteredFileNames = FilterFileNames(eventId, allFileNames);
+            return CreateEventFileInfos(filteredFileNames);
         }
 
         public string[] GetAllFileNames()
