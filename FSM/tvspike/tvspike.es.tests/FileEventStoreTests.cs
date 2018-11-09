@@ -17,7 +17,8 @@ namespace tvspike.es.tests
             Environment.CurrentDirectory = TestContext.CurrentContext.TestDirectory;
         }
 
-        [Test, Ignore("This test tests an .net API call and should be removed /TMa")]
+        // Question: "This test tests an .net API call and should be removed /TMa"
+        [Test]
         public void ShouldGetAllFileNamesFromTheStore()
         {
             // arrange
