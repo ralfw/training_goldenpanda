@@ -41,8 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EventFileInfo.cs" />
     <Compile Include="EventFilename.cs" />
     <Compile Include="EventSourceProvider.cs" />
+    <Compile Include="FileEventStore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

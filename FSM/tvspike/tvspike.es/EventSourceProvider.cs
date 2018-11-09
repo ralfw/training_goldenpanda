@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -21,6 +22,7 @@ namespace tvspike.es
     {
         private long _nextEventNumber;
         private readonly string _eventStoreFolderPath;
+        private FileEventStore _fileEventStore;
         private const string FILENAME_CLIENT_ID = "clientId.txt";
         private const string FILENAME_EVENT_NUMBERS = "eventnumbers.txt";
         private const string DIRNAME_EVENTS_SUBDIR = "events";
@@ -32,6 +34,8 @@ namespace tvspike.es
             _eventStoreFolderPath = eventStoreFolderPath;
 
             InitWorkFolder();
+
+            _fileEventStore = new FileEventStore(Path.Combine(_eventStoreFolderPath, DIRNAME_EVENTS_SUBDIR));
         }
 
         private void InitWorkFolder()
@@ -117,22 +121,31 @@ namespace tvspike.es
 
         public IEnumerable<Event> ReplayAll()
         {
-            return ReplayFor(string.Empty);
+            var eventFileInfos = _fileEventStore.GetAllEventFileInfos();
+            return CreateEvents(eventFileInfos);
         }
 
         public IEnumerable<Event> ReplayFor(string eventId)
         {
-            // get all files
-            var eventsFolder = Path.Combine(_eventStoreFolderPath, DIRNAME_EVENTS_SUBDIR);
-            var eventFiles = Directory.GetFiles(eventsFolder).ToList()
-                                    .Select(GetFileNameFromFullPath);
+            var eventFileInfos = _fileEventStore.GetEventFileInfosBy(eventId);
+            return CreateEvents(eventFileInfos);
+        }
 
-            // filter files
-            if (!string.IsNullOrWhiteSpace(eventId))
-                eventFiles = eventFiles.Where(file => MatchesAggregateId(file, eventId));
+        private IEnumerable<Event> CreateEvents(EventFileInfo[] eventFileInfos)
+        {
+            return eventFileInfos.Select(CreateEvent);
+        }
 
-            // foreach file, get event
-            return eventFiles.Select(f => CreateEventFromFile(eventsFolder, f));
+        private Event CreateEvent(EventFileInfo eventFileInfo)
+        {
+            var parsedNumber = long.Parse(eventFileInfo.EventNumber);
+            return new Event
+            {
+                Nummer = parsedNumber,
+                Id = eventFileInfo.EventId,
+                Name = eventFileInfo.EventName,
+                Daten = eventFileInfo.EventData
+            };
         }
 
         private bool MatchesAggregateId(string filename, string eventId)
