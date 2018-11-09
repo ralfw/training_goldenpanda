@@ -11,7 +11,8 @@ namespace tvspike.es
      * Idee: Ablage der Events im ordner _path
      *
      * Beispieleventstore/
-     *      clientId.txt        //
+     *      eventnumbers.txt    // enthält die nächste zu vergebene EventNummer, long Wert als String
+     *      clientId.txt        // enthält die generierte ClientId, vom Typ Guid
      *      events/
      *          <Nummer>_<ClientId>_<Id>_<EventName>.txt    // Eventsignatur, Inhalt der Datei -> Nutzlast
      *          ...
@@ -21,8 +22,8 @@ namespace tvspike.es
     public class EventSourceProvider
     {
         private readonly string _eventStoreFolderPath;
-        private FileEventStore _fileEventStore;
-        private FileNumberStore _fileNumberStore;
+        private readonly FileEventStore _fileEventStore;
+        private readonly FileNumberStore _fileNumberStore;
         private const string FILENAME_CLIENT_ID = "clientId.txt";
         private const string DIRNAME_EVENTS_SUBDIR = "events";
 
@@ -87,7 +88,7 @@ namespace tvspike.es
                 $"{filename}",
                 $"{@event.Daten}"
             };
-
+            // TODO: use FileEventStore to persist the event /TMa
             var eventsFolder = Path.Combine(_eventStoreFolderPath, DIRNAME_EVENTS_SUBDIR);
             File.WriteAllLines(Path.Combine(eventsFolder, filename), lines);
         }
@@ -118,44 +119,6 @@ namespace tvspike.es
                 Id = eventFileInfo.EventId,
                 Name = eventFileInfo.EventName,
                 Daten = eventFileInfo.EventData
-            };
-        }
-
-        private bool MatchesAggregateId(string filename, string eventId)
-        {
-            var parts = filename.Split('_');
-            return parts[2] == eventId;
-        }
-
-        private static string GetFileNameFromFullPath(string fullPath)
-        {
-            return fullPath.Substring(fullPath.LastIndexOf(Path.DirectorySeparatorChar) + 1 );
-        }
-
-        public static Event CreateEventFromFile(string directory, string filename)
-        {
-            // e.g.
-            // number               clientId                             eventId                           event name
-            // 00000000000000000500_1b5b501f-680f-4e53-b09b-8c39689e2f6e_000000000000000000000000000000000001_EventA.txt
-            // 1st line in file contains filename.
-            // 2nd line in file contains data string.
-
-            // parse filename
-            var parts = filename.Split('_');
-
-            var parsedNumber = long.Parse(parts[0]);
-            var parsedId = parts[2];
-            var eventName = parts[3].Split('.')[0];
-
-            // load event
-            var data = File.ReadAllLines(Path.Combine(directory, filename))[1];
-
-            return new Event
-            {
-                Nummer = parsedNumber,
-                Id = parsedId,
-                Name = eventName,
-                Daten = data
             };
         }
     }
