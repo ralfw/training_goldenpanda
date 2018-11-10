@@ -23,7 +23,7 @@ namespace tvspike.es.tests
             // ReSharper disable once ObjectCreationAsStatement
             new FileNumberStore(storeRootFolder);
 
-            File.ReadAllText(storageFilePath).Trim().Should().Be("499");
+            EventStoreTestHelper.AssertFileContent(storageFilePath, "499");
         }
 
         [Test]
@@ -36,8 +36,7 @@ namespace tvspike.es.tests
             store.NextNumber().Should().Be(501L);
             store.NextNumber().Should().Be(502L);
 
-            File.ReadAllText(Path.Combine(storeRootFolder, "eventnumbers.txt")).Trim()
-                .Should().Be("502");
+            EventStoreTestHelper.AssertFileContent(Path.Combine(storeRootFolder, "eventnumbers.txt"), "502");
         }
 
         [Test]
@@ -46,14 +45,14 @@ namespace tvspike.es.tests
             var storeRootFolder = EventStoreTestHelper.EnsureEmptyRootFolder("eventStore_2");
             var store = new FileNumberStore(storeRootFolder);
             // overwrite existing storage file
-            File.WriteAllText(Path.Combine(storeRootFolder, "eventnumbers.txt"), 5.ToString());
+
+            EventStoreTestHelper.CreateTestFile(storeRootFolder, "eventnumbers.txt", 5.ToString());
 
             store.NextNumber().Should().Be(6L);
             store.NextNumber().Should().Be(7L);
             store.NextNumber().Should().Be(8L);
 
-            File.ReadAllText(Path.Combine(storeRootFolder, "eventnumbers.txt")).Trim()
-                .Should().Be("8");
+            EventStoreTestHelper.AssertFileContent(Path.Combine(storeRootFolder, "eventnumbers.txt"), "8");
         }
 
         [Test]
@@ -61,7 +60,7 @@ namespace tvspike.es.tests
         {
             var storeRootFolder = EventStoreTestHelper.EnsureEmptyRootFolder("eventStore_3");
             // create storage file
-            File.WriteAllText(Path.Combine(storeRootFolder, "eventnumbers.txt"), long.MaxValue.ToString());
+            EventStoreTestHelper.CreateTestFile(storeRootFolder, "eventnumbers.txt", long.MaxValue.ToString());
             var store = new FileNumberStore(storeRootFolder);
 
             Action call = () => store.NextNumber();

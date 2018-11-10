@@ -121,14 +121,13 @@ namespace tvspike.es.tests
         public void ShouldLeaveExistingWorkingDirectoryStructureUntouched()
         {
             var rootFolder = EventStoreTestHelper.EnsureEmptyRootFolder("eventstore_1_2");
-
             var eventsSubFolderPath = Path.Combine(rootFolder, "events");
             Directory.CreateDirectory(eventsSubFolderPath);
 
             var leaveMeHereInRootPath = Path.Combine(rootFolder, "leaveMeHere1.txt");
-            File.WriteAllText(leaveMeHereInRootPath, "LeaveMeHereInRoot");
-            var leaveMeHereInEventsSubFolderPath = Path.Combine(eventsSubFolderPath, "leaveMeHere2.txt");
-            File.WriteAllText(leaveMeHereInEventsSubFolderPath, "LeaveMeHereInEventsSubFolder");
+            var leaveMeHereInEventsSubFolderPath = Path.Combine(rootFolder, "leaveMeHere2.txt");
+            EventStoreTestHelper.CreateTestFile(leaveMeHereInRootPath, "LeaveMeHereInRoot");
+            EventStoreTestHelper.CreateTestFile(leaveMeHereInEventsSubFolderPath, "LeaveMeHereInEventsSubFolder");
 
             EventSourceProvider.EnsureWorkingDirectoryStructure(rootFolder);
 
@@ -143,23 +142,21 @@ namespace tvspike.es.tests
         {
             var rootFolder = EventStoreTestHelper.EnsureEmptyRootFolder("eventstore_2");
 
-            var ensureClientId = EventSourceProvider.GetClientId(rootFolder);
+            var clientId = EventSourceProvider.GetClientId(rootFolder);
 
-            Guid.TryParse(ensureClientId, out var generatedClientId).Should().BeTrue();
-            var clientIdFileContent = File.ReadAllText(Path.Combine(rootFolder, "clientId.txt")).Trim();
-            Guid.Parse(clientIdFileContent).Should().Be(generatedClientId);
+            EventStoreTestHelper.AssertFileContent(Path.Combine(rootFolder, "clientId.txt"), clientId);
         }
 
         [Test]
         public void ShouldLoadClientId()
         {
             var rootFolder = EventStoreTestHelper.EnsureEmptyRootFolder("eventstore_2_2");
-            var clientId = Guid.Parse("D876B013-22A9-4B4D-9F32-C6646AC351BD").ToString();
-            File.WriteAllText(Path.Combine(rootFolder, "clientId.txt"), clientId);
+            const string existingClientId = "d876b013-22a9-4b4d-9f32-c6646ac351bd";
+            EventStoreTestHelper.CreateTestFile(rootFolder, "clientId.txt", existingClientId);
 
             var loadedClientId = EventSourceProvider.GetClientId(rootFolder);
 
-            loadedClientId.Should().Be(clientId);
+            loadedClientId.Should().Be(existingClientId);
         }
     }
 }
