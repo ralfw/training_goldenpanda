@@ -22,10 +22,7 @@ namespace tvspike.es.tests
         public void ShouldGetAllFileNamesFromTheStore()
         {
             // arrange
-            var eventStoreRootFolder = Path.Combine(TestContext.CurrentContext.TestDirectory, "events");
-            if (Directory.Exists(eventStoreRootFolder))
-                Directory.Delete(eventStoreRootFolder, true);
-            Directory.CreateDirectory(eventStoreRootFolder);
+            var eventStoreRootFolder = EventStoreTestHelper.EnsureEmptyRootFolder("events_1");
 
             const string fileName2 = "test.txt";
             const string fileName = "test2.txt";
@@ -46,10 +43,7 @@ namespace tvspike.es.tests
         public void ShouldCreateEventFileInfosFromFileNames()
         {
             // arrange
-            var eventStoreRootFolder = Path.Combine(TestContext.CurrentContext.TestDirectory, "events");
-            if (Directory.Exists(eventStoreRootFolder))
-                Directory.Delete(eventStoreRootFolder, true);
-            Directory.CreateDirectory(eventStoreRootFolder);
+            var eventStoreRootFolder = EventStoreTestHelper.EnsureEmptyRootFolder("events_2");
 
             const string fileName1 = "00000000000000000500_572e2387-00f9-4f8c-af7a-952f1a06b8d2_a2a45ecd-3060-415d-ab5c-ff1f33b8c9a4_EventA.txt";
             const string fileContent1 = "Content 500";

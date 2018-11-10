@@ -17,11 +17,7 @@ namespace tvspike.es.tests
         [Test]
         public void ShouldCreateInitialStorageFileIfNotExists()
         {
-            var storeRootFolder = Path.Combine(TestContext.CurrentContext.TestDirectory, "eventStore_0");
-            if (Directory.Exists(storeRootFolder))
-                Directory.Delete(storeRootFolder, true);
-            Directory.CreateDirectory(storeRootFolder);
-
+            var storeRootFolder = EventStoreTestHelper.EnsureEmptyRootFolder("eventStore_0");
             var storageFilePath = Path.Combine(storeRootFolder, "eventnumbers.txt");
 
             // ReSharper disable once ObjectCreationAsStatement
@@ -33,10 +29,7 @@ namespace tvspike.es.tests
         [Test]
         public void ShouldGetConsecutiveNumbersWithEachCallFromNewStorageFile()
         {
-            var storeRootFolder = Path.Combine(TestContext.CurrentContext.TestDirectory, "eventStore_1");
-            if(Directory.Exists(storeRootFolder))
-                Directory.Delete(storeRootFolder, true);
-            Directory.CreateDirectory(storeRootFolder);
+            var storeRootFolder = EventStoreTestHelper.EnsureEmptyRootFolder("eventStore_1");
             var store = new FileNumberStore(storeRootFolder);
 
             store.NextNumber().Should().Be(500L);
@@ -50,10 +43,7 @@ namespace tvspike.es.tests
         [Test]
         public void ShouldGetConsecutiveNumbersWithEachCallFromExistingStorageFile()
         {
-            var storeRootFolder = Path.Combine(TestContext.CurrentContext.TestDirectory, "eventStore_1");
-            if (Directory.Exists(storeRootFolder))
-                Directory.Delete(storeRootFolder, true);
-            Directory.CreateDirectory(storeRootFolder);
+            var storeRootFolder = EventStoreTestHelper.EnsureEmptyRootFolder("eventStore_2");
             var store = new FileNumberStore(storeRootFolder);
             // overwrite existing storage file
             File.WriteAllText(Path.Combine(storeRootFolder, "eventnumbers.txt"), 5.ToString());
@@ -69,10 +59,7 @@ namespace tvspike.es.tests
         [Test]
         public void ShouldThrowExceptionOnFullStore()
         {
-            var storeRootFolder = Path.Combine(TestContext.CurrentContext.TestDirectory, "eventStore_3");
-            if (Directory.Exists(storeRootFolder))
-                Directory.Delete(storeRootFolder, true);
-            Directory.CreateDirectory(storeRootFolder);
+            var storeRootFolder = EventStoreTestHelper.EnsureEmptyRootFolder("eventStore_3");
             // create storage file
             File.WriteAllText(Path.Combine(storeRootFolder, "eventnumbers.txt"), long.MaxValue.ToString());
             var store = new FileNumberStore(storeRootFolder);

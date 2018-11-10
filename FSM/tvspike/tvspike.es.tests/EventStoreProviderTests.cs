@@ -14,11 +14,17 @@ namespace tvspike.es.tests
     [TestFixture]
     public class EventStoreProviderTests
     {
+        [SetUp]
+        public void SetUp()
+        {
+            Environment.CurrentDirectory = TestContext.CurrentContext.TestDirectory;
+        }
+
         [Test]
         public void ShouldReplayAllRecordedEvents()
         {
             // clean up / prepare
-            var rootFolder = EnsureEmptyRootFolder("eventstore_0");
+            var rootFolder = EventStoreTestHelper.EnsureEmptyRootFolder("eventstore_0");
 
             // arrange
             var eventSourceProvider = new EventSourceProvider(rootFolder);
@@ -64,7 +70,7 @@ namespace tvspike.es.tests
         public void ShouldReplayRecordedEventsForAGivenAggregateId()
         {
             // clean up / prepare
-            var rootFolder = EnsureEmptyRootFolder("eventstore_0_2");
+            var rootFolder = EventStoreTestHelper.EnsureEmptyRootFolder("eventstore_0_2");
 
             // arrange
             var eventSourceProvider = new EventSourceProvider(rootFolder);
@@ -103,7 +109,7 @@ namespace tvspike.es.tests
         [Test]
         public void ShouldCreateWorkingDirectoryStructureIfNotExists()
         {
-            var rootFolder = EnsureDeletedRootFolder("eventstore_1");
+            var rootFolder = EventStoreTestHelper.EnsureDeletedRootFolder("eventstore_1");
 
             EventSourceProvider.EnsureWorkingDirectoryStructure(rootFolder);
 
@@ -114,7 +120,7 @@ namespace tvspike.es.tests
         [Test]
         public void ShouldLeaveExistingWorkingDirectoryStructureUntouched()
         {
-            var rootFolder = EnsureEmptyRootFolder("eventstore_1_2");
+            var rootFolder = EventStoreTestHelper.EnsureEmptyRootFolder("eventstore_1_2");
 
             var eventsSubFolderPath = Path.Combine(rootFolder, "events");
             Directory.CreateDirectory(eventsSubFolderPath);
@@ -135,7 +141,7 @@ namespace tvspike.es.tests
         [Test]
         public void ShouldGeneratedAndStoreGuidBasedClientId()
         {
-            var rootFolder = EnsureEmptyRootFolder("eventstore_2");
+            var rootFolder = EventStoreTestHelper.EnsureEmptyRootFolder("eventstore_2");
 
             var ensureClientId = EventSourceProvider.GetClientId(rootFolder);
 
@@ -147,28 +153,13 @@ namespace tvspike.es.tests
         [Test]
         public void ShouldLoadClientId()
         {
-            var rootFolder = EnsureEmptyRootFolder("eventstore_2_2");
+            var rootFolder = EventStoreTestHelper.EnsureEmptyRootFolder("eventstore_2_2");
             var clientId = Guid.Parse("D876B013-22A9-4B4D-9F32-C6646AC351BD").ToString();
             File.WriteAllText(Path.Combine(rootFolder, "clientId.txt"), clientId);
 
             var loadedClientId = EventSourceProvider.GetClientId(rootFolder);
 
             loadedClientId.Should().Be(clientId);
-        }
-
-        private string EnsureEmptyRootFolder(string folderName)
-        {
-            var rootFolder = EnsureDeletedRootFolder(folderName);
-            Directory.CreateDirectory(rootFolder);
-            return rootFolder;
-        }
-
-        private string EnsureDeletedRootFolder(string folderName)
-        {
-            var rootFolder = Path.Combine(TestContext.CurrentContext.TestDirectory, folderName);
-            if (Directory.Exists(rootFolder))
-                Directory.Delete(rootFolder, true);
-            return rootFolder;
         }
     }
 }
