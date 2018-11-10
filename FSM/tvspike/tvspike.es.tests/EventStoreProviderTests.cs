@@ -18,12 +18,8 @@ namespace tvspike.es.tests
         public void ShouldReplayAllRecordedEvents()
         {
             // clean up / prepare
-            var rootFolder = Path.Combine(TestContext.CurrentContext.TestDirectory, "eventstore_0");
+            var rootFolder = EnsureEmptyRootFolder("eventstore_0");
 
-            if (Directory.Exists(rootFolder))
-                Directory.Delete(rootFolder, true);
-            Directory.CreateDirectory(rootFolder);
-            
             // arrange
             var eventSourceProvider = new EventSourceProvider(rootFolder);
             var eventId1 = Guid.NewGuid().ToString();
@@ -68,11 +64,7 @@ namespace tvspike.es.tests
         public void ShouldReplayRecordedEventsForAGivenAggregateId()
         {
             // clean up / prepare
-            var rootFolder = Path.Combine(TestContext.CurrentContext.TestDirectory, "eventstore_0_2");
-
-            if (Directory.Exists(rootFolder))
-                Directory.Delete(rootFolder, true);
-            Directory.CreateDirectory(rootFolder);
+            var rootFolder = EnsureEmptyRootFolder("eventstore_0_2");
 
             // arrange
             var eventSourceProvider = new EventSourceProvider(rootFolder);
@@ -111,9 +103,7 @@ namespace tvspike.es.tests
         [Test]
         public void ShouldCreateWorkingDirectoryStructureIfNotExists()
         {
-            var rootFolder = Path.Combine(TestContext.CurrentContext.TestDirectory, "eventstore_1");
-            if (Directory.Exists(rootFolder))
-                Directory.Delete(rootFolder, true);
+            var rootFolder = EnsureDeletedRootFolder("eventstore_1");
 
             EventSourceProvider.EnsureWorkingDirectoryStructure(rootFolder);
 
@@ -124,11 +114,8 @@ namespace tvspike.es.tests
         [Test]
         public void ShouldLeaveExistingWorkingDirectoryStructureUntouched()
         {
-            var rootFolder = Path.Combine(TestContext.CurrentContext.TestDirectory, "eventstore_1_2");
-            if (Directory.Exists(rootFolder))
-                Directory.Delete(rootFolder, true);
+            var rootFolder = EnsureEmptyRootFolder("eventstore_1_2");
 
-            Directory.CreateDirectory(rootFolder);
             var eventsSubFolderPath = Path.Combine(rootFolder, "events");
             Directory.CreateDirectory(eventsSubFolderPath);
 
@@ -148,15 +135,11 @@ namespace tvspike.es.tests
         [Test]
         public void ShouldGeneratedAndStoreGuidBasedClientId()
         {
-            var rootFolder = Path.Combine(TestContext.CurrentContext.TestDirectory, "eventstore_2");
-            if (Directory.Exists(rootFolder))
-                Directory.Delete(rootFolder, true);
-            Directory.CreateDirectory(rootFolder);
+            var rootFolder = EnsureEmptyRootFolder("eventstore_2");
 
             var ensureClientId = EventSourceProvider.GetClientId(rootFolder);
 
             Guid.TryParse(ensureClientId, out var generatedClientId).Should().BeTrue();
-
             var clientIdFileContent = File.ReadAllText(Path.Combine(rootFolder, "clientId.txt")).Trim();
             Guid.Parse(clientIdFileContent).Should().Be(generatedClientId);
         }
@@ -164,17 +147,28 @@ namespace tvspike.es.tests
         [Test]
         public void ShouldLoadClientId()
         {
-            var rootFolder = Path.Combine(TestContext.CurrentContext.TestDirectory, "eventstore_2_2");
-            if (Directory.Exists(rootFolder))
-                Directory.Delete(rootFolder, true);
-            Directory.CreateDirectory(rootFolder);
-
+            var rootFolder = EnsureEmptyRootFolder("eventstore_2_2");
             var clientId = Guid.Parse("D876B013-22A9-4B4D-9F32-C6646AC351BD").ToString();
             File.WriteAllText(Path.Combine(rootFolder, "clientId.txt"), clientId);
 
             var loadedClientId = EventSourceProvider.GetClientId(rootFolder);
 
             loadedClientId.Should().Be(clientId);
+        }
+
+        private string EnsureEmptyRootFolder(string folderName)
+        {
+            var rootFolder = EnsureDeletedRootFolder(folderName);
+            Directory.CreateDirectory(rootFolder);
+            return rootFolder;
+        }
+
+        private string EnsureDeletedRootFolder(string folderName)
+        {
+            var rootFolder = Path.Combine(TestContext.CurrentContext.TestDirectory, folderName);
+            if (Directory.Exists(rootFolder))
+                Directory.Delete(rootFolder, true);
+            return rootFolder;
         }
     }
 }
