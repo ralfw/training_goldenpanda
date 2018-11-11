@@ -32,9 +32,11 @@ namespace tvspike.es
 
         public void Record(Event @event)
         {
-            @event.Nummer = _fileNumberStore.NextNumber();
-            var eventFilename = EventFilename.From(@event, _fileClientIdStore.ClientId).Name;
-            PersistEvent(eventFilename, @event);
+            AssignEventNumber(@event);
+            var eventFileInfo = CreateEventFileInfo(@event);
+            PersistEvent(eventFileInfo);
+
+            void AssignEventNumber(Event currentEvent) => currentEvent.Nummer = _fileNumberStore.NextNumber();
         }
 
         public void Record(IEnumerable<Event> events)
@@ -54,16 +56,17 @@ namespace tvspike.es
             return CreateEvents(eventFileInfos);
         }
 
-        private void PersistEvent(string filename, Event @event)
+        private void PersistEvent(EventFileInfo eventFileInfo)
         {
+            var eventFilename = EventFilename.From(eventFileInfo, _fileClientIdStore.ClientId).Name;
             var lines = new[]
             {
-                $"{filename}",
-                $"{@event.Daten}"
+                $"{eventFilename}",
+                $"{eventFileInfo.EventData}"
             };
             // TODO: use FileEventStore to persist the event /TMa
             var eventsFolder = Path.Combine(_storePath, "events");
-            File.WriteAllLines(Path.Combine(eventsFolder, filename), lines);
+            File.WriteAllLines(Path.Combine(eventsFolder, eventFilename), lines);
         }
 
         private IEnumerable<Event> CreateEvents(EventFileInfo[] eventFileInfos)
