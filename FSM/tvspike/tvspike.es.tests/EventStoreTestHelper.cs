@@ -33,6 +33,12 @@ namespace tvspike.es.tests
             File.ReadAllText(fullPath).Trim().Should().Be(expectedContent);
         }
 
+        public static void AssertFileContent(string fullPath, Func<string, bool> comparisonFunc)
+        {
+            var trim = File.ReadAllText(fullPath).Trim();
+            comparisonFunc(trim).Should().BeTrue();
+        }
+
         public static void CreateTestFile(string fullPath, string content)
         {
             File.WriteAllText(fullPath, content);
