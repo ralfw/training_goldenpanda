@@ -4,16 +4,16 @@ using tvspike.contracts;
 
 namespace tvspike.es
 {
-    public class EventFilename
+    internal class EventFilename
     {
-        public string Number { get; set; }
-        public string ClientId { get; set; }
-        public string EventId { get; set; }
-        public string EventName { get; set; }
+        internal string Number { get; set; }
+        internal string ClientId { get; set; }
+        internal string EventId { get; set; }
+        internal string EventName { get; set; }
 
-        public string Name  => $"{Number}_{ClientId}_{EventId}_{EventName}.txt";
+        internal string Name  => $"{Number}_{ClientId}_{EventId}_{EventName}.txt";
 
-        public static EventFilename From(Event @event, string clientId)
+        internal static EventFilename From(Event @event, string clientId)
         {
             var paddedNumber = @event.Nummer.ToString().PadLeft(20, '0');
             var paddedEventId = @event.Id.PadLeft(36, '0');
@@ -24,7 +24,7 @@ namespace tvspike.es
             return new EventFilename {Number = paddedNumber, ClientId = clientId, EventId = paddedEventId, EventName = @event.Name};
         }
 
-        public static EventFilename From(string filePath)
+        internal static EventFilename From(string filePath)
         {
             // File name format
             // number               clientId                             eventId                           event name
@@ -43,6 +43,16 @@ namespace tvspike.es
                 EventId = fileNameParts[2],
                 EventName = eventName
             };
+        }
+
+        internal static EventFilename From(EventFileInfo eventFileInfo, string clientId)
+        {
+            var paddedNumber = eventFileInfo.EventNumber.PadLeft(20, '0');
+            var paddedEventId = eventFileInfo.EventId.PadLeft(36, '0');
+            if (eventFileInfo.EventName.Length > 20)
+                throw new InvalidOperationException("Event name exceeds maximum of 20 characters.");
+
+            return new EventFilename { Number = paddedNumber, ClientId = clientId, EventId = paddedEventId, EventName = eventFileInfo.EventName };
         }
     }
 }

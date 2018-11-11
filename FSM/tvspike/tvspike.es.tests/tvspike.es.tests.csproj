@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FileClientIdStoreTests.cs" />
     <Compile Include="EventFilenameTests.cs" />
     <Compile Include="EventStoreProviderTests.cs" />
     <Compile Include="EventStoreProviderUsageTests.cs" />

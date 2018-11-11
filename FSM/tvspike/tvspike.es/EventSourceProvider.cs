@@ -19,61 +19,15 @@ namespace tvspike.es
      *
      */
 
+    // TODO rename this to EventStoreProvider
     public class EventSourceProvider
     {
-        private readonly string _eventStoreFolderPath;
-        private readonly FileEventStore _fileEventStore;
-        private readonly FileNumberStore _fileNumberStore;
-        private const string FILENAME_CLIENT_ID = "clientId.txt";
-        private const string DIRNAME_EVENTS_SUBDIR = "events";
-
-        public string ClientId { get; private set; }
-
         public EventSourceProvider(string eventStoreFolderPath)
         {
-            _eventStoreFolderPath = eventStoreFolderPath;
-
-            InitWorkFolder();
-
-            _fileEventStore = new FileEventStore(Path.Combine(_eventStoreFolderPath, DIRNAME_EVENTS_SUBDIR));
-            _fileNumberStore = new FileNumberStore(_eventStoreFolderPath);
-        }
-
-        private void InitWorkFolder()
-        {
-            EnsureWorkingDirectoryStructure(_eventStoreFolderPath);
-            ClientId = GetClientId(_eventStoreFolderPath);
-        }
-
-        internal static void EnsureWorkingDirectoryStructure(string rootFolderPath)
-        {
-            if (!Directory.Exists(rootFolderPath))
-                Directory.CreateDirectory(rootFolderPath);
-
-            var eventSubDirPath = Path.Combine(rootFolderPath, DIRNAME_EVENTS_SUBDIR);
-            if (!Directory.Exists(eventSubDirPath))
-                Directory.CreateDirectory(eventSubDirPath);
-        }
-
-        internal static string GetClientId(string rootFolderPath)
-        {
-            var clientIdFilePath = Path.Combine(rootFolderPath, FILENAME_CLIENT_ID);
-            if (File.Exists(clientIdFilePath))
-            {
-                var content = File.ReadAllText(clientIdFilePath).Trim();
-                return Guid.Parse(content).ToString();
-            }
-
-            var clientId = Guid.NewGuid().ToString();
-            File.WriteAllText(clientIdFilePath, clientId);
-            return clientId;
-        }
-
-        public void Record(Event @event)
-        {
-            @event.Nummer = _fileNumberStore.NextNumber();
-            var eventFilename = EventFilename.From(@event, ClientId).Name;
-            PersistEvent(eventFilename, @event);
+            StoreWorkingDirectoryPath(eventStoreFolderPath);
+            InitializeWorkFolder();
+            // Question: Should we better use a factory to build these? Or a factory which builds this whole instance?
+            BuildDependencies();    
         }
 
         public void Record(IEnumerable<Event> events)
@@ -81,16 +35,22 @@ namespace tvspike.es
             events.ToList().ForEach(Record);
         }
 
-        private void PersistEvent(string filename, Event @event)
+        public void Record(Event @event)
         {
-            var lines = new[]
+            @event.Nummer = _fileNumberStore.NextNumber();
+            var eventFileInfo = CreateEventFileInfo(@event);
+            _fileEventStore.Store(eventFileInfo);
+        }
+
+        internal static EventFileInfo CreateEventFileInfo(Event @event)
+        {
+            return new EventFileInfo
             {
-                $"{filename}",
-                $"{@event.Daten}"
+                EventNumber = @event.Nummer.ToString(),
+                EventId = @event.Id,
+                EventName = @event.Name,
+                EventData = @event.Daten
             };
-            // TODO: use FileEventStore to persist the event /TMa
-            var eventsFolder = Path.Combine(_eventStoreFolderPath, DIRNAME_EVENTS_SUBDIR);
-            File.WriteAllLines(Path.Combine(eventsFolder, filename), lines);
         }
 
         public IEnumerable<Event> ReplayAll()
@@ -110,7 +70,7 @@ namespace tvspike.es
             return eventFileInfos.Select(CreateEvent);
         }
 
-        private Event CreateEvent(EventFileInfo eventFileInfo)
+        private static Event CreateEvent(EventFileInfo eventFileInfo)
         {
             var parsedNumber = long.Parse(eventFileInfo.EventNumber);
             return new Event
@@ -121,5 +81,28 @@ namespace tvspike.es
                 Daten = eventFileInfo.EventData
             };
         }
+
+        private void StoreWorkingDirectoryPath(string storePath)
+        {
+            _storePath = storePath;
+        }
+
+        private void InitializeWorkFolder()
+        {
+            if (!Directory.Exists(_storePath))
+                Directory.CreateDirectory(_storePath);
+        }
+
+        private void BuildDependencies()
+        {
+            _fileNumberStore = new FileNumberStore(_storePath);
+            _fileClientIdStore = new FileClientIdStore(_storePath);
+            _fileEventStore = new FileEventStore(_storePath, _fileClientIdStore.ClientId);
+        }
+
+        private string _storePath;
+        private FileEventStore _fileEventStore;
+        private FileNumberStore _fileNumberStore;
+        private FileClientIdStore _fileClientIdStore;
     }
 }

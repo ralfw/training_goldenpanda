@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FluentAssertions;
 using NUnit.Framework;
 using tvspike.contracts;
@@ -107,56 +104,50 @@ namespace tvspike.es.tests
         }
 
         [Test]
-        public void ShouldCreateWorkingDirectoryStructureIfNotExists()
+        public void ShouldCreateEventFileInfoFromEvent()
         {
-            var rootFolder = EventStoreTestHelper.EnsureDeletedRootFolder("eventstore_1");
+            var @event = new Event
+            {
+                Nummer = 1000L,
+                Id = Guid.NewGuid().ToString(),
+                Name = "EventA",
+                Daten = "TestDaten_EventA"
+            };
 
-            EventSourceProvider.EnsureWorkingDirectoryStructure(rootFolder);
+            var eventFileInfo = EventSourceProvider.CreateEventFileInfo(@event);
 
-            Directory.Exists(rootFolder).Should().BeTrue();
-            Directory.Exists(Path.Combine(rootFolder, "events")).Should().BeTrue();
+            eventFileInfo.EventNumber.Should().Be(@event.Nummer.ToString());
+            eventFileInfo.EventId.Should().Be(@event.Id);
+            eventFileInfo.EventName.Should().Be(@event.Name);
+            eventFileInfo.EventData.Should().Be(@event.Daten);
         }
 
         [Test]
-        public void ShouldLeaveExistingWorkingDirectoryStructureUntouched()
+        public void ShouldCreateWorkingDirectoryIfNotExists()
+        {
+            var rootFolder = EventStoreTestHelper.EnsureDeletedRootFolder("eventstore_1");
+
+            // ReSharper disable once ObjectCreationAsStatement
+            new EventSourceProvider(rootFolder);
+
+            Directory.Exists(rootFolder).Should().BeTrue();
+        }
+
+        [Test]
+        public void ShouldLeaveExistingWorkingDirectoryUntouchedIfExists()
         {
             var rootFolder = EventStoreTestHelper.EnsureEmptyRootFolder("eventstore_1_2");
             var eventsSubFolderPath = Path.Combine(rootFolder, "events");
             Directory.CreateDirectory(eventsSubFolderPath);
 
             var leaveMeHereInRootPath = Path.Combine(rootFolder, "leaveMeHere1.txt");
-            var leaveMeHereInEventsSubFolderPath = Path.Combine(rootFolder, "leaveMeHere2.txt");
             EventStoreTestHelper.CreateTestFile(leaveMeHereInRootPath, "LeaveMeHereInRoot");
-            EventStoreTestHelper.CreateTestFile(leaveMeHereInEventsSubFolderPath, "LeaveMeHereInEventsSubFolder");
 
-            EventSourceProvider.EnsureWorkingDirectoryStructure(rootFolder);
+            // ReSharper disable once ObjectCreationAsStatement
+            new EventSourceProvider(rootFolder);
 
             Directory.Exists(rootFolder).Should().BeTrue();
             File.Exists(leaveMeHereInRootPath).Should().BeTrue();
-            Directory.Exists(eventsSubFolderPath).Should().BeTrue();
-            File.Exists(leaveMeHereInEventsSubFolderPath).Should().BeTrue();
-        }
-
-        [Test]
-        public void ShouldGeneratedAndStoreGuidBasedClientId()
-        {
-            var rootFolder = EventStoreTestHelper.EnsureEmptyRootFolder("eventstore_2");
-
-            var clientId = EventSourceProvider.GetClientId(rootFolder);
-
-            EventStoreTestHelper.AssertFileContent(Path.Combine(rootFolder, "clientId.txt"), clientId);
-        }
-
-        [Test]
-        public void ShouldLoadClientId()
-        {
-            var rootFolder = EventStoreTestHelper.EnsureEmptyRootFolder("eventstore_2_2");
-            const string existingClientId = "d876b013-22a9-4b4d-9f32-c6646ac351bd";
-            EventStoreTestHelper.CreateTestFile(rootFolder, "clientId.txt", existingClientId);
-
-            var loadedClientId = EventSourceProvider.GetClientId(rootFolder);
-
-            loadedClientId.Should().Be(existingClientId);
         }
     }
 }
