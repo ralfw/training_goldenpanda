@@ -21,8 +21,6 @@ namespace tvspike.es
 
     public class EventSourceProvider
     {
-        public string ClientId { get; private set; }
-
         public EventSourceProvider(string eventStoreFolderPath)
         {
             StoreEventStoreFolderPath(eventStoreFolderPath);
@@ -34,7 +32,7 @@ namespace tvspike.es
         public void Record(Event @event)
         {
             @event.Nummer = _fileNumberStore.NextNumber();
-            var eventFilename = EventFilename.From(@event, ClientId).Name;
+            var eventFilename = EventFilename.From(@event, _fileClientIdStore.ClientId).Name;
             PersistEvent(eventFilename, @event);
         }
 
@@ -92,7 +90,6 @@ namespace tvspike.es
         private void InitializeWorkFolder()
         {
             EnsureWorkingDirectoryStructure(_eventStoreFolderPath);
-            ClientId = GetClientId(_eventStoreFolderPath);
         }
 
         internal static void EnsureWorkingDirectoryStructure(string rootFolderPath)
@@ -100,36 +97,24 @@ namespace tvspike.es
             if (!Directory.Exists(rootFolderPath))
                 Directory.CreateDirectory(rootFolderPath);
 
+            // todo move the responsibility to the FileEventStore class
             var eventSubDirPath = Path.Combine(rootFolderPath, DIRNAME_EVENTS_SUBDIR);
             if (!Directory.Exists(eventSubDirPath))
                 Directory.CreateDirectory(eventSubDirPath);
-        }
-
-        internal static string GetClientId(string rootFolderPath)
-        {
-            var clientIdFilePath = Path.Combine(rootFolderPath, FILENAME_CLIENT_ID);
-            if (File.Exists(clientIdFilePath))
-            {
-                var content = File.ReadAllText(clientIdFilePath).Trim();
-                return Guid.Parse(content).ToString();
-            }
-
-            var clientId = Guid.NewGuid().ToString();
-            File.WriteAllText(clientIdFilePath, clientId);
-            return clientId;
         }
 
         private void BuildDependencies()
         {
             _fileEventStore = new FileEventStore(Path.Combine(_eventStoreFolderPath, DIRNAME_EVENTS_SUBDIR));
             _fileNumberStore = new FileNumberStore(_eventStoreFolderPath);
+            _fileClientIdStore = new FileClientIdStore(_eventStoreFolderPath);
         }
 
-        private const string FILENAME_CLIENT_ID = "clientId.txt";
         private const string DIRNAME_EVENTS_SUBDIR = "events";
 
         private string _eventStoreFolderPath;
         private FileEventStore _fileEventStore;
         private FileNumberStore _fileNumberStore;
+        private FileClientIdStore _fileClientIdStore;
     }
 }

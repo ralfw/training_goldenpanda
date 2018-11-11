@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FluentAssertions;
 using NUnit.Framework;
 using tvspike.contracts;
@@ -135,28 +132,6 @@ namespace tvspike.es.tests
             File.Exists(leaveMeHereInRootPath).Should().BeTrue();
             Directory.Exists(eventsSubFolderPath).Should().BeTrue();
             File.Exists(leaveMeHereInEventsSubFolderPath).Should().BeTrue();
-        }
-
-        [Test]
-        public void ShouldGeneratedAndStoreGuidBasedClientId()
-        {
-            var rootFolder = EventStoreTestHelper.EnsureEmptyRootFolder("eventstore_2");
-
-            var clientId = EventSourceProvider.GetClientId(rootFolder);
-
-            EventStoreTestHelper.AssertFileContent(Path.Combine(rootFolder, "clientId.txt"), clientId);
-        }
-
-        [Test]
-        public void ShouldLoadClientId()
-        {
-            var rootFolder = EventStoreTestHelper.EnsureEmptyRootFolder("eventstore_2_2");
-            const string existingClientId = "d876b013-22a9-4b4d-9f32-c6646ac351bd";
-            EventStoreTestHelper.CreateTestFile(rootFolder, "clientId.txt", existingClientId);
-
-            var loadedClientId = EventSourceProvider.GetClientId(rootFolder);
-
-            loadedClientId.Should().Be(existingClientId);
         }
     }
 }
