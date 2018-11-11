@@ -7,30 +7,30 @@ namespace tvspike.client
 {
     public class RequestHandler
     {
-        private readonly EventSourceProvider _eventSourceProvider;
+        private readonly EventStoreProvider _eventStoreProvider;
         private readonly ReadModelProvider _readModelProvider;
 
-        public RequestHandler(EventSourceProvider eventSourceProvider, ReadModelProvider readModelProvider)
+        public RequestHandler(EventStoreProvider eventStoreProvider, ReadModelProvider readModelProvider)
         {
-            _eventSourceProvider = eventSourceProvider;
+            _eventStoreProvider = eventStoreProvider;
             _readModelProvider = readModelProvider;
         }
 
         public IEnumerable<TerminRM> Handle(QueryTerminliste queryTerminliste)
         {
-            var events = _eventSourceProvider.ReplayAll();
+            var events = _eventStoreProvider.ReplayAll();
             return _readModelProvider.Aufbauen(events);
         }
 
         public void Handle(TerminLöschenCommand terminLöschenCommand) {
             var events = TerminAggregator.Process(terminLöschenCommand);
-            _eventSourceProvider.Record(events);
+            _eventStoreProvider.Record(events);
         }
 
         public void Handle(NeuerTerminCommand neuerTerminCommand)
         {
             var neuesEvent = TerminAggregator.Process(neuerTerminCommand);
-            _eventSourceProvider.Record(new []{neuesEvent});
+            _eventStoreProvider.Record(new []{neuesEvent});
         }
     }
 }

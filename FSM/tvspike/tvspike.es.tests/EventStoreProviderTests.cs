@@ -24,7 +24,7 @@ namespace tvspike.es.tests
             var rootFolder = EventStoreTestHelper.EnsureEmptyRootFolder("eventstore_0");
 
             // arrange
-            var eventSourceProvider = new EventSourceProvider(rootFolder);
+            var eventSourceProvider = new EventStoreProvider(rootFolder);
             var eventId1 = Guid.NewGuid().ToString();
             var eventId2 = Guid.NewGuid().ToString();
             var eventId3 = Guid.NewGuid().ToString();
@@ -70,7 +70,7 @@ namespace tvspike.es.tests
             var rootFolder = EventStoreTestHelper.EnsureEmptyRootFolder("eventstore_0_2");
 
             // arrange
-            var eventSourceProvider = new EventSourceProvider(rootFolder);
+            var eventSourceProvider = new EventStoreProvider(rootFolder);
             var eventId1 = Guid.NewGuid().ToString();
             var eventId2 = Guid.NewGuid().ToString();
 
@@ -114,7 +114,7 @@ namespace tvspike.es.tests
                 Daten = "TestDaten_EventA"
             };
 
-            var eventFileInfo = EventSourceProvider.CreateEventFileInfo(@event);
+            var eventFileInfo = EventStoreProvider.CreateEventFileInfo(@event);
 
             eventFileInfo.EventNumber.Should().Be(@event.Nummer.ToString());
             eventFileInfo.EventId.Should().Be(@event.Id);
@@ -128,7 +128,7 @@ namespace tvspike.es.tests
             var rootFolder = EventStoreTestHelper.EnsureDeletedRootFolder("eventstore_1");
 
             // ReSharper disable once ObjectCreationAsStatement
-            new EventSourceProvider(rootFolder);
+            new EventStoreProvider(rootFolder);
 
             Directory.Exists(rootFolder).Should().BeTrue();
         }
@@ -144,7 +144,7 @@ namespace tvspike.es.tests
             EventStoreTestHelper.CreateTestFile(leaveMeHereInRootPath, "LeaveMeHereInRoot");
 
             // ReSharper disable once ObjectCreationAsStatement
-            new EventSourceProvider(rootFolder);
+            new EventStoreProvider(rootFolder);
 
             Directory.Exists(rootFolder).Should().BeTrue();
             File.Exists(leaveMeHereInRootPath).Should().BeTrue();

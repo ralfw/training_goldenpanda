@@ -12,7 +12,7 @@ namespace tvspike.es.tests
         [Test]
         public void Usage_ReplayAll()
         {
-            var eventSource = new EventSourceProvider(@"D:\temp\eventSource1");
+            var eventSource = new EventStoreProvider(@"D:\temp\eventSource1");
 
             IEnumerable<Event> eventsToRecord = new[]
             {
@@ -34,7 +34,7 @@ namespace tvspike.es.tests
         [Test]
         public void Usage_ReplayFromGivenAggregateId()
         {
-            var eventSource = new EventSourceProvider(@"D:\temp\eventSource2");
+            var eventSource = new EventStoreProvider(@"D:\temp\eventSource2");
 
             var eventId1 = Guid.NewGuid().ToString();
             var eventId2 = Guid.NewGuid().ToString();
@@ -58,12 +58,12 @@ namespace tvspike.es.tests
             DumpReplayedEventsFor(eventId2, eventSource);
         }
 
-        private static void DumpReplayedEventsFor(string currentId, EventSourceProvider eventSource)
+        private static void DumpReplayedEventsFor(string currentId, EventStoreProvider eventStore)
         {
             Console.WriteLine($"Replay for AggregateId: {currentId}");
             Console.WriteLine("");
 
-            var replayedEvents = eventSource.ReplayFor(currentId);
+            var replayedEvents = eventStore.ReplayFor(currentId);
 
             foreach (var replayedEvent in replayedEvents)
             {

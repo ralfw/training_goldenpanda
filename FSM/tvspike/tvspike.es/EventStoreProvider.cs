@@ -19,10 +19,9 @@ namespace tvspike.es
      *
      */
 
-    // TODO rename this to EventStoreProvider
-    public class EventSourceProvider
+    public class EventStoreProvider
     {
-        public EventSourceProvider(string eventStoreFolderPath)
+        public EventStoreProvider(string eventStoreFolderPath)
         {
             StoreWorkingDirectoryPath(eventStoreFolderPath);
             InitializeWorkFolder();

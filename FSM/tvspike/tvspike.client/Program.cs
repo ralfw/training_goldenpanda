@@ -20,7 +20,7 @@ namespace tvspike.client
         {
             // build
             var pathToEventStore = Path.Combine(Path.GetTempPath(), "eventStore");
-            var eventSourceProvider = new EventSourceProvider(pathToEventStore);
+            var eventSourceProvider = new EventStoreProvider(pathToEventStore);
             var readModelProvider = new ReadModelProvider("store.rm");
             _requestHandler = new RequestHandler(eventSourceProvider, readModelProvider);
             _terminübersicht = new Terminübersicht();
@@ -58,7 +58,7 @@ namespace tvspike.client
             _requestHandler.Handle(neuerTerminKommando);
         }
 
-        // TODO: query need to to into the ui project
+        // TODO: query need to go into the ui project
         private static void TerminübersichtTerminlisteAnzeigen()
         {
             _terminübersicht.TerminListeZeigen(_requestHandler.Handle(new QueryTerminliste()));
