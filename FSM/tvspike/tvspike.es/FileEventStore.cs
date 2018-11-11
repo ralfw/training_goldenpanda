@@ -5,20 +5,32 @@ namespace tvspike.es
 {
     internal class FileEventStore
     {
-        public FileEventStore(string absolutePathToWorkingDirectory)
+        public FileEventStore(string parentDirectory)
         {
-            _absolutePathToWorkingDirectory = absolutePathToWorkingDirectory;
+            SetWorkingDirectory(parentDirectory);
+            EnsureWorkingDirectory();
+        }
+
+        private void SetWorkingDirectory(string parentDirectory)
+        {
+            _storageDirectory = Path.Combine(parentDirectory, "events");
+        }
+
+        private void EnsureWorkingDirectory()
+        {
+            if(!Directory.Exists(_storageDirectory))
+                Directory.CreateDirectory(_storageDirectory);
         }
 
         // ToDo: check if we need integration test for this method
-        public EventFileInfo[] GetAllEventFileInfos()
+        internal EventFileInfo[] GetAllEventFileInfos()
         {
             var allFileNames = GetAllFileNames();
             return CreateEventFileInfos(allFileNames);
         }
 
         // ToDo: check if we need integration test for this method
-        public EventFileInfo[] GetEventFileInfosBy(string eventId)
+        internal EventFileInfo[] GetEventFileInfosBy(string eventId)
         {
             var allFileNames = GetAllFileNames();
             var filteredFileNames = FilterFileNames(eventId, allFileNames);
@@ -27,19 +39,14 @@ namespace tvspike.es
 
         public string[] GetAllFileNames()
         {
-            return Directory.GetFiles(_absolutePathToWorkingDirectory);
+            return Directory.GetFiles(_storageDirectory);
         }
 
-        public EventFileInfo[] CreateEventFileInfos(string[] filenames)
+        internal EventFileInfo[] CreateEventFileInfos(string[] filenames)
         {
             return filenames.Select(CreateEventFileInfo)
                             .OrderBy(e => e.EventNumber)
                             .ToArray();
-        }
-
-        public string[] FilterFileNames(string eventId, string[] fileNames)
-        {
-            return fileNames.Where(f => f.Contains(eventId)).ToArray();
         }
 
         private EventFileInfo CreateEventFileInfo(string fullPath)
@@ -49,6 +56,11 @@ namespace tvspike.es
 
             // get file name only
             return CreateEventFileInfoFrom(fullPath, data);
+        }
+
+        internal static string[] FilterFileNames(string eventId, string[] fileNames)
+        {
+            return fileNames.Where(f => f.Contains(eventId)).ToArray();
         }
 
         private static string ReadDataFromEventFile(string fullPath)
@@ -70,6 +82,6 @@ namespace tvspike.es
             };
         }
 
-        private readonly string _absolutePathToWorkingDirectory;
+        private string _storageDirectory;
     }
 }

@@ -23,7 +23,7 @@ namespace tvspike.es
     {
         public EventSourceProvider(string eventStoreFolderPath)
         {
-            StoreEventStoreFolderPath(eventStoreFolderPath);
+            StoreWorkingDirectoryPath(eventStoreFolderPath);
             InitializeWorkFolder();
             // Question: Should we better use a factory to build these? Or a factory which builds this whole instance?
             BuildDependencies();    
@@ -61,7 +61,7 @@ namespace tvspike.es
                 $"{@event.Daten}"
             };
             // TODO: use FileEventStore to persist the event /TMa
-            var eventsFolder = Path.Combine(_eventStoreFolderPath, DIRNAME_EVENTS_SUBDIR);
+            var eventsFolder = Path.Combine(_storePath, "events");
             File.WriteAllLines(Path.Combine(eventsFolder, filename), lines);
         }
 
@@ -82,37 +82,25 @@ namespace tvspike.es
             };
         }
 
-        private void StoreEventStoreFolderPath(string eventStoreFolderPath)
+        private void StoreWorkingDirectoryPath(string storePath)
         {
-            _eventStoreFolderPath = eventStoreFolderPath;
+            _storePath = storePath;
         }
 
         private void InitializeWorkFolder()
         {
-            EnsureWorkingDirectoryStructure(_eventStoreFolderPath);
-        }
-
-        internal static void EnsureWorkingDirectoryStructure(string rootFolderPath)
-        {
-            if (!Directory.Exists(rootFolderPath))
-                Directory.CreateDirectory(rootFolderPath);
-
-            // todo move the responsibility to the FileEventStore class
-            var eventSubDirPath = Path.Combine(rootFolderPath, DIRNAME_EVENTS_SUBDIR);
-            if (!Directory.Exists(eventSubDirPath))
-                Directory.CreateDirectory(eventSubDirPath);
+            if (!Directory.Exists(_storePath))
+                Directory.CreateDirectory(_storePath);
         }
 
         private void BuildDependencies()
         {
-            _fileEventStore = new FileEventStore(Path.Combine(_eventStoreFolderPath, DIRNAME_EVENTS_SUBDIR));
-            _fileNumberStore = new FileNumberStore(_eventStoreFolderPath);
-            _fileClientIdStore = new FileClientIdStore(_eventStoreFolderPath);
+            _fileEventStore = new FileEventStore(_storePath);
+            _fileNumberStore = new FileNumberStore(_storePath);
+            _fileClientIdStore = new FileClientIdStore(_storePath);
         }
 
-        private const string DIRNAME_EVENTS_SUBDIR = "events";
-
-        private string _eventStoreFolderPath;
+        private string _storePath;
         private FileEventStore _fileEventStore;
         private FileNumberStore _fileNumberStore;
         private FileClientIdStore _fileClientIdStore;

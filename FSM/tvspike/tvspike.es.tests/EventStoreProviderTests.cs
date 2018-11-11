@@ -104,34 +104,31 @@ namespace tvspike.es.tests
         }
 
         [Test]
-        public void ShouldCreateWorkingDirectoryStructureIfNotExists()
+        public void ShouldCreateWorkingDirectoryIfNotExists()
         {
             var rootFolder = EventStoreTestHelper.EnsureDeletedRootFolder("eventstore_1");
 
-            EventSourceProvider.EnsureWorkingDirectoryStructure(rootFolder);
+            // ReSharper disable once ObjectCreationAsStatement
+            new EventSourceProvider(rootFolder);
 
             Directory.Exists(rootFolder).Should().BeTrue();
-            Directory.Exists(Path.Combine(rootFolder, "events")).Should().BeTrue();
         }
 
         [Test]
-        public void ShouldLeaveExistingWorkingDirectoryStructureUntouched()
+        public void ShouldLeaveExistingWorkingDirectoryUntouchedIfExists()
         {
             var rootFolder = EventStoreTestHelper.EnsureEmptyRootFolder("eventstore_1_2");
             var eventsSubFolderPath = Path.Combine(rootFolder, "events");
             Directory.CreateDirectory(eventsSubFolderPath);
 
             var leaveMeHereInRootPath = Path.Combine(rootFolder, "leaveMeHere1.txt");
-            var leaveMeHereInEventsSubFolderPath = Path.Combine(rootFolder, "leaveMeHere2.txt");
             EventStoreTestHelper.CreateTestFile(leaveMeHereInRootPath, "LeaveMeHereInRoot");
-            EventStoreTestHelper.CreateTestFile(leaveMeHereInEventsSubFolderPath, "LeaveMeHereInEventsSubFolder");
 
-            EventSourceProvider.EnsureWorkingDirectoryStructure(rootFolder);
+            // ReSharper disable once ObjectCreationAsStatement
+            new EventSourceProvider(rootFolder);
 
             Directory.Exists(rootFolder).Should().BeTrue();
             File.Exists(leaveMeHereInRootPath).Should().BeTrue();
-            Directory.Exists(eventsSubFolderPath).Should().BeTrue();
-            File.Exists(leaveMeHereInEventsSubFolderPath).Should().BeTrue();
         }
     }
 }
