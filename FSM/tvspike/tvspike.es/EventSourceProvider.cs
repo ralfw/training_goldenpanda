@@ -30,18 +30,27 @@ namespace tvspike.es
             BuildDependencies();    
         }
 
-        public void Record(Event @event)
-        {
-            AssignEventNumber(@event);
-            var eventFileInfo = CreateEventFileInfo(@event);
-            PersistEvent(eventFileInfo);
-
-            void AssignEventNumber(Event currentEvent) => currentEvent.Nummer = _fileNumberStore.NextNumber();
-        }
-
         public void Record(IEnumerable<Event> events)
         {
             events.ToList().ForEach(Record);
+        }
+
+        public void Record(Event @event)
+        {
+            @event.Nummer = _fileNumberStore.NextNumber();
+            var eventFileInfo = CreateEventFileInfo(@event);
+            _fileEventStore.Store(eventFileInfo);
+        }
+
+        internal static EventFileInfo CreateEventFileInfo(Event @event)
+        {
+            return new EventFileInfo
+            {
+                EventNumber = @event.Nummer.ToString(),
+                EventId = @event.Id,
+                EventName = @event.Name,
+                EventData = @event.Daten
+            };
         }
 
         public IEnumerable<Event> ReplayAll()
@@ -56,25 +65,12 @@ namespace tvspike.es
             return CreateEvents(eventFileInfos);
         }
 
-        private void PersistEvent(EventFileInfo eventFileInfo)
-        {
-            var eventFilename = EventFilename.From(eventFileInfo, _fileClientIdStore.ClientId).Name;
-            var lines = new[]
-            {
-                $"{eventFilename}",
-                $"{eventFileInfo.EventData}"
-            };
-            // TODO: use FileEventStore to persist the event /TMa
-            var eventsFolder = Path.Combine(_storePath, "events");
-            File.WriteAllLines(Path.Combine(eventsFolder, eventFilename), lines);
-        }
-
         private IEnumerable<Event> CreateEvents(EventFileInfo[] eventFileInfos)
         {
             return eventFileInfos.Select(CreateEvent);
         }
 
-        private Event CreateEvent(EventFileInfo eventFileInfo)
+        private static Event CreateEvent(EventFileInfo eventFileInfo)
         {
             var parsedNumber = long.Parse(eventFileInfo.EventNumber);
             return new Event
@@ -108,16 +104,5 @@ namespace tvspike.es
         private FileEventStore _fileEventStore;
         private FileNumberStore _fileNumberStore;
         private FileClientIdStore _fileClientIdStore;
-
-        internal static EventFileInfo CreateEventFileInfo(Event @event)
-        {
-            return new EventFileInfo
-            {
-                EventNumber = @event.Nummer.ToString(),
-                EventId = @event.Id,
-                EventName = @event.Name,
-                EventData = @event.Daten
-            };
-        }
     }
 }
