@@ -99,9 +99,9 @@ namespace tvspike.es
 
         private void BuildDependencies()
         {
-            _fileEventStore = new FileEventStore(_storePath);
             _fileNumberStore = new FileNumberStore(_storePath);
             _fileClientIdStore = new FileClientIdStore(_storePath);
+            _fileEventStore = new FileEventStore(_storePath, _fileClientIdStore.ClientId);
         }
 
         private string _storePath;

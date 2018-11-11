@@ -5,9 +5,10 @@ namespace tvspike.es
 {
     internal class FileEventStore
     {
-        public FileEventStore(string parentDirectory)
+        public FileEventStore(string parentDirectory, string clientId)
         {
             SetWorkingDirectory(parentDirectory);
+            SetClientId(clientId);
             EnsureWorkingDirectory();
         }
 
@@ -16,13 +17,30 @@ namespace tvspike.es
             _storageDirectory = Path.Combine(parentDirectory, "events");
         }
 
+        private void SetClientId(string clientId)
+        {
+            _clientId = clientId;
+        }
+
         private void EnsureWorkingDirectory()
         {
             if(!Directory.Exists(_storageDirectory))
                 Directory.CreateDirectory(_storageDirectory);
         }
 
+        public void Store(EventFileInfo eventFileInfo)
+        {
+            var fileName = EventFilename.From(eventFileInfo, _clientId);
+            string[] lines =
+            {
+                fileName.Name,
+                eventFileInfo.EventData
+            };
+            File.WriteAllLines(Path.Combine(_storageDirectory, fileName.Name), lines);
+        }
+
         // ToDo: check if we need integration test for this method
+
         internal EventFileInfo[] GetAllEventFileInfos()
         {
             var allFileNames = GetAllFileNames();
@@ -30,6 +48,7 @@ namespace tvspike.es
         }
 
         // ToDo: check if we need integration test for this method
+
         internal EventFileInfo[] GetEventFileInfosBy(string eventId)
         {
             var allFileNames = GetAllFileNames();
@@ -83,5 +102,7 @@ namespace tvspike.es
         }
 
         private string _storageDirectory;
+
+        private string _clientId;
     }
 }

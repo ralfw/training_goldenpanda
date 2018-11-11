@@ -106,7 +106,13 @@ namespace tvspike.es.tests
         [Test]
         public void ShouldCreateEventFileInfoFromEvent()
         {
-            var @event = new Event();
+            var @event = new Event
+            {
+                Nummer = 1000L,
+                Id = Guid.NewGuid().ToString(),
+                Name = "EventA",
+                Daten = "TestDaten_EventA"
+            };
 
             var eventFileInfo = EventSourceProvider.CreateEventFileInfo(@event);
 

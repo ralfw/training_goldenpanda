@@ -23,7 +23,7 @@ namespace tvspike.es.tests
             var eventStoreRootFolder = EventStoreTestHelper.EnsureEmptyRootFolder("storeRoot_1");
 
             // ReSharper disable once ObjectCreationAsStatement
-            new FileEventStore(eventStoreRootFolder);
+            new FileEventStore(eventStoreRootFolder, "1234");
 
             Directory.Exists(Path.Combine(eventStoreRootFolder, "events")).Should().BeTrue();
         }
@@ -41,7 +41,7 @@ namespace tvspike.es.tests
             const string fileName = "test2.txt";
             EventStoreTestHelper.CreateTestFile(eventsFolder, fileName, "");
             EventStoreTestHelper.CreateTestFile(eventsFolder, fileName2, "");
-            var fileEventStore = new FileEventStore(eventStoreRootFolder);
+            var fileEventStore = new FileEventStore(eventStoreRootFolder, "");
 
             // act
             var allFileNames = fileEventStore.GetAllFileNames();
@@ -59,13 +59,14 @@ namespace tvspike.es.tests
             var eventStoreRootFolder = EventStoreTestHelper.EnsureEmptyRootFolder("storeRoot_3");
             var eventsFolder = Path.Combine(eventStoreRootFolder, "events");
             Directory.CreateDirectory(eventsFolder);
-            const string fileName1 = "00000000000000000500_572e2387-00f9-4f8c-af7a-952f1a06b8d2_a2a45ecd-3060-415d-ab5c-ff1f33b8c9a4_EventA.txt";
+            const string clientId = "572e2387-00f9-4f8c-af7a-952f1a06b8d2";
+            const string fileName1 = "00000000000000000500_" + clientId + "_a2a45ecd-3060-415d-ab5c-ff1f33b8c9a4_EventA.txt";
             const string fileContent1 = "Content 500";
-            const string fileName2 = "00000000000000000501_572e2387-00f9-4f8c-af7a-952f1a06b8d2_2a990294-8f3c-467d-ae0b-0b84685a4c4a_EventA.txt";
+            const string fileName2 = "00000000000000000501_" + clientId + "_2a990294-8f3c-467d-ae0b-0b84685a4c4a_EventA.txt";
             const string fileContent2 = "Content 501";
             EventStoreTestHelper.CreateTestFile(eventsFolder, fileName1, new[] { fileName1, fileContent1 });
             EventStoreTestHelper.CreateTestFile(eventsFolder, fileName2, new[] { fileName2, fileContent2 });
-            var fileEventStore = new FileEventStore(eventStoreRootFolder);
+            var fileEventStore = new FileEventStore(eventStoreRootFolder, clientId);
 
             var fileNames = new []
             {
@@ -106,6 +107,37 @@ namespace tvspike.es.tests
 
             filteredNames.Length.Should().Be(1);
             filteredNames[0].Should().EndWith(fileName1);
+        }
+
+        [Test]
+        public void ShouldStoreEventFileInfo()
+        {
+            // arrange
+            var eventStoreRootFolder = EventStoreTestHelper.EnsureEmptyRootFolder("storeRoot_4");
+            var clientId = Guid.NewGuid().ToString();
+            EventStoreTestHelper.CreateTestFile(eventStoreRootFolder, "eventnumbers.txt", clientId);
+            var eventsFolder = Path.Combine(eventStoreRootFolder, "events");
+            var eventFileInfo = new EventFileInfo
+            {
+                EventNumber = "1000",
+                EventId = Guid.NewGuid().ToString(),
+                EventName = "EventA",
+                EventData = "TestDaten_EventA"
+            };
+            var eventFileName = EventFilename.From(eventFileInfo, clientId);
+            var fileEventStore = new FileEventStore(eventStoreRootFolder, clientId);
+
+            fileEventStore.Store(eventFileInfo);
+
+            var createdFile = Directory.GetFiles(eventsFolder).Single();
+            var fileName = Path.GetFileName(createdFile);
+            fileName.Should().Be(eventFileName.Name);
+
+            EventStoreTestHelper.AssertFileContent(createdFile, content =>
+            {
+                var lines = content.Split(new[] {Environment.NewLine}, StringSplitOptions.RemoveEmptyEntries);
+                return lines[0] == fileName && lines[1] == eventFileInfo.EventData;
+            });
         }
     }
 }
