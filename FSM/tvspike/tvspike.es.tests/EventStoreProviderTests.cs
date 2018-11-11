@@ -104,6 +104,19 @@ namespace tvspike.es.tests
         }
 
         [Test]
+        public void ShouldCreateEventFileInfoFromEvent()
+        {
+            var @event = new Event();
+
+            var eventFileInfo = EventSourceProvider.CreateEventFileInfo(@event);
+
+            eventFileInfo.EventNumber.Should().Be(@event.Nummer.ToString());
+            eventFileInfo.EventId.Should().Be(@event.Id);
+            eventFileInfo.EventName.Should().Be(@event.Name);
+            eventFileInfo.EventData.Should().Be(@event.Daten);
+        }
+
+        [Test]
         public void ShouldCreateWorkingDirectoryIfNotExists()
         {
             var rootFolder = EventStoreTestHelper.EnsureDeletedRootFolder("eventstore_1");

@@ -19,6 +19,7 @@ namespace tvspike.es
      *
      */
 
+    // TODO rename this to EventStoreProvider
     public class EventSourceProvider
     {
         public EventSourceProvider(string eventStoreFolderPath)
@@ -104,5 +105,16 @@ namespace tvspike.es
         private FileEventStore _fileEventStore;
         private FileNumberStore _fileNumberStore;
         private FileClientIdStore _fileClientIdStore;
+
+        internal static EventFileInfo CreateEventFileInfo(Event @event)
+        {
+            return new EventFileInfo
+            {
+                EventNumber = @event.Nummer.ToString(),
+                EventId = @event.Id,
+                EventName = @event.Name,
+                EventData = @event.Daten
+            };
+        }
     }
 }
