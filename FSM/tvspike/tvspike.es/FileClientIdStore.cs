@@ -15,6 +15,8 @@ namespace tvspike.es
 
         private void BuildStorageFilePath(string storeRootFolder)
         {
+            if (!Directory.Exists(storeRootFolder))
+                Directory.CreateDirectory(storeRootFolder);
             _storageFilePath = Path.Combine(storeRootFolder, "clientId.txt");
         }
 

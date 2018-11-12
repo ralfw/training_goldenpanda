@@ -14,6 +14,8 @@ namespace tvspike.es
 
         private void SetWorkingDirectory(string parentDirectory)
         {
+            if (!Directory.Exists(parentDirectory))
+                Directory.CreateDirectory(parentDirectory);
             _storageDirectory = Path.Combine(parentDirectory, "events");
         }
 

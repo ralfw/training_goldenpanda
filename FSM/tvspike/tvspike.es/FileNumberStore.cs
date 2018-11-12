@@ -7,14 +7,24 @@ namespace tvspike.es
     {
         private readonly string _storageFilePath;
 
-        public FileNumberStore(string workingFolder)
+        public FileNumberStore(string workingFolder) : this(workingFolder, 500L)
         {
+            
+        }
+
+        internal FileNumberStore(string workingFolder, long initialEventNumber)
+        {
+            if (!Directory.Exists(workingFolder))
+                Directory.CreateDirectory(workingFolder);
+
             _storageFilePath = Path.Combine(workingFolder, "eventnumbers.txt");
             if (!File.Exists(_storageFilePath))
             {
-                WriteNextNumber(499);
+                WriteNextNumber(initialEventNumber-1);
             }
         }
+
+
 
         public long NextNumber()
         {

@@ -24,14 +24,11 @@ namespace tvspike.es
         public EventStoreProvider(string eventRootFolderPath)
         : this(eventRootFolderPath, new FileNumberStore(eventRootFolderPath))
         {
-                
+            
         }
 
         internal EventStoreProvider(string eventRootFolderPath, FileNumberStore fileNumberStore)
         {
-            if (!Directory.Exists(eventRootFolderPath))
-                Directory.CreateDirectory(eventRootFolderPath);
-
             _fileNumberStore = fileNumberStore;
             var fileClientIdStore = new FileClientIdStore(eventRootFolderPath);
             _fileEventStore = new FileEventStore(eventRootFolderPath, fileClientIdStore.ClientId);
