@@ -5,18 +5,18 @@ namespace tvspike.es
 {
     internal class FileEventStore
     {
-        public FileEventStore(string parentDirectory, string clientId)
+        public FileEventStore(string storeRootFolderPath, string clientId)
         {
-            SetWorkingDirectory(parentDirectory);
+            SetWorkingDirectory(storeRootFolderPath);
             SetClientId(clientId);
             EnsureWorkingDirectory();
         }
 
-        private void SetWorkingDirectory(string parentDirectory)
+        private void SetWorkingDirectory(string storeRootFolderPath)
         {
-            if (!Directory.Exists(parentDirectory))
-                Directory.CreateDirectory(parentDirectory);
-            _storageDirectory = Path.Combine(parentDirectory, "events");
+            if (!Directory.Exists(storeRootFolderPath))
+                Directory.CreateDirectory(storeRootFolderPath);
+            _storageDirectory = Path.Combine(storeRootFolderPath, "events");
         }
 
         private void SetClientId(string clientId)

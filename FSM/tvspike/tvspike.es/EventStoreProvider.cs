@@ -21,17 +21,17 @@ namespace tvspike.es
 
     public class EventStoreProvider
     {
-        public EventStoreProvider(string eventRootFolderPath)
-        : this(eventRootFolderPath, new FileNumberStore(eventRootFolderPath))
+        public EventStoreProvider(string storeRootFolderPath)
+        : this(storeRootFolderPath, new FileNumberStore(storeRootFolderPath))
         {
             
         }
 
-        internal EventStoreProvider(string eventRootFolderPath, FileNumberStore fileNumberStore)
+        internal EventStoreProvider(string storeRootFolderPath, FileNumberStore fileNumberStore)
         {
             _fileNumberStore = fileNumberStore;
-            var fileClientIdStore = new FileClientIdStore(eventRootFolderPath);
-            _fileEventStore = new FileEventStore(eventRootFolderPath, fileClientIdStore.ClientId);
+            var fileClientIdStore = new FileClientIdStore(storeRootFolderPath);
+            _fileEventStore = new FileEventStore(storeRootFolderPath, fileClientIdStore.ClientId);
         }
 
         public void Record(IEnumerable<Event> events)

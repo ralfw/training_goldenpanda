@@ -7,17 +7,17 @@ namespace tvspike.es
     {
         public string ClientId { get; private set; }
 
-        public FileClientIdStore(string storeRootFolder)
+        public FileClientIdStore(string storeRootFolderPath)
         {
-            BuildStorageFilePath(storeRootFolder);
+            BuildStorageFilePath(storeRootFolderPath);
             EnsureClientId();
         }
 
-        private void BuildStorageFilePath(string storeRootFolder)
+        private void BuildStorageFilePath(string storeRootFolderPath)
         {
-            if (!Directory.Exists(storeRootFolder))
-                Directory.CreateDirectory(storeRootFolder);
-            _storageFilePath = Path.Combine(storeRootFolder, "clientId.txt");
+            if (!Directory.Exists(storeRootFolderPath))
+                Directory.CreateDirectory(storeRootFolderPath);
+            _storageFilePath = Path.Combine(storeRootFolderPath, "clientId.txt");
         }
 
         private void EnsureClientId()
