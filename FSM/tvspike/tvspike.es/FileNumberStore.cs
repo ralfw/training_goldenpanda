@@ -7,7 +7,7 @@ namespace tvspike.es
     {
         private readonly string _storageFilePath;
 
-        public FileNumberStore(string workingFolder) : this(workingFolder, 500L)
+        public FileNumberStore(string workingFolder) : this(workingFolder, 1L)
         {
             
         }

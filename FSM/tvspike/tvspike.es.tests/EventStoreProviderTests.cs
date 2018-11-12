@@ -74,7 +74,9 @@ namespace tvspike.es.tests
             var rootFolder = EventStoreTestHelper.EnsureEmptyRootFolder("eventstore_0_2");
 
             // arrange
-            var eventSourceProvider = new EventStoreProvider(rootFolder);
+            var initialEventNumber = 1L;
+            var fileNumberStore = new FileNumberStore(rootFolder, initialEventNumber);
+            var eventSourceProvider = new EventStoreProvider(rootFolder, fileNumberStore);
             var eventId1 = Guid.NewGuid().ToString();
             var eventId2 = Guid.NewGuid().ToString();
 
@@ -84,6 +86,7 @@ namespace tvspike.es.tests
                 new Event {Nummer = 0, Id = eventId1, Name = "EventB", Daten = "NutzdatenEventB_1"},
                 new Event {Nummer = 0, Id = eventId2, Name = "EventB", Daten = "NutzdatenEventB_2"},
             };
+
 
             // act
 
@@ -96,12 +99,12 @@ namespace tvspike.es.tests
             //assert
             events.Count.Should().Be(2);
 
-            events[0].Nummer.Should().Be(500L);
+            events[0].Nummer.Should().Be(initialEventNumber);
             events[0].Id.Should().Be(eventId1);
             events[0].Name.Should().Be("EventA");
             events[0].Daten.Should().Be("NutzdatenEventA_1");
 
-            events[1].Nummer.Should().Be(501L);
+            events[1].Nummer.Should().Be(initialEventNumber + 1);
             events[1].Id.Should().Be(eventId1);
             events[1].Name.Should().Be("EventB");
             events[1].Daten.Should().Be("NutzdatenEventB_1");

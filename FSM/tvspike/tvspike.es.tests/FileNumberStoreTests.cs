@@ -23,7 +23,7 @@ namespace tvspike.es.tests
             // ReSharper disable once ObjectCreationAsStatement
             new FileNumberStore(storeRootFolder);
 
-            EventStoreTestHelper.AssertFileContent(storageFilePath, "499");
+            EventStoreTestHelper.AssertFileContent(storageFilePath, "0");
         }
 
         [Test]
@@ -32,11 +32,11 @@ namespace tvspike.es.tests
             var storeRootFolder = EventStoreTestHelper.EnsureEmptyRootFolder("eventStore_1");
             var store = new FileNumberStore(storeRootFolder);
 
-            store.NextNumber().Should().Be(500L);
-            store.NextNumber().Should().Be(501L);
-            store.NextNumber().Should().Be(502L);
+            store.NextNumber().Should().Be(1L);
+            store.NextNumber().Should().Be(2L);
+            store.NextNumber().Should().Be(3L);
 
-            EventStoreTestHelper.AssertFileContent(Path.Combine(storeRootFolder, "eventnumbers.txt"), "502");
+            EventStoreTestHelper.AssertFileContent(Path.Combine(storeRootFolder, "eventnumbers.txt"), "3");
         }
 
         [Test]
