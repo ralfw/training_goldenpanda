@@ -17,7 +17,7 @@ namespace tvspike.es.tests
         [Test]
         public void ShouldCreateInitialStorageFileIfNotExists()
         {
-            var storeRootFolder = EventStoreTestHelper.EnsureEmptyRootFolder("clientIdStore_0");
+            var storeRootFolder = EventStoreTestHelper.EnsureDeletedRootFolder("clientIdStore_0");
             var storageFilePath = Path.Combine(storeRootFolder, "clientId.txt");
 
             // ReSharper disable once ObjectCreationAsStatement

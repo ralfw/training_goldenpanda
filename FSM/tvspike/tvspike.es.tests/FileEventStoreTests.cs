@@ -20,7 +20,7 @@ namespace tvspike.es.tests
         [Test]
         public void ShouldCreateWorkingDirectoryIfNotExists()
         {
-            var eventStoreRootFolder = EventStoreTestHelper.EnsureEmptyRootFolder("storeRoot_1");
+            var eventStoreRootFolder = EventStoreTestHelper.EnsureDeletedRootFolder("storeRoot_1");
 
             // ReSharper disable once ObjectCreationAsStatement
             new FileEventStore(eventStoreRootFolder, "1234");
