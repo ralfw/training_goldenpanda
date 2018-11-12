@@ -24,6 +24,9 @@ namespace tvspike.es.tests
             var rootFolder = EventStoreTestHelper.EnsureEmptyRootFolder("eventstore_0");
 
             // arrange
+            var fileNumberStore = new FileNumberStore(rootFolder);
+
+
             var eventSourceProvider = new EventStoreProvider(rootFolder);
             var eventId1 = Guid.NewGuid().ToString();
             var eventId2 = Guid.NewGuid().ToString();

@@ -21,12 +21,20 @@ namespace tvspike.es
 
     public class EventStoreProvider
     {
-        public EventStoreProvider(string eventStoreFolderPath)
+        public EventStoreProvider(string eventRootFolderPath)
+        : this(eventRootFolderPath, new FileNumberStore(eventRootFolderPath))
         {
-            StoreWorkingDirectoryPath(eventStoreFolderPath);
-            InitializeWorkFolder();
-            // Question: Should we better use a factory to build these? Or a factory which builds this whole instance?
-            BuildDependencies();    
+                
+        }
+
+        internal EventStoreProvider(string eventRootFolderPath, FileNumberStore fileNumberStore)
+        {
+            if (!Directory.Exists(eventRootFolderPath))
+                Directory.CreateDirectory(eventRootFolderPath);
+
+            _fileNumberStore = fileNumberStore;
+            var fileClientIdStore = new FileClientIdStore(eventRootFolderPath);
+            _fileEventStore = new FileEventStore(eventRootFolderPath, fileClientIdStore.ClientId);
         }
 
         public void Record(IEnumerable<Event> events)
@@ -81,27 +89,7 @@ namespace tvspike.es
             };
         }
 
-        private void StoreWorkingDirectoryPath(string storePath)
-        {
-            _storePath = storePath;
-        }
-
-        private void InitializeWorkFolder()
-        {
-            if (!Directory.Exists(_storePath))
-                Directory.CreateDirectory(_storePath);
-        }
-
-        private void BuildDependencies()
-        {
-            _fileNumberStore = new FileNumberStore(_storePath);
-            _fileClientIdStore = new FileClientIdStore(_storePath);
-            _fileEventStore = new FileEventStore(_storePath, _fileClientIdStore.ClientId);
-        }
-
-        private string _storePath;
-        private FileEventStore _fileEventStore;
-        private FileNumberStore _fileNumberStore;
-        private FileClientIdStore _fileClientIdStore;
+        private readonly FileEventStore _fileEventStore;
+        private readonly FileNumberStore _fileNumberStore;
     }
 }
