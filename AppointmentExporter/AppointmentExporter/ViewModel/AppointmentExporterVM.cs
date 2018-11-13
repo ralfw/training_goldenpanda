@@ -2,7 +2,7 @@
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 
-namespace AppointmentExporter
+namespace AppointmentExporter.ViewModel
 {
     public class AppointmentExporterVM : ViewModelBase
     {
