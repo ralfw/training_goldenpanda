@@ -6,7 +6,7 @@ namespace AppointmentExporter
     {
         public void Export(DateTime begin, DateTime end)
         {
-            onExported?.Invoke(10);
+            onExported(10);
         }
 
         public event Action<int> onExported;
