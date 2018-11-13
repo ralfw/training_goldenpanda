@@ -7,9 +7,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppointmentExporter", "Appo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppointmentContract", "..\AppointmentContract\AppointmentContract.csproj", "{9D62B43A-980D-4628-B46B-D19374EB913B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppointmentData", "AppointmentData\AppointmentData.csproj", "{31FD8DBA-6CDF-4B58-B4DF-AE0C261F9483}"
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqLiteProviderLib", "..\SqLiteProviderLib\SqLiteProviderLib.csproj", "{74C7C0C0-EDC7-4EC9-878E-13A0DE57EBF7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqLiteProviderLib.Tests", "..\SqLiteProviderLib.Tests\SqLiteProviderLib.Tests.csproj", "{ECEE5C81-AEF7-4EB8-BBB0-09FF598B6867}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{FEE7EF1A-1DAD-4980-B905-426E1D1646F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppointmentData.Tests", "AppointmentData.Tests\AppointmentData.Tests.csproj", "{06FDECA1-ADC5-499C-BD0E-5730B3DE3308}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppointmentCsv", "AppointmentCsv\AppointmentCsv.csproj", "{98B5D588-A398-4CFF-9AAB-19BA568A8FB4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppointmenCsv.Tests", "AppointmenCsv.Tests\AppointmenCsv.Tests.csproj", "{C0A09A39-79AC-4611-A156-C8DE5DE2DA40}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,9 +41,29 @@ Global
 		{ECEE5C81-AEF7-4EB8-BBB0-09FF598B6867}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ECEE5C81-AEF7-4EB8-BBB0-09FF598B6867}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ECEE5C81-AEF7-4EB8-BBB0-09FF598B6867}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31FD8DBA-6CDF-4B58-B4DF-AE0C261F9483}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31FD8DBA-6CDF-4B58-B4DF-AE0C261F9483}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31FD8DBA-6CDF-4B58-B4DF-AE0C261F9483}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31FD8DBA-6CDF-4B58-B4DF-AE0C261F9483}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06FDECA1-ADC5-499C-BD0E-5730B3DE3308}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06FDECA1-ADC5-499C-BD0E-5730B3DE3308}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06FDECA1-ADC5-499C-BD0E-5730B3DE3308}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06FDECA1-ADC5-499C-BD0E-5730B3DE3308}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98B5D588-A398-4CFF-9AAB-19BA568A8FB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98B5D588-A398-4CFF-9AAB-19BA568A8FB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98B5D588-A398-4CFF-9AAB-19BA568A8FB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98B5D588-A398-4CFF-9AAB-19BA568A8FB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0A09A39-79AC-4611-A156-C8DE5DE2DA40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0A09A39-79AC-4611-A156-C8DE5DE2DA40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0A09A39-79AC-4611-A156-C8DE5DE2DA40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0A09A39-79AC-4611-A156-C8DE5DE2DA40}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{06FDECA1-ADC5-499C-BD0E-5730B3DE3308} = {FEE7EF1A-1DAD-4980-B905-426E1D1646F6}
+		{C0A09A39-79AC-4611-A156-C8DE5DE2DA40} = {FEE7EF1A-1DAD-4980-B905-426E1D1646F6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {28C87A3F-0204-4A1C-AE49-97BCDF6AD23C}

@@ -47,7 +47,7 @@ namespace AppointmentExporter.ViewModel
             var lastMonth = DateTime.Now.AddMonths(-1);
             Begin = new DateTime(lastMonth.Year, lastMonth.Month, 1);
             End = Begin.AddMonths(1).AddDays(-1);
-            ExportCsvCommand = new RelayCommand(() => onExport?.Invoke(Begin, End), () => true);
+            ExportCsvCommand = new RelayCommand(() => onExport(Begin, End), () => true);
         }
 
         public void DisplayStatus(int numberOfExportedAppointments)
