@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +22,11 @@ namespace AppointmentExporter
         public MainWindow()
         {
             InitializeComponent();
+            var vm = new AppointmentExporterVM();
+            var  fakeRequestHandler = new FakeRequestHandler();
+            vm.onExport += fakeRequestHandler.Export;
+            fakeRequestHandler.onExported += vm.DisplayStatus;
+            DataContext = vm;
         }
     }
 }
