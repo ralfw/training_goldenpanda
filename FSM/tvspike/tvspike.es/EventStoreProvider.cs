@@ -76,10 +76,9 @@ namespace tvspike.es
 
         private static Event CreateEvent(EventFileInfo eventFileInfo)
         {
-            var parsedNumber = long.Parse(eventFileInfo.EventNumber);
             return new Event
             {
-                Nummer = parsedNumber,
+                Nummer = long.Parse(eventFileInfo.EventNumber),
                 Id = eventFileInfo.EventId,
                 Name = eventFileInfo.EventName,
                 Daten = eventFileInfo.EventData

@@ -6,12 +6,16 @@ namespace tvspike.es
 {
     internal class EventFilename
     {
-        internal string Number { get; set; }
-        internal string ClientId { get; set; }
-        internal string EventId { get; set; }
-        internal string EventName { get; set; }
+        #region event meta data
 
-        internal string Name  => $"{Number}_{ClientId}_{EventId}_{EventName}.txt";
+        public string Number { get; private set; }
+        public string ClientId { get; private set; }
+        public string EventId { get; private set; }
+        public string EventName { get; private set; }
+
+        #endregion
+
+        public string Name => $"{Number}_{ClientId}_{EventId}_{EventName}.txt";
 
         internal static EventFilename From(Event @event, string clientId)
         {
@@ -52,7 +56,7 @@ namespace tvspike.es
             if (eventFileInfo.EventName.Length > 20)
                 throw new InvalidOperationException("Event name exceeds maximum of 20 characters.");
 
-            return new EventFilename { Number = paddedNumber, ClientId = clientId, EventId = paddedEventId, EventName = eventFileInfo.EventName };
+            return new EventFilename {Number = paddedNumber, ClientId = clientId, EventId = paddedEventId, EventName = eventFileInfo.EventName};
         }
     }
 }

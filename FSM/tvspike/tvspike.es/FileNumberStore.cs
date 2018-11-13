@@ -24,8 +24,6 @@ namespace tvspike.es
             }
         }
 
-
-
         public long NextNumber()
         {
             var lastNumber = ReadLastNumber();
