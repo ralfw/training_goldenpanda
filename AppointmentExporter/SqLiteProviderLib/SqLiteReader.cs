@@ -11,7 +11,7 @@ namespace SqLiteProviderLib
     {
         public IEnumerable<Appointment> ReadDataFromSqLite(DateTime begin, DateTime end)
         {
-            return null;
+            return new List<Appointment>{new Appointment()};
         }
     }
 }
