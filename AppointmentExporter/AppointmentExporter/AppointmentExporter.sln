@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppointmentExporter", "Appo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppointmentContract", "..\AppointmentContract\AppointmentContract.csproj", "{9D62B43A-980D-4628-B46B-D19374EB913B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqLiteProviderLib", "..\SqLiteProviderLib\SqLiteProviderLib.csproj", "{74C7C0C0-EDC7-4EC9-878E-13A0DE57EBF7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{9D62B43A-980D-4628-B46B-D19374EB913B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9D62B43A-980D-4628-B46B-D19374EB913B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9D62B43A-980D-4628-B46B-D19374EB913B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74C7C0C0-EDC7-4EC9-878E-13A0DE57EBF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74C7C0C0-EDC7-4EC9-878E-13A0DE57EBF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74C7C0C0-EDC7-4EC9-878E-13A0DE57EBF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74C7C0C0-EDC7-4EC9-878E-13A0DE57EBF7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
