@@ -70,10 +70,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AppointmentExporterVM.cs" />
+    <Compile Include="ViewModel\AppointmentExporterVM.cs" />
     <Compile Include="FakeRequestHandler.cs" />
-    <Compile Include="ViewModel\MainViewModel.cs" />
-    <Page Include="AppointmentExporterWindow.xaml">
+    <Page Include="View\AppointmentExporterWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -81,7 +80,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="AppointmentExporterWindow.xaml.cs">
+    <Compile Include="View\AppointmentExporterWindow.xaml.cs">
       <DependentUpon>AppointmentExporterWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
