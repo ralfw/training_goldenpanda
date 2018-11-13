@@ -28,6 +28,13 @@ namespace SqLiteProviderLib.Tests
             var readDataFromSqLite = reader.ReadDataFromSqLite(begin, end);
 
             readDataFromSqLite.Count().Should().BeGreaterThan(0);
+
+            foreach (var appointment in readDataFromSqLite)
+            {
+                Console.WriteLine($"{appointment.Begin}");
+                Console.WriteLine($"{appointment.End}");
+                Console.WriteLine($"{appointment.Subject}");
+            }
         }
 
     }
